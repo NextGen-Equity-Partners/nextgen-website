@@ -1183,7 +1183,7 @@ body.bg-image .story-break.story-banner {
   height: 76px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 28px;
-  /* Lock the nav: no transitions, isolated stacking context, own composite layer. */
+  /* Lock the nav in its own composite layer so the glass stays stable while scrolling. */
   isolation: isolate;
   contain: layout style;
   transform: translate3d(0, 0, 0);
@@ -1207,26 +1207,105 @@ body.bg-image .story-break.story-banner {
     inset 0 1px 0 rgba(255,255,255,.20);
   pointer-events: none;
   z-index: -1;
+  transition: background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), backdrop-filter .35s var(--ease);
+}
+.nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 104px;
+  background:
+    linear-gradient(180deg, rgba(5,13,31,.42) 0%, rgba(5,13,31,.20) 58%, rgba(5,13,31,0) 100%);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  opacity: .72;
+  pointer-events: none;
+  z-index: -2;
+  transition: opacity .35s var(--ease), backdrop-filter .35s var(--ease);
+}
+.nav.is-scrolled::before {
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(36px) saturate(1.65) brightness(1.1);
+  -webkit-backdrop-filter: blur(36px) saturate(1.65) brightness(1.1);
+  border-color: rgba(255,255,255,.24);
+  box-shadow:
+    0 16px 52px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.28);
+}
+.nav.is-scrolled::after {
+  opacity: 1;
+  backdrop-filter: blur(24px) saturate(1.45);
+  -webkit-backdrop-filter: blur(24px) saturate(1.45);
 }
 .nav .brand {
   display: flex; align-items: center;
   padding: 0 22px;
+  width: 154px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 999px;
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
   letter-spacing: .18em;
   font-size: 13px;
   color: var(--w);
   text-transform: uppercase;
+  transition: width .45s var(--ease), padding .45s var(--ease);
 }
 .nav .brand img {
   height: 24px; width: auto;
+  flex: 0 0 auto;
   display: block;
   filter: drop-shadow(0 1px 12px rgba(120,180,255,.15));
-  transition: none;
+  transition: opacity .28s var(--ease), transform .45s var(--ease);
   transform: translateZ(0);
+  transform-origin: left center;
+}
+.nav .brand-mark {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0;
+  transform: translateY(-50%) scale(.82);
+  filter: drop-shadow(0 1px 12px rgba(120,180,255,.18));
+  transition: opacity .28s var(--ease), transform .45s var(--ease);
+}
+.nav.is-scrolled .brand {
+  width: 58px;
+  padding: 0 14px;
+}
+.nav.is-scrolled .brand img {
+  opacity: 0;
+  transform: translateX(-10px) scale(.92);
+}
+.nav.is-scrolled .brand-mark {
+  left: 14px;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
 }
 @media (max-width: 760px) {
+  .nav .brand { width: 132px; height: 40px; }
   .nav .brand img { height: 20px; }
+  .nav.is-scrolled .brand { width: 52px; padding: 0 12px; }
+  .nav .brand-mark { left: 20px; width: 26px; height: 26px; font-size: 18px; }
+  .nav.is-scrolled .brand-mark { left: 12px; }
 }
 .nav-links {
   display: flex; gap: 2px; align-items: center;
@@ -1287,6 +1366,23 @@ body.bg-image .story-break.story-banner {
 .lang-switch a.active {
   background: rgba(255,255,255,.14);
   color: var(--w);
+}
+
+/* Animations-Lab badge in nav */
+.nav-alab {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  font-size: 11px; font-weight: 700; letter-spacing: 0;
+  color: rgba(249,247,244,.55);
+  border: 1px solid rgba(249,247,244,.22);
+  margin-left: 6px;
+  transition: color .25s, border-color .25s, background .25s;
+  flex-shrink: 0;
+}
+.nav-alab:hover {
+  color: var(--w);
+  border-color: rgba(249,247,244,.55);
+  background: rgba(249,247,244,.08);
 }
 
 /* Mobile */
@@ -1453,12 +1549,7 @@ h3.display {
 }
 .hero-line {
   display: block; opacity: 0;
-  animation: hero-line-in 1.5s var(--ease-cinema) forwards;
-}
-.hero-line:nth-child(2) { animation-delay: .35s; }
-@keyframes hero-line-in {
-  from { opacity: 0; transform: translateY(36px); filter: blur(8px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  /* Animation removed — GSAP handles reveal via mask + fromTo in page-animations.tsx */
 }
 .hero-sub {
   position: absolute;
@@ -2623,4 +2714,49 @@ footer a:hover, footer button:hover { color: var(--w); }
     0 26px 60px rgba(0,0,0,.32),
     0 8px 16px rgba(0,0,0,.18),
     inset 0 1px 0 rgba(255,255,255,.20);
+}
+
+/* ============================================================
+   ANIMATIONS LAB · /animations demo page
+============================================================ */
+.alab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.alab-card {
+  border-radius: 20px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.alab-canvas {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(5,13,31,.6);
+}
+.alab-meta {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.alab-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--w);
+}
+.alab-tech {
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+@media (max-width: 760px) {
+  .alab-grid { grid-template-columns: 1fr; }
+  .alab-canvas { height: 240px; }
 }

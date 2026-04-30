@@ -18,6 +18,8 @@ export function HeroShader() {
           width: "100vw",
           height: "100vh",
           zIndex: -2,
+          filter: "blur(28px) saturate(1.35)",
+          transform: "scale(1.06)",
         }}
         colors={["#050d1f", "#0c1a32", "#1a2a48", "#2a1838"]}
         distortion={0.85}

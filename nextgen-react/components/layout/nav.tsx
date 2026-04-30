@@ -1,12 +1,26 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function Nav() {
   const pathname = usePathname() || "/";
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const isEN = pathname.startsWith("/en");
   const base = isEN ? "/en" : "";
   const home = isEN ? "/en" : "/";
+
+  useEffect(() => {
+    const updateScrollState = () => {
+      const top = window.scrollY || document.documentElement.scrollTop || 0;
+      setIsScrolled(top > 8);
+    };
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   const links = isEN
     ? [
@@ -35,9 +49,10 @@ export function Nav() {
 
   return (
     <>
-      <nav className="nav" id="nav">
+      <nav className={`nav${isScrolled ? " is-scrolled" : ""}`} id="nav">
         <a href={home} className="brand" aria-label="NextGen Equity">
           <img src="/assets/logo-white.svg" alt="NextGen Equity" height={24} />
+          <span className="brand-mark" aria-hidden="true">N</span>
         </a>
         <div className="nav-links">
           {links.map((l) => (
@@ -52,16 +67,23 @@ export function Nav() {
             <a href={dePath} className={!isEN ? "active" : undefined}>DE</a>
             <a href={enPath} className={isEN ? "active" : undefined}>EN</a>
           </div>
+          <a href="/animations" className="nav-alab" aria-label="Animations Lab" title="Animations Lab">A</a>
         </div>
-        <button className="nav-burger" id="nav-burger" aria-label={isEN ? "Open menu" : "Menü öffnen"}>
+        <button
+          className={`nav-burger${mobileOpen ? " open" : ""}`}
+          id="nav-burger"
+          aria-label={isEN ? "Open menu" : "Menü öffnen"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((open) => !open)}
+        >
           <span></span><span></span><span></span>
         </button>
       </nav>
-      <div className="nav-mobile" id="nav-mobile">
+      <div className={`nav-mobile${mobileOpen ? " open" : ""}`} id="nav-mobile">
         {links.map((l) => (
-          <a key={l.href} href={l.href}>{l.label}</a>
+          <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}>{l.label}</a>
         ))}
-        <a href={ctaHref} className="cta">{ctaLabel}</a>
+        <a href={ctaHref} className="cta" onClick={() => setMobileOpen(false)}>{ctaLabel}</a>
       </div>
     </>
   );

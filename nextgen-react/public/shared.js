@@ -2,8 +2,16 @@
    NEXTGEN EQUITY · SHARED RUNTIME
 ============================================================ */
 
-/* NAV – fully fixed, no scroll-state changes (logo must never appear to move) */
+/* NAV */
 const nav = document.getElementById('nav');
+if (nav && !window.__nextgenNavScrollBound) {
+  window.__nextgenNavScrollBound = true;
+  const setNavScrolled = () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
+  };
+  setNavScrolled();
+  window.addEventListener('scroll', setNavScrolled, { passive: true });
+}
 
 /* Scroll-driven video scrubbing — top of page = video start, bottom = end */
 (function () {
@@ -50,14 +58,17 @@ const nav = document.getElementById('nav');
 /* MOBILE NAV */
 const burger = document.getElementById('nav-burger');
 const mobile = document.getElementById('nav-mobile');
-if (burger && mobile) {
+if (burger && mobile && !window.__nextgenNavMobileBound) {
+  window.__nextgenNavMobileBound = true;
   burger.addEventListener('click', () => {
     burger.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(burger.classList.contains('open')));
     mobile.classList.toggle('open');
   });
   mobile.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
       mobile.classList.remove('open');
     });
   });

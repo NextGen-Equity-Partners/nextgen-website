@@ -58,6 +58,52 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <MagneticButtons />
           <CursorProxy />
         </SmoothScrollProvider>
+        <script
+          id="nav-runtime"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                function bindNav() {
+                  var nav = document.getElementById('nav');
+                  if (nav && !window.__nextgenNavScrollBound) {
+                    window.__nextgenNavScrollBound = true;
+                    var setNavScrolled = function () {
+                      var top = window.scrollY || document.documentElement.scrollTop || 0;
+                      nav.classList.toggle('is-scrolled', top > 8);
+                    };
+                    setNavScrolled();
+                    window.addEventListener('scroll', setNavScrolled, { passive: true });
+                  }
+
+                  var burger = document.getElementById('nav-burger');
+                  var mobile = document.getElementById('nav-mobile');
+                  if (burger && mobile && !window.__nextgenNavMobileBound) {
+                    window.__nextgenNavMobileBound = true;
+                    burger.addEventListener('click', function () {
+                      var open = !mobile.classList.contains('open');
+                      burger.classList.toggle('open', open);
+                      burger.setAttribute('aria-expanded', String(open));
+                      mobile.classList.toggle('open', open);
+                    });
+                    mobile.querySelectorAll('a').forEach(function (link) {
+                      link.addEventListener('click', function () {
+                        burger.classList.remove('open');
+                        burger.setAttribute('aria-expanded', 'false');
+                        mobile.classList.remove('open');
+                      });
+                    });
+                  }
+                }
+
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', bindNav, { once: true });
+                } else {
+                  bindNav();
+                }
+              })();
+            `,
+          }}
+        />
 
         <div className="imp-backdrop" id="imp-backdrop">
           <div className="imp-panel">

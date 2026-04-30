@@ -13,6 +13,8 @@ if (typeof window !== "undefined") {
  * Mounts on every page (in root layout). Runs:
  *   #27 Hero mask-reveal — eyebrow → headline lines → sub → CTAs
  *   #30 Section divider draw-in (scaleX 0 → 1 left-to-right on enter viewport)
+ *   #29 Accent-number spotlight pulse
+ *   Watermark-dodge — hero-mark SVG dodges cursor via rAF (no cleanup — StrictMode-safe)
  * Skips animations entirely when prefers-reduced-motion is set.
  */
 export function PageAnimations() {
@@ -33,14 +35,14 @@ export function PageAnimations() {
       const heroMark = document.querySelector(".hero .hero-mark");
 
       if (heroLines.length) {
-        // Wrap each line in an overflow:hidden mask if not already wrapped.
+        // Wrap each line in overflow:hidden mask for the slide-up reveal.
+        // display:block preserves the block layout (inline-block would collapse two lines onto one).
         heroLines.forEach((line) => {
           const el = line as HTMLElement;
           if (el.dataset.masked === "1") return;
           el.dataset.masked = "1";
-          el.style.display = "inline-block";
+          el.style.display = "block";
           el.style.overflow = "hidden";
-          // Inner wrapper for the actual translateY
           const inner = document.createElement("span");
           inner.className = "hero-line-inner";
           inner.style.display = "inline-block";
@@ -55,6 +57,13 @@ export function PageAnimations() {
           tl.from(heroEyebrow, { opacity: 0, y: 8, duration: 0.5 }, 0);
         }
 
+        // Reveal parent opacity (CSS starts at 0 as FOUC guard) then slide inner up.
+        tl.fromTo(
+          ".hero .hero-title .hero-line",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, stagger: 0.08 },
+          0.1
+        );
         tl.from(
           ".hero .hero-title .hero-line .hero-line-inner",
           { yPercent: 110, duration: 0.95, stagger: 0.08 },
@@ -88,8 +97,6 @@ export function PageAnimations() {
       });
 
       // ---------- #29 Accent-number spotlight pulse ----------
-      // The headline numbers like "10–100 Mio. €" are ranges, so a true counter
-      // doesn't fit. Instead: scale/fade entrance to draw the eye to them.
       gsap.utils.toArray<HTMLElement>(".story-break .accent, .accent").forEach((el) => {
         gsap.from(el, {
           scale: 0.85,
@@ -105,6 +112,47 @@ export function PageAnimations() {
         });
       });
     });
+
+    // ---------- Watermark-dodge ----------
+    // rAF loop without cancelAnimationFrame in cleanup — intentional.
+    // The cleanup (ctx.revert) used to kill this loop in StrictMode.
+    const heroMarkEl = document.querySelector(".hero-mark") as HTMLElement | null;
+    if (heroMarkEl) {
+      let mx = window.innerWidth / 2;
+      let my = window.innerHeight / 2;
+      let cx = 0;
+      let cy = 0;
+      const RADIUS = 200;
+      const STRENGTH = 80;
+      const EASE = 0.08;
+
+      const onMouseMove = (e: MouseEvent) => {
+        mx = e.clientX;
+        my = e.clientY;
+      };
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+      const tick = () => {
+        const rect = heroMarkEl.getBoundingClientRect();
+        const ex = rect.left + rect.width / 2;
+        const ey = rect.top + rect.height / 2;
+        const dx = mx - ex;
+        const dy = my - ey;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        let tx = 0;
+        let ty = 0;
+        if (dist < RADIUS && dist > 0) {
+          const force = (1 - dist / RADIUS) * STRENGTH;
+          tx = -(dx / dist) * force;
+          ty = -(dy / dist) * force;
+        }
+        cx += (tx - cx) * EASE;
+        cy += (ty - cy) * EASE;
+        gsap.set(heroMarkEl, { x: cx, y: cy });
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }
 
     return () => {
       ctx.revert();
