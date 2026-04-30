@@ -5,6 +5,9 @@ import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { HeroShader } from "@/components/layout/hero-shader";
+import { PageAnimations } from "@/components/animations/page-animations";
+import { MagneticButtons } from "@/components/animations/magnetic-buttons";
+import { CursorProxy } from "@/components/animations/cursor-proxy";
 
 const SITE = "https://nextgen-equity.com";
 
@@ -51,6 +54,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
+          <PageAnimations />
+          <MagneticButtons />
+          <CursorProxy />
         </SmoothScrollProvider>
 
         <div className="imp-backdrop" id="imp-backdrop">
