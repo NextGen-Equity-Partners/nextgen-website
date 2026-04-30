@@ -18,7 +18,7 @@ import { LabCanvas } from "./_canvas";
  * the lift.
  */
 
-const COUNT = 3000;
+const COUNT = 1800;
 
 const VERT = /* glsl */ `
   attribute vec3 seed;
@@ -40,7 +40,7 @@ const VERT = /* glsl */ `
 
   void main() {
     float life = mod(uTime * 0.18 + lifeOffset, 1.0); // 0..1 each 5.5s
-    float r = mix(5.4, 0.04, life);
+    float r = mix(3.6, 0.05, life);
 
     float angle = seed.x * 6.28318 + uTime * (0.18 + seed.y * 0.35);
     float lat = (seed.y - 0.5) * 2.6;
@@ -60,7 +60,8 @@ const VERT = /* glsl */ `
 
     // Smaller as it approaches the singularity.
     float ps = uSize * (1.05 - 0.65 * life);
-    gl_PointSize = ps * (260.0 / -mv.z);
+    float depth = max(1.15, -mv.z);
+    gl_PointSize = min(ps * (180.0 / depth), 16.0);
 
     vAlpha = smoothstep(0.0, 0.12, life) * (1.0 - smoothstep(0.88, 1.0, life));
   }
@@ -76,7 +77,7 @@ const FRAG = /* glsl */ `
     if (dist > 0.5) discard;
     float falloff = pow(1.0 - dist * 2.0, 1.4);
     vec3 col = mix(uColorA, uColorB, vAlpha);
-    gl_FragColor = vec4(col, falloff * vAlpha);
+    gl_FragColor = vec4(col, falloff * vAlpha * 0.32);
   }
 `;
 
@@ -109,7 +110,7 @@ function Particles() {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uSize: { value: 5.0 },
+      uSize: { value: 2.8 },
       uColorA: { value: new THREE.Color("#5a78d4") },
       uColorB: { value: new THREE.Color("#ffc18c") },
     }),
@@ -156,11 +157,11 @@ function Core() {
 
 export function MagneticConvergenceAnimation() {
   return (
-    <LabCanvas camera={[0, 0, 5.0]} fov={42}>
+    <LabCanvas camera={[0, 0, 5.8]} fov={42}>
       <Particles />
       <Core />
       <EffectComposer multisampling={0}>
-        <Bloom intensity={1.4} luminanceThreshold={0.18} luminanceSmoothing={0.45} mipmapBlur />
+        <Bloom intensity={0.72} luminanceThreshold={0.32} luminanceSmoothing={0.5} mipmapBlur />
       </EffectComposer>
     </LabCanvas>
   );

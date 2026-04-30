@@ -7,7 +7,7 @@ export default function AnimationsPage() {
         <div className="s-tag rv">Animations Lab</div>
         <h1 className="display rv">Animationen für <span className="bold">NextGen.</span></h1>
         <p className="body-text rv rv-d1 alab-intro">
-          Sechs WebGL-Szenen — jede inhaltlich verankert: Plattform-Aufbau, KI-Vernetzung, langfristige Gruppen, Konvergenz, DACH-Netz, organisches Wachstum.
+          Zehn WebGL-Szenen — von Plattform-Aufbau, Buy-and-Build, EBITDA-Bridge und Wertsteigerung über Deal-Pipeline und DACH-Verbindung bis zu KI, Gruppe, Wachstum und Konvergenz.
         </p>
       </section>
 

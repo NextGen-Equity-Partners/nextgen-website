@@ -2,114 +2,174 @@
 
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Environment, MeshTransmissionMaterial } from "@react-three/drei";
-import { Bloom, ChromaticAberration, EffectComposer } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { Environment } from "@react-three/drei";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { LabCanvas } from "./_canvas";
 
 /**
- * Scene 1 · Plattform-Konsolidierung
- * Story: Buy-and-Build. Geometric shards drift in from offscreen, snap into a unified
- * platform grid, hold, then disperse. Endless loop.
+ * Scene 1 · Plattform & Add-ons (Buy-and-Build)
+ * Story: Eine Plattform im Zentrum. Add-on-Unternehmen fliegen ein, docken
+ * an der Oberfläche an, lösen sich in die Plattform auf — und die Plattform
+ * wächst sichtbar mit jedem Andocken.
  *
- * Tech: 9 octahedrons with MeshTransmissionMaterial (frosted glass + chromatic aberration),
- * easing-driven convergence, HDRI environment for reflections, additive bloom.
+ * Tech: matte warm sphere as platform, small cubes scheduled to spawn and
+ * approach surface points on a 16s loop. Sphere radius is a function of how
+ * many add-ons have completed docking. Soft warm lighting, low bloom — no
+ * neon. Slow camera orbit.
  */
 
-const COUNT = 9;
+const DOCK_COUNT = 12;
+const CYCLE = 16; // seconds per loop
+const APPROACH_DURATION = 2.0;
+const ABSORB_DURATION = 0.55;
+const SPHERE_BASE_RADIUS = 0.55;
+const SPHERE_MAX_RADIUS = 1.05;
 
-type Shard = {
-  target: THREE.Vector3;
+type Dock = {
+  spawnAt: number;
   start: THREE.Vector3;
-  offset: number;
+  surface: THREE.Vector3;
+  size: number;
   rotSeed: number;
-  scale: number;
+  rotAxis: THREE.Vector3;
 };
 
-function createShards(): Shard[] {
-  const out: Shard[] = [];
-  for (let i = 0; i < COUNT; i++) {
-    const col = (i % 3) - 1;
-    const row = Math.floor(i / 3) - 1;
-    const target = new THREE.Vector3(col * 0.95, row * 0.95, 0);
-    const angle = (i / COUNT) * Math.PI * 2 + Math.random();
-    const radius = 4.5 + Math.random() * 1.5;
-    const start = new THREE.Vector3(
-      Math.cos(angle) * radius,
-      Math.sin(angle * 1.3) * (radius * 0.6),
-      (Math.random() - 0.5) * 5,
+function makeDocks(): Dock[] {
+  const out: Dock[] = [];
+  for (let i = 0; i < DOCK_COUNT; i++) {
+    // Stagger across the first 90% of the cycle.
+    const spawnAt = (i / DOCK_COUNT) * CYCLE * 0.9;
+    // Random direction on a sphere (uniform).
+    const u = Math.random();
+    const v = Math.random();
+    const theta = 2 * Math.PI * u;
+    const phi = Math.acos(2 * v - 1);
+    const dir = new THREE.Vector3(
+      Math.sin(phi) * Math.cos(theta),
+      Math.cos(phi),
+      Math.sin(phi) * Math.sin(theta),
     );
+    const start = dir.clone().multiplyScalar(3.8 + Math.random() * 1.4);
+    const rotAxis = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
     out.push({
-      target,
+      spawnAt,
       start,
-      offset: (i / COUNT) * 0.45,
+      surface: dir.clone(),
+      size: 0.135 + Math.random() * 0.04,
       rotSeed: Math.random() * Math.PI * 2,
-      scale: 0.42 + Math.random() * 0.05,
+      rotAxis,
     });
   }
   return out;
 }
 
-function easeOutCubic(t: number) {
-  return 1 - Math.pow(1 - t, 3);
+function easeOutQuad(t: number) {
+  return 1 - (1 - t) * (1 - t);
 }
 
-function Shards() {
-  const groupRef = useRef<THREE.Group>(null);
-  const meshRefs = useRef<(THREE.Mesh | null)[]>([]);
-  const shards = useMemo(createShards, []);
+function PlatformScene() {
+  const docks = useMemo(makeDocks, []);
+  const sphereRef = useRef<THREE.Mesh>(null);
+  const cubeRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const currentScaleRef = useRef(SPHERE_BASE_RADIUS);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-    const CYCLE = 9;
-    const cy = (t % CYCLE) / CYCLE;
-    let phase: number;
-    if (cy < 0.55) phase = easeOutCubic(cy / 0.55);
-    else if (cy < 0.82) phase = 1;
-    else phase = 1 - (cy - 0.82) / 0.18;
+    const cycleT = t % CYCLE;
 
-    shards.forEach((s, i) => {
-      const m = meshRefs.current[i];
-      if (!m) return;
-      const local = THREE.MathUtils.clamp(phase - s.offset * 0.5, 0, 1);
-      m.position.lerpVectors(s.start, s.target, local);
-      m.rotation.x = s.rotSeed + t * 0.18;
-      m.rotation.y = s.rotSeed * 1.7 + t * 0.24;
-      m.rotation.z = Math.sin(t * 0.4 + i) * 0.2;
-      const sScale = s.scale * (0.85 + 0.15 * local);
-      m.scale.setScalar(sScale);
-    });
-
-    const g = groupRef.current;
-    if (g) {
-      g.rotation.y = t * 0.12;
-      g.rotation.x = Math.sin(t * 0.2) * 0.18;
+    // Count add-ons that have already finished their approach (touched the surface).
+    let completed = 0;
+    for (const d of docks) {
+      if (cycleT > d.spawnAt + APPROACH_DURATION) completed++;
     }
+
+    const targetRadius = THREE.MathUtils.lerp(
+      SPHERE_BASE_RADIUS,
+      SPHERE_MAX_RADIUS,
+      completed / DOCK_COUNT,
+    );
+
+    // Smooth growth even though completed jumps in steps — feels organic.
+    currentScaleRef.current = THREE.MathUtils.lerp(currentScaleRef.current, targetRadius, 0.06);
+    const sphereScale = currentScaleRef.current;
+
+    if (sphereRef.current) {
+      sphereRef.current.scale.setScalar(sphereScale);
+      sphereRef.current.rotation.y = t * 0.13;
+      sphereRef.current.rotation.x = Math.sin(t * 0.18) * 0.14;
+    }
+
+    // Update each add-on cube.
+    docks.forEach((d, i) => {
+      const m = cubeRefs.current[i];
+      if (!m) return;
+      const localT = cycleT - d.spawnAt;
+
+      // Hidden outside its own active window.
+      if (localT < 0 || localT > APPROACH_DURATION + ABSORB_DURATION) {
+        m.visible = false;
+        return;
+      }
+      m.visible = true;
+
+      const surfacePoint = d.surface.clone().multiplyScalar(sphereScale);
+
+      if (localT < APPROACH_DURATION) {
+        const k = easeOutQuad(localT / APPROACH_DURATION);
+        m.position.lerpVectors(d.start, surfacePoint, k);
+        // Slight pre-impact stretch toward the platform.
+        const stretch = 1 + k * 0.18;
+        m.scale.setScalar(d.size * stretch);
+      } else {
+        // Absorption: stick on surface, scale down to zero.
+        const k = (localT - APPROACH_DURATION) / ABSORB_DURATION;
+        m.position.copy(surfacePoint);
+        m.scale.setScalar(d.size * (1 - k) * (1 - k));
+      }
+
+      // Spin while approaching.
+      m.rotation.x = d.rotSeed + t * 1.6;
+      m.rotation.y = d.rotSeed * 1.7 + t * 1.2;
+      m.rotation.z = d.rotSeed * 0.4 + t * 0.8;
+    });
   });
 
   return (
-    <group ref={groupRef}>
-      {shards.map((s, i) => (
+    <group>
+      <mesh ref={sphereRef}>
+        <icosahedronGeometry args={[1, 5]} />
+        <meshPhysicalMaterial
+          color="#d8c8ad"
+          metalness={0.32}
+          roughness={0.38}
+          clearcoat={0.6}
+          clearcoatRoughness={0.18}
+          emissive="#3b2c1a"
+          emissiveIntensity={0.18}
+        />
+      </mesh>
+
+      {/* Subtle inner glow shell to give the platform body. */}
+      <mesh>
+        <icosahedronGeometry args={[SPHERE_BASE_RADIUS * 0.94, 3]} />
+        <meshBasicMaterial color="#ffd6a8" transparent opacity={0.07} toneMapped={false} />
+      </mesh>
+
+      {docks.map((d, i) => (
         <mesh
           key={i}
           ref={(el) => {
-            meshRefs.current[i] = el;
+            cubeRefs.current[i] = el;
           }}
         >
-          <octahedronGeometry args={[1, 0]} />
-          <MeshTransmissionMaterial
-            samples={4}
-            thickness={0.55}
-            chromaticAberration={0.08}
-            transmission={1}
-            roughness={0.18}
-            ior={1.45}
-            distortion={0.18}
-            distortionScale={0.35}
-            temporalDistortion={0.05}
-            color="#fde7c8"
-            backside
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial
+            color="#f3e7cf"
+            emissive="#a07246"
+            emissiveIntensity={0.65}
+            metalness={0.2}
+            roughness={0.45}
           />
         </mesh>
       ))}
@@ -117,27 +177,29 @@ function Shards() {
   );
 }
 
+function CameraOrbit() {
+  useFrame((state) => {
+    const t = state.clock.elapsedTime * 0.06;
+    const r = 4.2;
+    state.camera.position.x = Math.cos(t) * r;
+    state.camera.position.z = Math.sin(t) * r;
+    state.camera.position.y = 0.6 + Math.sin(t * 1.4) * 0.15;
+    state.camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
 export function PlatformConsolidationAnimation() {
   return (
-    <LabCanvas camera={[0, 0.4, 5.4]} fov={42}>
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[6, 5, 6]} intensity={1.6} color="#ffe9cc" />
-      <directionalLight position={[-4, -3, 2]} intensity={0.5} color="#9ec0ff" />
-      <Environment preset="city" environmentIntensity={0.55} />
-      <Shards />
+    <LabCanvas camera={[3, 0.6, 3.5]} fov={44}>
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[5, 5, 4]} intensity={1.4} color="#fff0d8" />
+      <directionalLight position={[-3, 2, -2]} intensity={0.55} color="#dde5ff" />
+      <Environment preset="apartment" environmentIntensity={0.4} />
+      <CameraOrbit />
+      <PlatformScene />
       <EffectComposer multisampling={0}>
-        <Bloom
-          intensity={0.55}
-          luminanceThreshold={0.32}
-          luminanceSmoothing={0.45}
-          mipmapBlur
-        />
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={[0.0008, 0.0014]}
-          radialModulation={false}
-          modulationOffset={0}
-        />
+        <Bloom intensity={0.5} luminanceThreshold={0.42} luminanceSmoothing={0.5} mipmapBlur />
       </EffectComposer>
     </LabCanvas>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 
 type LabCanvasProps = {
@@ -26,18 +26,37 @@ export function LabCanvas({
   fov = 38,
   bg = 0x050d1f,
 }: LabCanvasProps) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: "160px 0px", threshold: 0 },
+    );
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
-      camera={{ position: camera, fov }}
-      onCreated={({ gl, scene }) => {
-        gl.setClearColor(bg, 1);
-        gl.toneMappingExposure = 1.05;
-        scene.fog = null;
-      }}
-    >
-      <Suspense fallback={null}>{children}</Suspense>
-    </Canvas>
+    <div ref={hostRef} className="lab-canvas-stage">
+      {active && (
+        <Canvas
+          dpr={[1, 1.35]}
+          gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
+          camera={{ position: camera, fov }}
+          onCreated={({ gl, scene }) => {
+            gl.setClearColor(bg, 1);
+            gl.toneMappingExposure = 1.05;
+            scene.fog = null;
+          }}
+        >
+          <Suspense fallback={null}>{children}</Suspense>
+        </Canvas>
+      )}
+    </div>
   );
 }

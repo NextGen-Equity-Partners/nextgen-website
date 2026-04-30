@@ -34,6 +34,10 @@
   overflow: hidden;
   background: rgba(5, 13, 31, 1);
 }
+.lab-canvas-stage {
+  width: 100%;
+  height: 100%;
+}
 .alab-canvas canvas {
   display: block;
   width: 100%;
