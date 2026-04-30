@@ -20,6 +20,10 @@ export function CursorProxy() {
     if (prefersReducedMotion()) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
     setEnabled(true);
+    document.body.classList.add("has-custom-cursor");
+    return () => {
+      document.body.classList.remove("has-custom-cursor");
+    };
   }, []);
 
   useEffect(() => {

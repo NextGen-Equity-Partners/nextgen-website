@@ -23,18 +23,49 @@ export function PageAnimations() {
     ranRef.current = true;
 
     // Header glass: toggle .nav-scrolled when user has scrolled > 30px.
-    // Runs even with reduced-motion (state class, not animation).
+    // Watermark dodge: hide .hero-mark when a glass-card / pane visibly
+    // collides with its bottom-right corner, restore when the area is clear.
     const nav = document.getElementById("nav");
+    const heroMark = document.querySelector<HTMLElement>(".hero-mark");
     let detachNavScroll: (() => void) | undefined;
-    if (nav) {
-      const onScroll = () => {
+
+    const onScroll = () => {
+      if (nav) {
         if (window.scrollY > 30) nav.classList.add("nav-scrolled");
         else nav.classList.remove("nav-scrolled");
-      };
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-      detachNavScroll = () => window.removeEventListener("scroll", onScroll);
-    }
+      }
+
+      if (heroMark) {
+        const mr = heroMark.getBoundingClientRect();
+        // Probe the rect that the watermark "owns" + a small safety pad.
+        const pad = 12;
+        const probeL = mr.left - pad;
+        const probeR = mr.right + pad;
+        const probeT = mr.top - pad;
+        const probeB = mr.bottom + pad;
+
+        // Does anything visually solid overlap that rect?
+        const colliders = document.querySelectorAll<HTMLElement>(
+          ".pane, .glass-card, .story-break, .slogan-break, footer"
+        );
+        let collide = false;
+        for (const c of colliders) {
+          const cr = c.getBoundingClientRect();
+          if (cr.right < probeL || cr.left > probeR) continue;
+          if (cr.bottom < probeT || cr.top > probeB) continue;
+          collide = true;
+          break;
+        }
+        heroMark.classList.toggle("dodged", collide);
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    detachNavScroll = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
 
     if (prefersReducedMotion()) {
       return () => {

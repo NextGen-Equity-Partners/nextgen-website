@@ -8,6 +8,7 @@ import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { MagneticButtons } from "@/components/animations/magnetic-buttons";
 import { CursorProxy } from "@/components/animations/cursor-proxy";
+import { SharedRuntime } from "@/components/providers/shared-runtime";
 
 const SITE = "https://nextgen-equity.com";
 
@@ -73,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             document.documentElement.lang = 'en';
           }
         `}</Script>
-        <Script src="/shared.js" strategy="afterInteractive" />
+        <SharedRuntime />
       </body>
     </html>
   );

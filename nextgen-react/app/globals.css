@@ -982,7 +982,7 @@ body.bg-image .story-break.story-banner {
    HERO BIG-LOGO · prominent mark on the photo
 ============================================================ */
 .hero-mark {
-  position: absolute;            /* was fixed — now scrolls away with hero */
+  position: fixed;
   right: clamp(28px, 5vw, 64px);
   bottom: clamp(28px, 5vw, 56px);
   z-index: 0;
@@ -994,7 +994,12 @@ body.bg-image .story-break.story-banner {
   user-select: none;
   -webkit-user-drag: none;
   animation: hero-mark-in 1.2s var(--ease) .25s both;
+  /* JS toggles --dodge-x to slide right when a glass-card collides */
+  transform: translate3d(var(--dodge-x, 0px), 0, 0);
+  transition: transform 0.55s cubic-bezier(.22, 1, .36, 1),
+              opacity   0.45s ease;
 }
+.hero-mark.dodged { --dodge-x: 140%; opacity: 0; }
 @keyframes hero-mark-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: .92; transform: translateY(0); }
@@ -1200,11 +1205,11 @@ body.bg-image .story-break.story-banner {
     box-shadow 0.35s ease;
 }
 .nav-scrolled {
-  background: rgba(5, 13, 31, 0.55);
-  backdrop-filter: blur(22px) saturate(1.6) brightness(1.05);
-  -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  background: rgba(5, 13, 31, 0.78);
+  backdrop-filter: blur(28px) saturate(1.7) brightness(1.05);
+  -webkit-backdrop-filter: blur(28px) saturate(1.7) brightness(1.05);
+  border-bottom-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32);
 }
 .nav .brand {
   position: relative;
@@ -2417,6 +2422,18 @@ footer a:hover, footer button:hover { color: var(--w); }
 .rv {
   opacity: 0; transform: translateY(36px);
   transition: opacity 1.4s var(--ease-cinema), transform 1.4s var(--ease-cinema);
+}
+/* Custom-cursor-mode: hide native cursor everywhere so the ring/dot is the
+   only pointer indicator. Without this, hovering text shows the I-beam and
+   fast-scroll briefly reveals the system cursor. */
+body.has-custom-cursor,
+body.has-custom-cursor *,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor input,
+body.has-custom-cursor textarea,
+body.has-custom-cursor select {
+  cursor: none !important;
 }
 .rv.on { opacity: 1; transform: translateY(0); }
 .rv-d1 { transition-delay: .14s; }
