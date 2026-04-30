@@ -30,7 +30,6 @@ export function Nav() {
       <nav className={`nav${isScrolled ? " is-scrolled" : ""}`} id="nav">
         <a href="/" className="brand" aria-label="NextGen Equity">
           <img src="/assets/logo-white.svg" alt="NextGen Equity" height={24} />
-          <span className="brand-mark" aria-hidden="true">N</span>
         </a>
         <div className="nav-links">
           {LINKS.map((l) => (

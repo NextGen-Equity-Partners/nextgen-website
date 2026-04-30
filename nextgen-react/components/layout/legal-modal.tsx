@@ -87,7 +87,7 @@ const CONTENT: Record<LegalKey, { title: string; html: string }> = {
       </section>
       <section>
         <h3>6. Externe Dienste · Schriftarten</h3>
-        <p>Diese Website lädt Schriftarten ("Outfit") über das Google-Fonts-CDN. Beim Aufruf der Seite kann hierbei Ihre IP-Adresse an Google Ireland Limited bzw. Google LLC (USA) übermittelt werden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer ansprechenden, einheitlichen Darstellung unserer Website). Weitere Informationen finden Sie in der Datenschutzerklärung von Google: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+        <p>Die Schriftart ("Outfit") wird lokal über die Anwendung ausgeliefert. Beim Aufruf der Website wird keine Verbindung zu einem Google-Fonts-CDN hergestellt.</p>
       </section>
       <section>
         <h3>7. SSL-/TLS-Verschlüsselung</h3>

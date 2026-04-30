@@ -68,25 +68,6 @@
   will-change: transform;
 }
 
-/* On pages with body.solid-cards: glass cards become solid CI navy. */
-body.solid-cards .glass-card,
-body.solid-cards .j-item,
-body.solid-cards .cmp-card,
-body.solid-cards .tm,
-body.solid-cards .aaa-tool {
-  background: #161933;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: 1px solid rgba(255,255,255,.10);
-}
-body.solid-cards .glass-card:hover,
-body.solid-cards .j-item:hover,
-body.solid-cards .cmp-card:hover,
-body.solid-cards .tm:hover,
-body.solid-cards .aaa-tool:hover {
-  background: #1c2040;
-  border-color: rgba(255,255,255,.14);
-}
 .glass-card::before {
   content: "";
   position: absolute; inset: 0;
@@ -128,8 +109,6 @@ body.solid-cards .aaa-tool:hover {
   margin-top: 12px; font-weight: 300;
 }
 .glass-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
-
-.glass-card.with-num h3 { margin-top: 32px; }
 
 @media (max-width: 1024px) {
   .glass-grid,

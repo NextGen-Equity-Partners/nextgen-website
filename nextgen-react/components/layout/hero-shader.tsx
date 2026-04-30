@@ -3,7 +3,7 @@
 import { MeshGradient } from "@paper-design/shaders-react";
 
 /**
- * Animated WebGL mesh-gradient background — replaces the legacy hero-scrub.mp4.
+ * Animated WebGL mesh-gradient background.
  * Fixed fullscreen behind all content. Reuses .hero-image-bg / .hero-image-tint
  * positioning conventions from globals.css.
  */

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { prefersReducedMotion } from "./reduced-motion";
 
@@ -13,6 +14,8 @@ const TRIGGER_RADIUS_PX = 90;
  * Uses gsap.quickTo for 60fps performance. Pointer-coarse devices opt out.
  */
 export function MagneticButtons() {
+  const pathname = usePathname();
+
   useEffect(() => {
     if (prefersReducedMotion()) return;
     if (window.matchMedia("(pointer: coarse)").matches) return; // touch — skip
@@ -22,7 +25,12 @@ export function MagneticButtons() {
     const attach = (el: HTMLElement) => {
       const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "power3.out" });
       const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "power3.out" });
-      const sTo = gsap.quickTo(el, "scale", { duration: 0.4, ease: "power3.out" });
+      const scaleXTo = gsap.quickTo(el, "scaleX", { duration: 0.4, ease: "power3.out" });
+      const scaleYTo = gsap.quickTo(el, "scaleY", { duration: 0.4, ease: "power3.out" });
+      const scaleTo = (value: number) => {
+        scaleXTo(value);
+        scaleYTo(value);
+      };
 
       let active = false;
 
@@ -38,7 +46,7 @@ export function MagneticButtons() {
         if (dist < trigger) {
           if (!active) {
             active = true;
-            sTo(1.04);
+            scaleTo(1.04);
           }
           xTo(dx * STRENGTH);
           yTo(dy * STRENGTH);
@@ -46,7 +54,7 @@ export function MagneticButtons() {
           active = false;
           xTo(0);
           yTo(0);
-          sTo(1);
+          scaleTo(1);
         }
       };
 
@@ -54,7 +62,7 @@ export function MagneticButtons() {
         active = false;
         xTo(0);
         yTo(0);
-        sTo(1);
+        scaleTo(1);
       };
 
       window.addEventListener("mousemove", onMove);
@@ -70,7 +78,7 @@ export function MagneticButtons() {
     return () => {
       cleanups.forEach((c) => c());
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

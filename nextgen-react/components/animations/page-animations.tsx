@@ -15,7 +15,6 @@ if (typeof window !== "undefined") {
  *   #27 Hero mask-reveal — eyebrow → headline lines → sub → CTAs
  *   #30 Section divider draw-in (scaleX 0 → 1 left-to-right on enter viewport)
  *   #29 Accent-number spotlight pulse
- *   Watermark-dodge — hero-mark SVG dodges cursor via rAF
  * Skips animations entirely when prefers-reduced-motion is set.
  */
 export function PageAnimations() {
@@ -30,7 +29,6 @@ export function PageAnimations() {
       const heroLines = document.querySelectorAll(".hero .hero-title .hero-line");
       const heroSub = document.querySelector(".hero .hero-sub");
       const heroCtas = document.querySelector(".hero .hero-ctas");
-      const heroMark = document.querySelector(".hero .hero-mark");
 
       if (heroLines.length) {
         // Wrap each line in overflow:hidden mask for the slide-up reveal.
@@ -74,9 +72,6 @@ export function PageAnimations() {
         if (heroCtas) {
           tl.from(heroCtas, { opacity: 0, y: 12, duration: 0.6 }, 0.7);
         }
-        if (heroMark) {
-          tl.from(heroMark, { opacity: 0, duration: 1.2 }, 0.6);
-        }
       }
 
       // ---------- #30 Section divider draw-in ----------
@@ -111,51 +106,7 @@ export function PageAnimations() {
       });
     });
 
-    // ---------- Watermark-dodge ----------
-    const heroMarkEl = document.querySelector(".hero-mark") as HTMLElement | null;
-    let raf = 0;
-    let onMouseMove: ((e: MouseEvent) => void) | null = null;
-
-    if (heroMarkEl) {
-      let mx = window.innerWidth / 2;
-      let my = window.innerHeight / 2;
-      let cx = 0;
-      let cy = 0;
-      const RADIUS = 200;
-      const STRENGTH = 80;
-      const EASE = 0.08;
-
-      onMouseMove = (e: MouseEvent) => {
-        mx = e.clientX;
-        my = e.clientY;
-      };
-      window.addEventListener("mousemove", onMouseMove, { passive: true });
-
-      const tick = () => {
-        const rect = heroMarkEl.getBoundingClientRect();
-        const ex = rect.left + rect.width / 2;
-        const ey = rect.top + rect.height / 2;
-        const dx = mx - ex;
-        const dy = my - ey;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        let tx = 0;
-        let ty = 0;
-        if (dist < RADIUS && dist > 0) {
-          const force = (1 - dist / RADIUS) * STRENGTH;
-          tx = -(dx / dist) * force;
-          ty = -(dy / dist) * force;
-        }
-        cx += (tx - cx) * EASE;
-        cy += (ty - cy) * EASE;
-        gsap.set(heroMarkEl, { x: cx, y: cy });
-        raf = requestAnimationFrame(tick);
-      };
-      tick();
-    }
-
     return () => {
-      if (raf) cancelAnimationFrame(raf);
-      if (onMouseMove) window.removeEventListener("mousemove", onMouseMove);
       ctx.revert();
     };
   }, [pathname]);

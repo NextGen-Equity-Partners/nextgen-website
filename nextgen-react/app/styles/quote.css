@@ -47,12 +47,6 @@
   color: var(--w); opacity: .92;
   position: relative; z-index: 1;
 }
-.quote .author {
-  display: block; margin-top: 24px;
-  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(249,247,244,.55); font-weight: 500;
-}
-
 /* Bare variant: same typography, but no glass shell */
 .quote.bare {
   background: transparent;

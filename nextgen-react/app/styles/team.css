@@ -53,12 +53,6 @@
   transition: transform .8s var(--ease), filter .35s var(--ease);
 }
 .tm:hover .portrait img { transform: scale(1.04); filter: saturate(1.05) contrast(1.05); }
-.portrait .glyph {
-  position: absolute; inset: 0; display: flex;
-  align-items: center; justify-content: center;
-  font-family: 'Outfit', sans-serif; font-weight: 300;
-  font-size: 56px; color: rgba(255,255,255,.7); letter-spacing: -.02em;
-}
 .tm-body { margin-top: 16px; }
 .tm .role {
   font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase;

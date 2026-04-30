@@ -1,10 +1,8 @@
-/* editorial · story breaks, media tiles, slogan, greeting, kontakt-teaser */
+/* editorial · story breaks, slogan, portraits, kontakt-teaser */
 
-/* ============================================================
-   STORY BREAK · cinematic full-bleed quote
-============================================================ */
 .story-break {
   position: relative;
+  z-index: 1;
   padding: clamp(48px, 7vw, 96px) clamp(28px, 6vw, 96px);
   text-align: center;
   overflow: hidden;
@@ -25,59 +23,39 @@ body.bg-image .story-break::before { content: none; }
   position: relative;
   z-index: 2;
 }
-
-/* Story-break with full-bleed photo background */
-.story-break.with-image .story-bg {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  opacity: .55;
-  pointer-events: none;
-  user-select: none;
+.story-break .eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--warm);
+  opacity: .7;
+  font-weight: 500;
+  margin-bottom: 32px;
 }
-.story-break.with-image .story-overlay {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 50%, rgba(5,13,31,.45) 0%, rgba(5,13,31,.82) 80%),
-    linear-gradient(180deg, rgba(5,13,31,.55) 0%, rgba(5,13,31,.30) 50%, rgba(5,13,31,.85) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Headline + circular photo side by side */
-.title-with-circle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(32px, 5vw, 64px);
-}
-.title-with-circle > div { flex: 1; min-width: 0; }
-.title-with-circle .media-circle { flex-shrink: 0; }
-@media (max-width: 900px) {
-  .title-with-circle { flex-direction: column; align-items: flex-start; gap: 24px; }
-}
-
-/* Round photo medallion (small accent next to text) */
-.media-circle {
+.story-break q,
+.story-break blockquote {
   display: block;
-  width: clamp(180px, 22vw, 280px);
-  height: clamp(180px, 22vw, 280px);
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow:
-    0 18px 44px rgba(0,0,0,.34),
-    inset 0 1px 0 rgba(255,255,255,.18);
-  flex-shrink: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 200;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -.025em;
+  color: var(--w);
+  quotes: none;
 }
-.media-circle.lg {
-  width: clamp(240px, 30vw, 380px);
-  height: clamp(240px, 30vw, 380px);
+.story-break q::before,
+.story-break q::after { content: ''; }
+.story-break .accent { color: var(--warm); font-weight: 400; }
+.story-break .signature {
+  display: inline-block;
+  margin-top: 36px;
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: rgba(232,223,208,.6);
+  font-weight: 500;
 }
 
-/* Rounded rectangle photo accent */
 .media-rounded {
   display: block;
   width: 100%;
@@ -88,24 +66,6 @@ body.bg-image .story-break::before { content: none; }
   box-shadow: 0 18px 44px rgba(0,0,0,.30);
 }
 
-/* Side-by-side: text + circle accent */
-.media-flex {
-  display: flex;
-  align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  margin-top: clamp(32px, 4vw, 56px);
-}
-.media-flex.reverse { flex-direction: row-reverse; }
-.media-flex .media-circle { transform: translateZ(0); }
-@media (max-width: 760px) {
-  .media-flex,
-  .media-flex.reverse { flex-direction: column; gap: 24px; }
-  .media-circle { width: 200px; height: 200px; }
-  .media-circle.lg { width: 240px; height: 240px; }
-  .media-rounded { height: 220px; border-radius: 18px; }
-}
-
-/* Weißer Slogan-Block (statementhafter Spruch ohne Box, ohne Bild) */
 .slogan-break {
   padding: clamp(48px, 6vw, 84px) clamp(28px, 6vw, 96px);
   text-align: center;
@@ -125,7 +85,6 @@ body.bg-image .story-break::before { content: none; }
 }
 .slogan-inner .bold { font-weight: 800; color: #FB724E; }
 
-/* Amon Quote · Portrait links, Zitat rechts, Name unter dem Portrait */
 .amon-quote-grid {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -140,9 +99,7 @@ body.bg-image .story-break::before { content: none; }
   align-items: center;
   text-align: center;
 }
-.amon-portrait-block .kontakt-portrait {
-  margin-bottom: 16px;
-}
+.amon-portrait-block .kontakt-portrait { margin-bottom: 16px; }
 .amon-name {
   font-family: 'Outfit', sans-serif;
   font-size: 16px;
@@ -160,16 +117,7 @@ body.bg-image .story-break::before { content: none; }
 }
 .amon-quote-grid .quote.bare q,
 .amon-quote-grid .quote.bare p { text-align: left; }
-@media (max-width: 760px) {
-  .amon-quote-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    text-align: center;
-  }
-  .amon-quote-grid .quote.bare p { text-align: center; }
-}
 
-/* Rundes Portrait über dem Kontakt-Teaser */
 .kontakt-portrait {
   width: clamp(120px, 14vw, 180px);
   height: clamp(120px, 14vw, 180px);
@@ -182,10 +130,7 @@ body.bg-image .story-break::before { content: none; }
   display: block;
 }
 
-/* Greeting + Kontakt-Teaser: keine Glasbox im Hintergrund (nur Content) */
-body.bg-image .pane.greeting-pane,
 body.bg-image .pane.kontakt-teaser-pane,
-.pane.greeting-pane,
 .pane.kontakt-teaser-pane {
   background: transparent;
   backdrop-filter: none;
@@ -195,384 +140,16 @@ body.bg-image .pane.kontakt-teaser-pane,
   margin-left: 0;
   margin-right: 0;
 }
-body.bg-image .pane.greeting-pane::before,
-body.bg-image .pane.kontakt-teaser-pane::before {
-  display: none;
-}
+body.bg-image .pane.kontakt-teaser-pane::before { display: none; }
 
-/* Persönlicher Gruß-Block (z.B. Max nach Sektion 1) */
-.greeting-pane .greeting-inner {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(36px, 4vw, 64px);
-  align-items: center;
-  max-width: 1080px;
-  margin: 0 auto;
-}
-.greeting-portrait {
-  width: clamp(140px, 16vw, 200px);
-  height: clamp(140px, 16vw, 200px);
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 18%;
-  border: 1px solid rgba(255,255,255,.20);
-  box-shadow: 0 14px 38px rgba(0,0,0,.32);
-  display: block;
-}
 @media (max-width: 760px) {
-  .greeting-pane .greeting-inner {
+  .media-rounded { height: 220px; border-radius: 18px; }
+  .amon-quote-grid {
     grid-template-columns: 1fr;
-    text-align: center;
-    gap: 24px;
-  }
-  .greeting-portrait {
-    width: 140px; height: 140px;
-    margin: 0 auto;
-  }
-}
-
-/* Story-Break als Voll-Banner mit Hintergrundbild — Button-Optik mit Lift-Schatten */
-.story-break.story-break-banner,
-body.bg-image .story-break.story-break-banner {
-  border-radius: 36px;
-  overflow: hidden;
-  margin: 48px 36px;
-  padding: clamp(80px, 11vw, 160px) clamp(40px, 6vw, 96px);
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.16);
-  box-shadow:
-    0 32px 80px rgba(0,0,0,.50),
-    0 12px 28px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,.22);
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.story-break.story-break-banner:hover,
-body.bg-image .story-break.story-break-banner:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,.56),
-    0 16px 36px rgba(0,0,0,.36),
-    inset 0 1px 0 rgba(255,255,255,.28);
-}
-.story-break-banner .story-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-}
-.story-break-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(5,13,31,.30) 0%, rgba(5,13,31,.55) 60%, rgba(5,13,31,.78) 100%);
-  pointer-events: none;
-}
-.story-break-banner .story-break-inner {
-  position: relative;
-  z-index: 2;
-}
-@media (max-width: 760px) {
-  .story-break.story-break-banner {
-    margin: 28px 14px;
-    padding: 64px 24px;
-    border-radius: 22px;
-  }
-  body.bg-image .story-break.story-break-banner {
-    margin: 28px 14px;
-  }
-}
-
-/* Pane mit Foto-Vollhintergrund + Liquid-Glass-Look (z.B. "Wer wir sind") */
-body.bg-image .pane.pane-with-bg,
-.pane.pane-with-bg {
-  position: relative;
-  overflow: hidden;
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.pane-with-bg .pane-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  /* Bild bleibt scharf, nur leichte Sättigung */
-  filter: saturate(1.05);
-  pointer-events: none;
-  user-select: none;
-}
-/* Liquid-Glass-Layer: dezenter Tint + leichter Blur, so dass das Foto klar durchscheint */
-.pane-with-bg .pane-bg-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.08) 0%, transparent 60%),
-    linear-gradient(180deg, rgba(5,13,31,.32) 0%, rgba(5,13,31,.50) 100%);
-  backdrop-filter: blur(6px) saturate(1.2);
-  -webkit-backdrop-filter: blur(6px) saturate(1.2);
-  pointer-events: none;
-}
-.pane-with-bg .pane-inner,
-.pane-with-bg > *:not(.pane-bg):not(.pane-bg-overlay) {
-  position: relative;
-  z-index: 2;
-}
-body.bg-image .pane.pane-with-bg::before { display: none; }
-/* Subtle inner highlight to reinforce the glass edge */
-body.bg-image .pane.pane-with-bg::after {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: 32px;
-  background: linear-gradient(180deg, rgba(255,255,255,.08) 0%, transparent 35%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Story-break: Full-Bleed Banner mit Foto-Hintergrund, abgerundet, mit Lift-Schatten */
-.story-break.story-banner,
-body.bg-image .story-break.story-banner {
-  position: relative;
-  overflow: hidden;
-  border-radius: 36px;
-  margin: 22px 36px;
-  padding: clamp(80px, 12vw, 160px) clamp(40px, 6vw, 96px);
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.16);
-  box-shadow:
-    0 32px 80px rgba(0,0,0,.50),
-    0 12px 28px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,.22);
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.story-break.story-banner:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,.56),
-    0 16px 36px rgba(0,0,0,.36),
-    inset 0 1px 0 rgba(255,255,255,.28);
-}
-.story-banner .story-banner-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-}
-.story-banner .story-banner-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(5,13,31,.30) 0%, rgba(5,13,31,.55) 60%, rgba(5,13,31,.78) 100%);
-  pointer-events: none;
-}
-.story-banner .story-break-inner {
-  position: relative;
-  z-index: 2;
-}
-@media (max-width: 760px) {
-  .story-break.story-banner,
-  body.bg-image .story-break.story-banner {
-    margin: 22px 14px;
-    padding: 64px 24px;
-    border-radius: 22px;
-  }
-}
-
-/* Story-break: layered cards (photo back + glass front, slightly offset) */
-.story-break-stack {
-  position: relative;
-  max-width: 1080px;
-  margin: 0 auto;
-  height: clamp(420px, 52vw, 600px);
-}
-.story-break-stack .stack-back {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 72%;
-  height: 78%;
-  border-radius: 28px;
-  object-fit: cover;
-  z-index: 1;
-  box-shadow: 0 22px 50px rgba(0,0,0,.40);
-}
-.story-break-stack .stack-front {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 78%;
-  height: 80%;
-  border-radius: 28px;
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(36px) saturate(1.4);
-  -webkit-backdrop-filter: blur(36px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,.20);
-  box-shadow:
-    0 32px 80px rgba(0,0,0,.50),
-    inset 0 1px 0 rgba(255,255,255,.26);
-  padding: clamp(32px, 4vw, 56px) clamp(36px, 5vw, 64px);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
-}
-.story-break-stack .stack-front .eyebrow {
-  font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase;
-  color: var(--warm); opacity: .8; font-weight: 500;
-  margin-bottom: 24px;
-}
-.story-break-stack .stack-front q,
-.story-break-stack .stack-front blockquote {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 200;
-  font-size: clamp(24px, 3.4vw, 44px);
-  line-height: 1.18;
-  letter-spacing: -.025em;
-  color: var(--w);
-  quotes: none;
-}
-.story-break-stack .stack-front q::before,
-.story-break-stack .stack-front q::after { content: ''; }
-.story-break-stack .stack-front .accent { color: var(--warm); font-weight: 400; }
-.story-break-stack .stack-front .signature {
-  display: inline-block;
-  margin-top: 22px;
-  font-size: 11.5px; letter-spacing: .28em; text-transform: uppercase;
-  color: rgba(249,247,244,.55); font-weight: 500;
-}
-@media (max-width: 760px) {
-  .story-break-stack {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .story-break-stack .stack-back,
-  .story-break-stack .stack-front {
-    position: static;
-    width: 100%;
-    height: auto;
-  }
-  .story-break-stack .stack-back { height: 220px; }
-  .story-break-stack .stack-front { padding: 32px 28px; }
-}
-
-/* Story-break with side-by-side text + large rounded image */
-.story-break-with-media {
-  display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: clamp(48px, 6vw, 88px);
-  align-items: center;
-  max-width: 1240px;
-  margin: 0 auto;
-  text-align: left;
-}
-.story-break-with-media .media-rounded {
-  height: clamp(380px, 46vw, 580px);
-  width: 100%;
-  border-radius: 28px;
-}
-.story-break-with-media q,
-.story-break-with-media blockquote { text-align: left; }
-@media (max-width: 900px) {
-  .story-break-with-media {
-    grid-template-columns: 1fr;
+    gap: 28px;
     text-align: center;
   }
-  .story-break-with-media q,
-  .story-break-with-media blockquote { text-align: center; }
-  .story-break-with-media .media-rounded { height: clamp(260px, 55vw, 380px); }
-}
-
-/* Kontakt-Teaser with large rounded image on the left */
-.kontakt-teaser-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: clamp(48px, 6vw, 88px);
-  align-items: center;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-.kontakt-teaser-grid .media-rounded {
-  height: clamp(420px, 50vw, 600px);
-  width: 100%;
-  border-radius: 28px;
-}
-@media (max-width: 900px) {
-  .kontakt-teaser-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    text-align: center;
-  }
-  .kontakt-teaser-grid .media-rounded { height: clamp(280px, 55vw, 380px); }
-}
-
-/* Editorial image-only media block (between sections) */
-.media-break {
-  position: relative;
-  margin: 80px 36px;
-  border-radius: 32px;
-  overflow: hidden;
-  height: clamp(280px, 38vw, 480px);
-  box-shadow: 0 18px 50px rgba(0,0,0,.32);
-}
-.media-break img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.media-break::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(5,13,31,.10) 0%, rgba(5,13,31,.45) 100%);
-  pointer-events: none;
-}
-@media (max-width: 900px) {
-  .media-break { margin: 56px 16px; border-radius: 22px; height: clamp(220px, 50vw, 340px); }
-}
-.story-break .eyebrow {
-  font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase;
-  color: var(--warm); opacity: .7; font-weight: 500;
-  margin-bottom: 32px;
-}
-.story-break q,
-.story-break blockquote {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 200;
-  font-size: clamp(28px, 4vw, 56px);
-  line-height: 1.18; letter-spacing: -.025em;
-  color: var(--w);
-  quotes: none;
-}
-.story-break q::before, .story-break q::after { content: ''; }
-.story-break .accent { color: var(--warm); font-weight: 400; }
-.story-break .signature {
-  display: inline-block;
-  margin-top: 36px;
-  font-size: 11px; letter-spacing: .26em; text-transform: uppercase;
-  color: rgba(232,223,208,.6); font-weight: 500;
-}
-
-@media (max-width: 760px) {
+  .amon-quote-grid .quote.bare p { text-align: center; }
   .story-break {
     padding: clamp(80px, 16vw, 130px) 22px;
   }

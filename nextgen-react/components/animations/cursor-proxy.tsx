@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { prefersReducedMotion } from "./reduced-motion";
 
@@ -11,6 +12,7 @@ const HOVER_TARGETS = ".btn, .nav-cta, .glass-card, .nav-links a, .cf-submit, [d
  * On hover targets it grows + becomes outline. Hidden on touch devices.
  */
 export function CursorProxy() {
+  const pathname = usePathname();
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +54,8 @@ export function CursorProxy() {
     };
 
     window.addEventListener("mousemove", onMove);
-    document.querySelectorAll(HOVER_TARGETS).forEach((el) => {
+    const hoverTargets = Array.from(document.querySelectorAll(HOVER_TARGETS));
+    hoverTargets.forEach((el) => {
       el.addEventListener("mouseenter", onEnterTarget);
       el.addEventListener("mouseleave", onLeaveTarget);
     });
@@ -66,12 +69,12 @@ export function CursorProxy() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeaveWindow);
-      document.querySelectorAll(HOVER_TARGETS).forEach((el) => {
+      hoverTargets.forEach((el) => {
         el.removeEventListener("mouseenter", onEnterTarget);
         el.removeEventListener("mouseleave", onLeaveTarget);
       });
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <>

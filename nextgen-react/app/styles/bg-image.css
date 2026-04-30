@@ -50,16 +50,11 @@ body.bg-image .hero-image-tint {
 }
 
 
-/* Hide the static gradient + orbs in image mode */
-body.bg-image .site-bg { display: none; }
-body.bg-image .orb { display: none; }
-
 /* Hero stays full-bleed, no glass surround */
 body.bg-image .hero { background: transparent; }
 
 /* All content panes float on the photo as glass plates with generous breathing room */
-body.bg-image .pane,
-body.bg-image .stats {
+body.bg-image .pane {
   margin: 22px 36px;
   border-radius: 32px;
   background: rgba(255,255,255,.05);
@@ -71,8 +66,7 @@ body.bg-image .stats {
     inset 0 1px 0 rgba(255,255,255,.16);
   position: relative;
 }
-body.bg-image .pane::before,
-body.bg-image .stats::before {
+body.bg-image .pane::before {
   content: "";
   position: absolute; inset: 0;
   border-radius: 32px;
@@ -89,8 +83,7 @@ body.bg-image .pane {
 body.bg-image .sec-divider { display: none; }
 
 /* First plate after hero – keep visible breathing room (no overlap) */
-body.bg-image .hero + .pane,
-body.bg-image .hero + .stats { margin-top: 56px; }
+body.bg-image .hero + .pane { margin-top: 56px; }
 
 /* Footer sits on the photo too */
 body.bg-image footer {
@@ -100,21 +93,17 @@ body.bg-image footer {
 }
 
 @media (max-width: 760px) {
-  body.bg-image .pane,
-  body.bg-image .stats {
+  body.bg-image .pane {
     margin: 28px 12px;
     border-radius: 22px;
   }
   body.bg-image .pane { padding: clamp(44px, 9vw, 72px) 20px; }
-  body.bg-image .pane::before,
-  body.bg-image .stats::before { border-radius: 22px; }
-  body.bg-image .hero + .pane,
-  body.bg-image .hero + .stats { margin-top: 36px; }
+  body.bg-image .pane::before { border-radius: 22px; }
+  body.bg-image .hero + .pane { margin-top: 36px; }
 }
 
 @media (max-width: 420px) {
-  body.bg-image .pane,
-  body.bg-image .stats {
+  body.bg-image .pane {
     margin: 24px 8px;
   }
   body.bg-image .pane { padding: 40px 16px; }

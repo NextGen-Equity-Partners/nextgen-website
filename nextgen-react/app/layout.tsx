@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { LegalModal } from "@/components/layout/legal-modal";
+import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <SmoothScrollProvider>
           <Nav />
+          <Watermark />
           {children}
           <Footer />
           <PageAnimations />

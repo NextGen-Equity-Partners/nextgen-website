@@ -13,8 +13,8 @@ type HeroProps = {
 };
 
 /**
- * Standard hero block. The mark image and scroll-arrow positions are owned here.
- * Title supports rich JSX so callers can stress words via <span className="bold">.
+ * Standard hero block. Title supports rich JSX so callers can stress words via
+ * <span className="bold">.
  */
 export function Hero({ eyebrow, title, sub, ctas, scrollTo, variant = "home" }: HeroProps) {
   const isHome = variant === "home";
@@ -24,7 +24,6 @@ export function Hero({ eyebrow, title, sub, ctas, scrollTo, variant = "home" }: 
       <h1 className="display hero-title">{title}</h1>
       <p className="hero-sub">{sub}</p>
       {ctas && <div className="hero-ctas">{ctas}</div>}
-      <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
       {scrollTo && (
         <a href={`#${scrollTo}`} className="hero-scroll" aria-label="Scrollen">
           <div className="mouse"><div className="wheel"></div></div>

@@ -5,6 +5,7 @@
 ============================================================ */
 .pane {
   position: relative;
+  z-index: 1;
   padding: clamp(64px, 8vw, 112px) 48px;
 }
 .pane-inner {
