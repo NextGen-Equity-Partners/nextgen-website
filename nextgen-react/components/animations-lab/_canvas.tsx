@@ -43,20 +43,19 @@ export function LabCanvas({
 
   return (
     <div ref={hostRef} className="lab-canvas-stage">
-      {active && (
-        <Canvas
-          dpr={[1, 1.35]}
-          gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
-          camera={{ position: camera, fov }}
-          onCreated={({ gl, scene }) => {
-            gl.setClearColor(bg, 1);
-            gl.toneMappingExposure = 1.05;
-            scene.fog = null;
-          }}
-        >
-          <Suspense fallback={null}>{children}</Suspense>
-        </Canvas>
-      )}
+      <Canvas
+        dpr={[1, 1.35]}
+        frameloop={active ? "always" : "never"}
+        gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
+        camera={{ position: camera, fov }}
+        onCreated={({ gl, scene }) => {
+          gl.setClearColor(bg, 1);
+          gl.toneMappingExposure = 1.05;
+          scene.fog = null;
+        }}
+      >
+        <Suspense fallback={null}>{children}</Suspense>
+      </Canvas>
     </div>
   );
 }
