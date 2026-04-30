@@ -41,6 +41,8 @@ yarn-error.log*
 nextgen-react/compare-out/
 nextgen-react/test-results/
 nextgen-react/playwright-report/
+nextgen-react/.playwright-cli/
+nextgen-react/output/
 
 # Internal/hidden
 .claude/
