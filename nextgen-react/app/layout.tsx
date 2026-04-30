@@ -1,15 +1,24 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Script from "next/script";
+import { Outfit } from "next/font/google";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { LegalModal } from "@/components/layout/legal-modal";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { MagneticButtons } from "@/components/animations/magnetic-buttons";
 import { CursorProxy } from "@/components/animations/cursor-proxy";
+import { PageEffects } from "@/components/runtime/page-effects";
 
 const SITE = "https://nextgen-equity.com";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-outfit",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -39,14 +48,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de">
       <head>
         <meta name="color-scheme" content="dark" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        />
       </head>
-      <body className="bg-image">
+      <body className={`bg-image ${outfit.variable} ${outfit.className}`}>
         <HeroShader />
         <div className="grain"></div>
 
@@ -55,71 +58,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           <PageAnimations />
+          <PageEffects />
           <MagneticButtons />
           <CursorProxy />
         </SmoothScrollProvider>
-        <script
-          id="nav-runtime"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                function bindNav() {
-                  var nav = document.getElementById('nav');
-                  if (nav && !window.__nextgenNavScrollBound) {
-                    window.__nextgenNavScrollBound = true;
-                    var setNavScrolled = function () {
-                      var top = window.scrollY || document.documentElement.scrollTop || 0;
-                      nav.classList.toggle('is-scrolled', top > 8);
-                    };
-                    setNavScrolled();
-                    window.addEventListener('scroll', setNavScrolled, { passive: true });
-                  }
 
-                  var burger = document.getElementById('nav-burger');
-                  var mobile = document.getElementById('nav-mobile');
-                  if (burger && mobile && !window.__nextgenNavMobileBound) {
-                    window.__nextgenNavMobileBound = true;
-                    burger.addEventListener('click', function () {
-                      var open = !mobile.classList.contains('open');
-                      burger.classList.toggle('open', open);
-                      burger.setAttribute('aria-expanded', String(open));
-                      mobile.classList.toggle('open', open);
-                    });
-                    mobile.querySelectorAll('a').forEach(function (link) {
-                      link.addEventListener('click', function () {
-                        burger.classList.remove('open');
-                        burger.setAttribute('aria-expanded', 'false');
-                        mobile.classList.remove('open');
-                      });
-                    });
-                  }
-                }
-
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', bindNav, { once: true });
-                } else {
-                  bindNav();
-                }
-              })();
-            `,
-          }}
-        />
-
-        <div className="imp-backdrop" id="imp-backdrop">
-          <div className="imp-panel">
-            <button className="imp-close" id="imp-close" aria-label="Schließen">✕</button>
-            <div className="imp-eyebrow">Rechtliches</div>
-            <div className="imp-title" id="imp-title">Impressum</div>
-            <div className="imp-body" id="imp-body"></div>
-          </div>
-        </div>
-
-        <Script id="set-lang" strategy="beforeInteractive">{`
-          if (typeof document !== 'undefined' && location.pathname.toLowerCase().startsWith('/en')) {
-            document.documentElement.lang = 'en';
-          }
-        `}</Script>
-        <Script src="/shared.js" strategy="afterInteractive" />
+        <LegalModal />
       </body>
     </html>
   );

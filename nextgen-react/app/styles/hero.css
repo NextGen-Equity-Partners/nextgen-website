@@ -1,0 +1,132 @@
+/* hero */
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Reserve fixed space at bottom for sub + ctas – title always lands at the same height */
+  padding: 0 48px 250px;
+  overflow: hidden;
+}
+/* Subpage hero matches index hero – title sits at bottom of viewport */
+.hero.subpage {
+  min-height: 100vh;
+  padding-top: 0;
+  padding-bottom: 250px;
+  justify-content: flex-end;
+}
+.hero-eyebrow {
+  font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--w); opacity: .8; font-weight: 400;
+  margin-bottom: 26px;
+}
+.hero-title {
+  max-width: 1100px;
+}
+.hero-line {
+  display: block; opacity: 0;
+  /* Animation removed — GSAP handles reveal via mask + fromTo in page-animations.tsx */
+}
+.hero-sub {
+  position: absolute;
+  left: 48px; right: 48px;
+  bottom: 140px;
+  max-width: 580px;
+  margin-top: 0;
+  font-size: 15px; line-height: 1.75;
+  color: var(--w); opacity: .78; font-weight: 300;
+}
+.hero-ctas {
+  position: absolute;
+  left: 48px; right: 48px;
+  bottom: 60px;
+  margin-top: 0;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+}
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: .55; transition: opacity .3s;
+}
+.hero-scroll:hover { opacity: 1; }
+.hero-scroll .mouse {
+  width: 22px; height: 34px;
+  border: 1.5px solid rgba(249,247,244,.6);
+  border-radius: 11px;
+  display: flex; justify-content: center; padding-top: 5px;
+}
+.hero-scroll .wheel {
+  width: 3px; height: 6px;
+  background: var(--w); border-radius: 2px;
+  animation: scroll-wheel 2s ease-in-out infinite;
+}
+@keyframes scroll-wheel {
+  0% { transform: translateY(0); opacity: .9; }
+  60% { transform: translateY(10px); opacity: .1; }
+  100% { transform: translateY(0); opacity: .9; }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: 88vh;
+    padding: 0 18px 200px;
+  }
+  .hero.subpage {
+    min-height: 80vh;
+    padding-top: 0;
+    padding-bottom: 200px;
+  }
+  .hero-title { max-width: 100%; }
+  .hero-sub {
+    left: 18px;
+    right: 18px;
+    bottom: 110px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .hero-ctas {
+    left: 18px;
+    right: 18px;
+    bottom: 44px;
+    gap: 10px;
+  }
+  .hero-ctas .btn {
+    padding: 12px 18px;
+    font-size: 12px;
+  }
+  .hero-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: .22em;
+    margin-bottom: 18px;
+  }
+  .hero-mark {
+    right: 18px;
+    bottom: 18px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero { padding: 0 16px 180px; }
+  .hero.subpage { padding-bottom: 180px; }
+  .hero-sub {
+    bottom: 100px;
+    font-size: 13.5px;
+  }
+  .hero-ctas {
+    bottom: 36px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-ctas .btn {
+    width: 100%;
+    padding: 13px 16px;
+    text-align: center;
+  }
+}

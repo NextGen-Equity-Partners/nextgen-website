@@ -1,0 +1,86 @@
+/* utilities · small layout helpers reused across sections */
+
+/* Standard intro paragraph after a display heading. */
+.section-intro {
+  max-width: 980px;
+  margin-top: 32px;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* Small uppercase footnote (e.g. tagline strip under a card grid). */
+.section-footnote {
+  margin-top: 32px;
+  font-size: 11.5px;
+  color: var(--mute);
+  letter-spacing: .16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Approach section: CTA + grid spacing inside the .twocol layout. */
+.ansatz-cta { margin-top: 32px; }
+.ansatz-grid { margin-top: 42px; }
+
+/* Generic spacing primitives used across pages. */
+.body-text + .body-text { margin-top: 18px; }
+.cta-row { margin-top: 48px; }
+.cta-row.center { text-align: center; }
+.intro-narrow { max-width: 700px; margin-top: 24px; }
+.twocol.center { align-items: center; }
+.list-bullets {
+  list-style: none;
+  font-size: 14px;
+  line-height: 2;
+  color: rgba(249,247,244,.78);
+  font-weight: 300;
+}
+
+/* Ki-wertsteigerung: stacked single-column comparison grid in the twocol right column. */
+.cmp-grid.stacked {
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 0;
+}
+
+/* Team: philosophy paragraph block under heading. */
+.team-philosophy-text {
+  margin-top: 36px;
+  max-width: 780px;
+}
+
+/* Beteiligungen: card with min-height to match neighbour. */
+.glass-card.tall { min-height: 340px; }
+.glass-card h3.with-mb { margin-bottom: 18px; }
+
+/* Beteiligungen "coming soon" centered inner. */
+.pane-center { text-align: center; }
+.s-tag.center { justify-content: center; }
+.center-narrow { max-width: 760px; margin: 0 auto; }
+.center-narrow-sm { max-width: 620px; margin: 24px auto 0; }
+.center-narrow-sm + .center-narrow-sm { margin-top: 14px; }
+.media-rounded.beteiligungen-photo {
+  margin: 48px auto 0;
+  max-width: 680px;
+  height: 280px;
+}
+
+/* Kontakt teaser block: centered column, generous padding, narrow text. */
+.kontakt-teaser-section {
+  text-align: center;
+  padding: clamp(40px, 6vw, 76px) 48px;
+}
+.kontakt-teaser-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.kontakt-teaser-title { max-width: 880px; margin: 0 auto; }
+.kontakt-teaser-body {
+  margin-top: 24px;
+  max-width: 58ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.kontakt-teaser-cta { margin-top: 36px; }
+.kontakt-teaser-btn { font-size: 14px; padding: 16px 36px; }

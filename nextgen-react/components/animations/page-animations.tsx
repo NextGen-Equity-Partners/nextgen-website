@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "./reduced-motion";
@@ -10,20 +11,17 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * Mounts on every page (in root layout). Runs:
+ * Runs for the active App Router page:
  *   #27 Hero mask-reveal — eyebrow → headline lines → sub → CTAs
  *   #30 Section divider draw-in (scaleX 0 → 1 left-to-right on enter viewport)
  *   #29 Accent-number spotlight pulse
- *   Watermark-dodge — hero-mark SVG dodges cursor via rAF (no cleanup — StrictMode-safe)
+ *   Watermark-dodge — hero-mark SVG dodges cursor via rAF
  * Skips animations entirely when prefers-reduced-motion is set.
  */
 export function PageAnimations() {
-  const ranRef = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (ranRef.current) return;
-    ranRef.current = true;
-
     if (prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
@@ -114,9 +112,10 @@ export function PageAnimations() {
     });
 
     // ---------- Watermark-dodge ----------
-    // rAF loop without cancelAnimationFrame in cleanup — intentional.
-    // The cleanup (ctx.revert) used to kill this loop in StrictMode.
     const heroMarkEl = document.querySelector(".hero-mark") as HTMLElement | null;
+    let raf = 0;
+    let onMouseMove: ((e: MouseEvent) => void) | null = null;
+
     if (heroMarkEl) {
       let mx = window.innerWidth / 2;
       let my = window.innerHeight / 2;
@@ -126,7 +125,7 @@ export function PageAnimations() {
       const STRENGTH = 80;
       const EASE = 0.08;
 
-      const onMouseMove = (e: MouseEvent) => {
+      onMouseMove = (e: MouseEvent) => {
         mx = e.clientX;
         my = e.clientY;
       };
@@ -149,15 +148,17 @@ export function PageAnimations() {
         cx += (tx - cx) * EASE;
         cy += (ty - cy) * EASE;
         gsap.set(heroMarkEl, { x: cx, y: cy });
-        requestAnimationFrame(tick);
+        raf = requestAnimationFrame(tick);
       };
       tick();
     }
 
     return () => {
+      if (raf) cancelAnimationFrame(raf);
+      if (onMouseMove) window.removeEventListener("mousemove", onMouseMove);
       ctx.revert();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

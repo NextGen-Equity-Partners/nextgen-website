@@ -1,0 +1,16 @@
+/* tags */
+
+/* ============================================================
+   TAGS
+============================================================ */
+.tag-list { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.tag {
+  display: inline-flex; padding: 8px 18px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(249,247,244,.75); font-weight: 500;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+

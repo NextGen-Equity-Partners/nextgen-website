@@ -1,3 +1,5 @@
+import { ContactForm } from "@/components/forms/contact-form";
+
 export default function Page() {
   return (
     <>
@@ -17,41 +19,7 @@ export default function Page() {
       <section className="pane" style={{ paddingTop: "48px", paddingBottom: "clamp(120px,12vw,180px)" }}>
         <div className="pane-inner">
           <div className="cf-wrap" style={{ marginTop: "0" }}>
-            <form className="cf rv" id="contact-form">
-              <div className="cf-row">
-                <div>
-                  <label htmlFor="cf-name">Name *</label>
-                  <input id="cf-name" name="name" type="text" placeholder="Maximilian Mustermann" required />
-                </div>
-                <div>
-                  <label htmlFor="cf-company">Unternehmen</label>
-                  <input id="cf-company" name="company" type="text" placeholder="Mustermann GmbH" />
-                </div>
-              </div>
-              <div className="cf-row">
-                <div>
-                  <label htmlFor="cf-email">E-Mail *</label>
-                  <input id="cf-email" name="email" type="email" placeholder="max@mustermann.de" required />
-                </div>
-                <div>
-                  <label htmlFor="cf-topic">Anliegen</label>
-                  <select id="cf-topic" name="topic">
-                    <option>Bitte wählen</option>
-                    <option>Unternehmensverkauf</option>
-                    <option>Co-Investment</option>
-                    <option>Beratung / Netzwerk</option>
-                    <option>Sonstiges</option>
-                  </select>
-                </div>
-              </div>
-              <div className="cf-row full">
-                <div>
-                  <label htmlFor="cf-msg">Kurze Nachricht</label>
-                  <textarea id="cf-msg" name="message" placeholder="Womit können wir helfen?"></textarea>
-                </div>
-              </div>
-              <button type="submit" className="cf-submit">Unverbindliches Gespräch vereinbaren →</button>
-            </form>
+            <ContactForm />
       
             <div className="cf-side rv rv-d1">
               <div className="cf-block cf-greeting">

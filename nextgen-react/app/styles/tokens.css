@@ -1,0 +1,48 @@
+/* tokens · design system + base resets */
+
+/* ============================================================
+   NEXTGEN EQUITY · SHARED DESIGN SYSTEM
+============================================================ */
+:root {
+  --bg-deep:    #050d1f;
+  --bg-mid:     #0a1a40;
+  --bg-soft:    #112555;
+  --w:          #F9F7F4;
+  --w-soft:     #E8E3D9;
+  /* Warm cream accent – picked from the photo tones, used sparingly to humanize */
+  --warm:       #E8DFD0;
+  --warm-soft:  #D4C7AF;
+  --warm-deep:  #B8A488;
+  --mute:       rgba(249,247,244,.55);
+  --mute-2:     rgba(249,247,244,.35);
+  --line:       rgba(255,255,255,.10);
+  --line-2:     rgba(255,255,255,.18);
+  --ink-card:   #1A1916;
+  --ease:       cubic-bezier(.16,1,.3,1);
+  --ease-cinema: cubic-bezier(.22, 1, .36, 1);
+}
+
+* , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-padding-top: 110px;
+  scroll-behavior: smooth;
+  background: var(--bg-deep);
+}
+html, body {
+  color: var(--w);
+  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background: transparent;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+img { display: block; max-width: 100%; }

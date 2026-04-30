@@ -1,0 +1,278 @@
+/* contact form · glass panel */
+
+/* ============================================================
+   CONTACT FORM · GLASS PANEL
+============================================================ */
+.cf-wrap {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: clamp(28px, 3.5vw, 56px);
+  align-items: stretch;
+  margin-top: 64px;
+}
+.cf {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
+  position: relative;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 24px;
+  padding: 44px 48px 48px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.16);
+  transform: perspective(1000px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
+  transform-style: preserve-3d;
+  transition: background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+}
+.cf::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.cf:hover::after { opacity: 1; }
+.cf > * { position: relative; z-index: 1; }
+
+.cf-side {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
+  position: relative;
+  padding: 36px 36px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 22px;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.14);
+  transform: perspective(1000px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
+  transform-style: preserve-3d;
+  transition: background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cf-side::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.cf-side:hover::after { opacity: 1; }
+.cf-side > * { position: relative; z-index: 1; }
+.cf-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.cf-row.full { grid-template-columns: 1fr; }
+.cf label {
+  display: block;
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(249,247,244,.85); font-weight: 600;
+  margin-bottom: 9px;
+}
+.cf input, .cf select, .cf textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.08);
+  color: var(--w);
+  font: inherit; font-size: 14.5px;
+  outline: none;
+  transition: border-color .25s, background .25s;
+  font-weight: 400;
+  -webkit-appearance: none; appearance: none;
+}
+.cf input:focus, .cf select:focus, .cf textarea:focus {
+  border-color: rgba(249,247,244,.6);
+  background: rgba(255,255,255,.12);
+}
+.cf input::placeholder, .cf textarea::placeholder { color: rgba(249,247,244,.55); }
+.cf select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(249,247,244,.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+  padding-right: 42px;
+}
+.cf select option { background: #112555; color: var(--w); }
+.cf textarea { resize: none; height: 120px; line-height: 1.6; }
+.cf-submit {
+  width: 100%; margin-top: 24px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--w); color: var(--bg-deep);
+  font: inherit; font-size: 14px; font-weight: 600;
+  letter-spacing: .04em; cursor: pointer;
+  border: none;
+  transition: background .25s, transform .25s var(--ease);
+}
+.cf-submit:hover { background: #fff; transform: translateY(-2px); }
+.cf-submit.sent { background: rgba(249,247,244,.2); color: rgba(249,247,244,.7); cursor: default; transform: none; }
+
+.cf-side .cf-block {
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.cf-side .cf-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.cf-side .cf-eyebrow {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.85); font-weight: 600; margin-bottom: 14px;
+}
+.cf-side h4 {
+  font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 600;
+  color: var(--w); letter-spacing: -.015em;
+}
+.cf-side p {
+  font-size: 14px; line-height: 1.7; color: var(--w); opacity: .88;
+  margin-top: 8px; font-weight: 400;
+}
+.cf-side a { color: var(--w); border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 1px; transition: border-color .2s; }
+.cf-side a:hover { border-color: var(--w); }
+
+/* Greeting block with portrait at top of contact sidebar */
+.cf-greeting .cf-portrait {
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  margin: 0 auto 22px;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 14px 40px rgba(0,0,0,.32);
+}
+.cf-greeting {
+  text-align: center;
+}
+.cf-greeting h4 {
+  font-size: 24px;
+  margin-top: 4px;
+}
+.cf-greeting p {
+  max-width: 36ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cf-greeting .cf-signature {
+  margin-top: 18px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: var(--w);
+  opacity: .8;
+  font-weight: 500;
+  letter-spacing: -.005em;
+}
+.cf-greeting .cf-signature span {
+  font-weight: 300;
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.5);
+}
+
+/* Two bubbles below cf-wrap, mirroring its grid (form / Max greeting) */
+.cf-bottom {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: clamp(28px, 3.5vw, 56px);
+  margin-top: clamp(28px, 3.5vw, 56px);
+  align-items: stretch;
+}
+.cf-bottom-block {
+  padding: clamp(28px, 3vw, 36px) clamp(32px, 3.4vw, 44px);
+  border-radius: 22px;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 12px 36px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.16);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cf-bottom-block .cf-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.55);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.cf-bottom-block p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--w);
+  opacity: .9;
+  font-weight: 300;
+  margin: 0;
+}
+.cf-bottom-block a {
+  color: var(--w);
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  padding-bottom: 1px;
+  transition: border-color .2s;
+}
+.cf-bottom-block a:hover { border-color: var(--w); }
+@media (max-width: 760px) {
+  .cf-wrap {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .cf {
+    padding: 26px 20px 30px;
+    border-radius: 18px;
+  }
+  .cf-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .cf-side {
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+  .cf-greeting .cf-portrait {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 16px;
+  }
+  .cf-greeting h4 { font-size: 20px; }
+  .cf-greeting p {
+    max-width: 32ch;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .cf-greeting .cf-signature {
+    margin-top: 14px;
+    font-size: 12.5px;
+  }
+  .cf-bottom {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .cf-bottom-block {
+    padding: 22px 24px;
+    border-radius: 18px;
+  }
+  .cf-bottom-block p {
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 420px) {
+  .cf { padding: 22px 16px 26px; }
+  .cf-side { padding: 24px 18px; }
+  .cf-greeting .cf-portrait {
+    width: 110px;
+    height: 110px;
+  }
+  .cf-bottom-block { padding: 18px; }
+}

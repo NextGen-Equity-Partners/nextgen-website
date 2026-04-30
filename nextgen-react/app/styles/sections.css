@@ -1,0 +1,117 @@
+/* sections · pane framework */
+
+/* ============================================================
+   SECTIONS · PANE FRAMEWORK
+============================================================ */
+.pane {
+  position: relative;
+  padding: clamp(64px, 8vw, 112px) 48px;
+}
+.pane-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.s-tag {
+  display: inline-flex; align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--mute); font-weight: 500; margin-bottom: 28px;
+}
+
+h1.display, h2.display {
+  font-family: 'Outfit', sans-serif;
+  color: var(--w);
+  letter-spacing: -.04em;
+  line-height: 1.04;
+  /* Optical alignment: pull the first character flush with eyebrows / left edge */
+  margin-left: -0.045em;
+}
+h1.display {
+  font-weight: 200;
+  font-size: clamp(44px, 6vw, 84px);
+}
+h2.display {
+  font-weight: 200;
+  font-size: clamp(36px, 4.6vw, 66px);
+  line-height: 1.06;
+}
+h3.display {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 200;
+  font-size: clamp(28px, 3vw, 44px);
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--w);
+}
+.bold { font-weight: 800; color: #FB724E; }
+
+.body-text {
+  font-size: 15px; line-height: 1.85;
+  color: var(--w); opacity: .78; font-weight: 300;
+}
+
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.twocol .sticky-col { position: sticky; top: 130px; }
+
+/* When the left column of a .twocol starts with an .s-tag eyebrow + headline,
+   any body content in the right column needs matching top offset so titles and texts line up. */
+.twocol > .sticky-col + div > .body-text:first-child,
+.twocol > .sticky-col + div > p:first-child,
+.twocol > .sticky-col + .body-text,
+.twocol > .sticky-col + p,
+.twocol > div:has(> .s-tag:first-child) + div > .body-text:first-child,
+.twocol > div:has(> .s-tag:first-child) + div > p:first-child,
+.twocol > div:has(> .s-tag:first-child) + .body-text,
+.twocol > div:has(> .s-tag:first-child) + p {
+  margin-top: 42px;
+}
+
+@media (max-width: 760px) {
+  .pane { padding: clamp(56px, 9vw, 96px) 18px; }
+  h1.display {
+    font-size: clamp(34px, 9vw, 52px);
+    line-height: 1.05;
+  }
+  h2.display {
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1.08;
+  }
+  h3.display { font-size: clamp(22px, 5.6vw, 30px); }
+  .body-text {
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .twocol {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .twocol .sticky-col { position: static; }
+  .twocol > .sticky-col + div > .body-text:first-child,
+  .twocol > .sticky-col + div > p:first-child,
+  .twocol > .sticky-col + .body-text,
+  .twocol > .sticky-col + p,
+  .twocol > div:has(> .s-tag:first-child) + div > .body-text:first-child,
+  .twocol > div:has(> .s-tag:first-child) + div > p:first-child,
+  .twocol > div:has(> .s-tag:first-child) + .body-text,
+  .twocol > div:has(> .s-tag:first-child) + p {
+    margin-top: 0;
+  }
+  h2.display[style*="max-width"],
+  .body-text[style*="max-width"] {
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .pane { padding: 40px 16px; }
+  h1.display { font-size: clamp(28px, 9vw, 40px); }
+  h2.display { font-size: clamp(24px, 7vw, 32px); }
+  h3.display { font-size: clamp(20px, 5.6vw, 26px); }
+}

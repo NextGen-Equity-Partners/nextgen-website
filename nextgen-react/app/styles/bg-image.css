@@ -1,0 +1,121 @@
+/* background image mode · floating glass plates */
+
+/* ============================================================
+   IMAGE BACKGROUND MODE · photo + floating glass plates
+============================================================ */
+body.bg-image {
+  background: transparent;
+}
+
+/* Photo as a real <img> tag – no CSS path / z-index ambiguity */
+body.bg-image .hero-image-bg {
+  display: block;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -2;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Ken Burns: slow, hypnotic zoom + slight drift */
+  animation: ken-burns 32s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes ken-burns {
+  0%   { transform: scale(1)    translate(0, 0); }
+  100% { transform: scale(1.10) translate(-1.5%, -2%); }
+}
+/* Canvas backgrounds animate themselves – no Ken Burns needed */
+body.bg-image canvas.hero-image-bg {
+  animation: none;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.bg-image .hero-image-bg { animation: none; }
+}
+
+/* Tint layer above the image – lighter so the photo breathes */
+body.bg-image .hero-image-tint {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(5,13,31,.12) 0%,
+    rgba(5,13,31,.28) 50%,
+    rgba(5,13,31,.55) 100%);
+}
+
+
+/* Hide the static gradient + orbs in image mode */
+body.bg-image .site-bg { display: none; }
+body.bg-image .orb { display: none; }
+
+/* Hero stays full-bleed, no glass surround */
+body.bg-image .hero { background: transparent; }
+
+/* All content panes float on the photo as glass plates with generous breathing room */
+body.bg-image .pane,
+body.bg-image .stats {
+  margin: 22px 36px;
+  border-radius: 32px;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(36px) saturate(1.4);
+  -webkit-backdrop-filter: blur(36px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.40),
+    inset 0 1px 0 rgba(255,255,255,.16);
+  position: relative;
+}
+body.bg-image .pane::before,
+body.bg-image .stats::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+/* Inner padding stays generous so content isn't cramped */
+body.bg-image .pane {
+  padding: clamp(40px, 5vw, 72px) clamp(36px, 5vw, 72px);
+}
+
+/* Section dividers hidden – gaps between plates serve that purpose */
+body.bg-image .sec-divider { display: none; }
+
+/* First plate after hero – keep visible breathing room (no overlap) */
+body.bg-image .hero + .pane,
+body.bg-image .hero + .stats { margin-top: 56px; }
+
+/* Footer sits on the photo too */
+body.bg-image footer {
+  background: rgba(0,0,0,.50);
+  backdrop-filter: blur(28px) saturate(1.3);
+  -webkit-backdrop-filter: blur(28px) saturate(1.3);
+}
+
+@media (max-width: 760px) {
+  body.bg-image .pane,
+  body.bg-image .stats {
+    margin: 28px 12px;
+    border-radius: 22px;
+  }
+  body.bg-image .pane { padding: clamp(44px, 9vw, 72px) 20px; }
+  body.bg-image .pane::before,
+  body.bg-image .stats::before { border-radius: 22px; }
+  body.bg-image .hero + .pane,
+  body.bg-image .hero + .stats { margin-top: 36px; }
+}
+
+@media (max-width: 420px) {
+  body.bg-image .pane,
+  body.bg-image .stats {
+    margin: 24px 8px;
+  }
+  body.bg-image .pane { padding: 40px 16px; }
+}

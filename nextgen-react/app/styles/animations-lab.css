@@ -1,0 +1,46 @@
+/* animations lab · /animations demo page only */
+
+/* ============================================================
+   ANIMATIONS LAB · /animations demo page
+============================================================ */
+.alab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.alab-card {
+  border-radius: 20px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.alab-canvas {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(5,13,31,.6);
+}
+.alab-meta {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.alab-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--w);
+}
+.alab-tech {
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+@media (max-width: 760px) {
+  .alab-grid { grid-template-columns: 1fr; }
+  .alab-canvas { height: 240px; }
+}

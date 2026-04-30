@@ -1,0 +1,27 @@
+/* reveal animation + section divider */
+
+/* ============================================================
+   REVEAL ANIMATION
+============================================================ */
+.rv {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity 1.4s var(--ease-cinema), transform 1.4s var(--ease-cinema);
+}
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv-d1 { transition-delay: .14s; }
+.rv-d2 { transition-delay: .28s; }
+.rv-d3 { transition-delay: .42s; }
+.rv-d4 { transition-delay: .56s; }
+
+/* ============================================================
+   SECTION DIVIDER
+============================================================ */
+.sec-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.14) 50%, transparent 100%);
+  margin: 0 48px;
+}
+
+@media (max-width: 760px) {
+  .sec-divider { margin: 0 18px; }
+}

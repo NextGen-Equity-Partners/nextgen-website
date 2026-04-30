@@ -1,0 +1,166 @@
+/* glass cards · 3D tilt + line icons */
+
+/* glass card · line icons */
+
+/* ============================================================
+   GLASS CARD · LINE ICONS (inline with .num label)
+============================================================ */
+.gc-num-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gc-icon {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: rgba(255,255,255,.55);
+  transition: color .35s var(--ease), transform .35s var(--ease);
+  pointer-events: none;
+}
+.glass-card:hover .gc-icon {
+  color: rgba(255,255,255,.95);
+  transform: scale(1.08);
+}
+.gc-icon svg {
+  width: 100%; height: 100%; display: block;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   GLASS CARDS · LIQUID GLASS WITH 3D TILT
+============================================================ */
+.glass-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 16px; margin-top: 56px;
+}
+.glass-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+.glass-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+
+.glass-card {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
+  position: relative;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(22px) saturate(1.5) brightness(1.08);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5) brightness(1.08);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px;
+  padding: 26px 26px;
+  min-height: 200px;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  overflow: hidden;
+  box-shadow:
+    0 8px 36px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
+  transition:
+    background .4s var(--ease),
+    border-color .4s var(--ease),
+    box-shadow .4s var(--ease);
+  will-change: transform;
+}
+
+/* On pages with body.solid-cards: glass cards become solid CI navy. */
+body.solid-cards .glass-card,
+body.solid-cards .j-item,
+body.solid-cards .cmp-card,
+body.solid-cards .tm,
+body.solid-cards .aaa-tool {
+  background: #161933;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(255,255,255,.10);
+}
+body.solid-cards .glass-card:hover,
+body.solid-cards .j-item:hover,
+body.solid-cards .cmp-card:hover,
+body.solid-cards .tm:hover,
+body.solid-cards .aaa-tool:hover {
+  background: #1c2040;
+  border-color: rgba(255,255,255,.14);
+}
+.glass-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.18) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.glass-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 50%);
+  pointer-events: none;
+}
+.glass-card:hover {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.28);
+  box-shadow:
+    0 16px 50px rgba(0,0,0,.3),
+    inset 0 1px 0 rgba(255,255,255,.24);
+}
+.glass-card:hover::before { opacity: 1; }
+.glass-card .num,
+.glass-card .label {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); font-weight: 500;
+}
+.glass-card h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 21px; font-weight: 600;
+  line-height: 1.22; margin-top: 28px;
+  letter-spacing: -.02em; color: var(--w);
+}
+.glass-card p {
+  font-size: 13.5px; line-height: 1.75;
+  color: var(--w); opacity: .72;
+  margin-top: 12px; font-weight: 300;
+}
+.glass-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
+
+.glass-card.with-num h3 { margin-top: 32px; }
+
+@media (max-width: 1024px) {
+  .glass-grid,
+  .glass-grid.cols-3,
+  .glass-grid.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .glass-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .glass-card {
+    min-height: auto;
+    padding: 22px 20px;
+    border-radius: 18px;
+  }
+  .glass-card h3 {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+  .glass-card p {
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 420px) {
+  .glass-card { padding: 20px 18px; }
+  .glass-card h3 { font-size: 17px; }
+}
