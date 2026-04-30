@@ -36,17 +36,21 @@ export function PageAnimations() {
       }
 
       if (heroMark) {
-        const mr = heroMark.getBoundingClientRect();
-        // Probe the rect that the watermark "owns" + a small safety pad.
-        const pad = 12;
-        const probeL = mr.left - pad;
-        const probeR = mr.right + pad;
-        const probeT = mr.top - pad;
-        const probeB = mr.bottom + pad;
+        // Use a fixed bottom-right probe area, independent of the watermark's
+        // current transform — measuring the element directly causes flicker
+        // because .dodged scale(0.4) shrinks the rect and then collision
+        // returns false. The probe matches the watermark's natural footprint
+        // plus a generous safety pad.
+        const probeW = 140;
+        const probeH = 96;
+        const margin = 24;
+        const probeR = window.innerWidth - margin;
+        const probeL = probeR - probeW;
+        const probeB = window.innerHeight - margin;
+        const probeT = probeB - probeH;
 
-        // Does anything visually solid overlap that rect?
         const colliders = document.querySelectorAll<HTMLElement>(
-          ".pane, .glass-card, .story-break, .slogan-break, footer"
+          ".pane, .glass-card, .story-break, .slogan-break, footer, .kontakt-teaser-pane"
         );
         let collide = false;
         for (const c of colliders) {
