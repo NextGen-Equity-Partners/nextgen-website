@@ -5,13 +5,14 @@
 ============================================================ */
 .pane {
   position: relative;
-  z-index: 1;
   padding: clamp(64px, 8vw, 112px) 48px;
 }
 .pane-inner {
   max-width: 1320px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .s-tag {

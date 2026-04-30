@@ -16,15 +16,15 @@ export function HeroShader() {
           position: "fixed",
           inset: 0,
           width: "100vw",
-          height: "100vh",
+          height: "100svh",
           zIndex: -2,
-          filter: "blur(28px) saturate(1.35)",
+          filter: "saturate(1.2)",
           transform: "scale(1.06)",
         }}
         colors={["#050d1f", "#0c1a32", "#1a2a48", "#2a1838"]}
         distortion={0.85}
         swirl={0.18}
-        speed={0.22}
+        speed={0.14}
       />
       <div className="hero-image-tint" style={{ zIndex: -1 }} />
     </>

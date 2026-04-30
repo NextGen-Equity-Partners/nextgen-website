@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 /**
  * Page-wide DOM effects that need to bind after hydration:
- *   - Reveal-on-scroll for elements with .rv (adds .on when in viewport)
+ *   - Reveal-on-scroll for elements with .rv (toggles .on in viewport)
  *   - 3D tilt on cards (.glass-card, .j-item, .tm, .aaa-tool, .cmp-card)
  *
  * Mounted in the root layout and rebound on App Router navigation.
@@ -36,10 +36,7 @@ function bindRevealOnScroll() {
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add("on");
-          io.unobserve(e.target);
-        }
+        e.target.classList.toggle("on", e.isIntersecting);
       }
     },
     { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
@@ -51,6 +48,10 @@ function bindRevealOnScroll() {
 // -- 3D tilt ----------------------------------------------------------------
 
 function bindTilt(el: HTMLElement, max = 15) {
+  if (window.matchMedia("(hover: none), (pointer: coarse)").matches) {
+    return undefined;
+  }
+
   type TiltElement = HTMLElement & { __tiltCleanup?: () => void };
   const tiltEl = el as TiltElement;
   if (tiltEl.__tiltCleanup) return undefined;
@@ -99,21 +100,15 @@ function bindTilt(el: HTMLElement, max = 15) {
     el.style.setProperty("--gy", "50%");
   };
 
-  const onScroll = () => {
-    if (rect) rect = el.getBoundingClientRect();
-  };
-
   el.addEventListener("mouseenter", onMouseEnter);
   el.addEventListener("mousemove", onMouseMove);
   el.addEventListener("mouseleave", onMouseLeave);
-  window.addEventListener("scroll", onScroll, { passive: true });
 
   tiltEl.__tiltCleanup = () => {
     if (raf) cancelAnimationFrame(raf);
     el.removeEventListener("mouseenter", onMouseEnter);
     el.removeEventListener("mousemove", onMouseMove);
     el.removeEventListener("mouseleave", onMouseLeave);
-    window.removeEventListener("scroll", onScroll);
     delete tiltEl.__tiltCleanup;
   };
 

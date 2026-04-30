@@ -72,35 +72,48 @@ export function PageAnimations() {
         if (heroCtas) {
           tl.from(heroCtas, { opacity: 0, y: 12, duration: 0.6 }, 0.7);
         }
+
+        ScrollTrigger.create({
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom top",
+          onEnterBack: () => tl.restart(true),
+        });
       }
 
       // ---------- #30 Section divider draw-in ----------
       gsap.utils.toArray<HTMLElement>(".sec-divider").forEach((el) => {
-        gsap.from(el, {
+        gsap.fromTo(el, {
           scaleX: 0,
+        }, {
+          scaleX: 1,
           transformOrigin: "left center",
-          duration: 1.1,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
             start: "top 85%",
-            toggleActions: "play none none none",
+            toggleActions: "restart reset restart reset",
           },
         });
       });
 
       // ---------- #29 Accent-number spotlight pulse ----------
       gsap.utils.toArray<HTMLElement>(".story-break .accent, .accent").forEach((el) => {
-        gsap.from(el, {
+        gsap.fromTo(el, {
           scale: 0.85,
           opacity: 0,
           y: 8,
+        }, {
+          scale: 1,
+          opacity: 1,
+          y: 0,
           duration: 0.85,
           ease: "back.out(1.6)",
           scrollTrigger: {
             trigger: el,
             start: "top 88%",
-            toggleActions: "play none none none",
+            toggleActions: "restart reset restart reset",
           },
         });
       });
