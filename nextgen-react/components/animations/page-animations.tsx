@@ -22,7 +22,25 @@ export function PageAnimations() {
     if (ranRef.current) return;
     ranRef.current = true;
 
-    if (prefersReducedMotion()) return;
+    // Header glass: toggle .nav-scrolled when user has scrolled > 30px.
+    // Runs even with reduced-motion (state class, not animation).
+    const nav = document.getElementById("nav");
+    let detachNavScroll: (() => void) | undefined;
+    if (nav) {
+      const onScroll = () => {
+        if (window.scrollY > 30) nav.classList.add("nav-scrolled");
+        else nav.classList.remove("nav-scrolled");
+      };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      detachNavScroll = () => window.removeEventListener("scroll", onScroll);
+    }
+
+    if (prefersReducedMotion()) {
+      return () => {
+        detachNavScroll?.();
+      };
+    }
 
     const ctx = gsap.context(() => {
       // ---------- #27 Hero reveal ----------
@@ -72,7 +90,7 @@ export function PageAnimations() {
         }
       }
 
-      // ---------- #30 Section divider draw-in ----------
+// ---------- #30 Section divider draw-in ----------
       gsap.utils.toArray<HTMLElement>(".sec-divider").forEach((el) => {
         gsap.from(el, {
           scaleX: 0,
@@ -108,6 +126,7 @@ export function PageAnimations() {
 
     return () => {
       ctx.revert();
+      detachNavScroll?.();
     };
   }, []);
 

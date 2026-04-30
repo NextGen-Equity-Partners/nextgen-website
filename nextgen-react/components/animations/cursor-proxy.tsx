@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { prefersReducedMotion } from "./reduced-motion";
 
@@ -8,21 +8,27 @@ const HOVER_TARGETS = ".btn, .nav-cta, .glass-card, .nav-links a, .cf-submit, [d
 
 /**
  * #32 — Custom cursor: a small ring that follows the cursor with subtle delay.
- * On hover targets it grows + becomes outline. Hidden on touch devices.
+ * On hover targets it grows + becomes outline. Skipped entirely on touch
+ * (no DOM elements rendered to avoid initial flash).
  */
 export function CursorProxy() {
+  const [enabled, setEnabled] = useState(false);
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    setEnabled(true);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     const ring = ringRef.current;
     const dot = dotRef.current;
     if (!ring || !dot) return;
 
-    // Show after first mouse move (avoid flash on initial render)
     gsap.set([ring, dot], { autoAlpha: 0, xPercent: -50, yPercent: -50 });
 
     const xRing = gsap.quickTo(ring, "x", { duration: 0.35, ease: "power3.out" });
@@ -71,7 +77,9 @@ export function CursorProxy() {
         el.removeEventListener("mouseleave", onLeaveTarget);
       });
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>
@@ -90,6 +98,7 @@ export function CursorProxy() {
           zIndex: 9999,
           mixBlendMode: "difference",
           willChange: "transform, opacity",
+          opacity: 0,
         }}
       />
       <div
@@ -107,6 +116,7 @@ export function CursorProxy() {
           zIndex: 9999,
           mixBlendMode: "difference",
           willChange: "transform, opacity",
+          opacity: 0,
         }}
       />
     </>

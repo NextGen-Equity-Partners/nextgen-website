@@ -3,7 +3,7 @@
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 if (typeof window !== "undefined") {
@@ -12,14 +12,23 @@ if (typeof window !== "undefined") {
 
 /**
  * Lenis drives its own RAF (autoRaf: true). We only sync ScrollTrigger to
- * Lenis's scroll events. This avoids race conditions where the ref is null
- * during the first useEffect tick — which froze the page scroll entirely.
+ * Lenis's scroll events.
+ *
+ * On touch devices we skip Lenis entirely — native iOS/Android momentum
+ * scrolling feels far better than emulated smooth scroll.
  */
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
+  const [enabled, setEnabled] = useState(false);
+
   useEffect(() => {
-    // Disable GSAP's lag smoothing so ScrollTrigger updates feel immediate.
     gsap.ticker.lagSmoothing(0);
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    setEnabled(!isTouch);
   }, []);
+
+  if (!enabled) {
+    return <>{children}</>;
+  }
 
   return (
     <ReactLenis
