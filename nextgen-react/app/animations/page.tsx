@@ -14,8 +14,30 @@ export default function AnimationsPage() {
 
       <section className="pane alab-2d-pane">
         <div className="pane-inner">
-          <div className="s-tag rv">2D Text Companions</div>
+          <div className="s-tag rv">2D Text Companions · Dark</div>
           <h2 className="display rv">Ruhige Animationen <span className="bold">neben Content.</span></h2>
+          <div className="alab-2d-list">
+            {TWO_D_ANIMATIONS.map(({ id, kicker, title, body, Component }) => (
+              <article key={id} className="alab-2d-card rv">
+                <div className="alab-2d-copy">
+                  <span className="alab-2d-kicker">{kicker}</span>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </div>
+                <Component />
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pane alab-2d-pane is-beige">
+        <div className="pane-inner">
+          <div className="s-tag rv">Vorschau · Beiger Hintergrund</div>
+          <h2 className="display rv">Dieselben Animationen <span className="bold">vor warm-creme.</span></h2>
+          <p className="alab-2d-note">
+            Identische Komponenten, aber heller Hintergrund und entglaste Karten. Direkter Vergleich zur Sektion oben.
+          </p>
           <div className="alab-2d-list">
             {TWO_D_ANIMATIONS.map(({ id, kicker, title, body, Component }) => (
               <article key={id} className="alab-2d-card rv">
