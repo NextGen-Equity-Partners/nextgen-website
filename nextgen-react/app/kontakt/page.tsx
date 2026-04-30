@@ -10,7 +10,6 @@ export default function Page() {
           <span className="hero-line"><span className="bold">vertraulich.</span></span>
         </h1>
         <p className="hero-sub">Ob Unternehmer, Geschäftsführer, Manager oder M&amp;A-Berater – wir freuen uns über ein erstes Gespräch. Diskretion und Verlässlichkeit sind selbstverständlich.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
       </section>
       
       {/* KONTAKT-FORMULAR */}

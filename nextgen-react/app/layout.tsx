@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { HeroMark } from "@/components/layout/hero-mark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
+          <HeroMark />
           <PageAnimations />
           <MagneticButtons />
           <CursorProxy />

@@ -15,7 +15,6 @@ export default function HomePage() {
           <a href="/kontakt" className="btn btn-light">Lassen Sie uns sprechen →</a>
           <a href="/profil" className="btn btn-ghost">Über uns</a>
         </div>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
         <a href="#wer-wir-sind" className="hero-scroll" aria-label="Scrollen">
           <div className="mouse"><div className="wheel"></div></div>
         </a>

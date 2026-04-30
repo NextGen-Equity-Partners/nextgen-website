@@ -10,7 +10,6 @@ export default function Page() {
           <span className="hero-line"><span className="bold">NextGen.</span></span>
         </h1>
         <p className="hero-sub">Investoren, Unternehmer und Technikexperten – in einem Team, das gemeinsam kauft, aufbaut und Verantwortung trägt. Mit eigenem Kapital im Spiel.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
       </section>
       
       {/* TEAM-GRID */}

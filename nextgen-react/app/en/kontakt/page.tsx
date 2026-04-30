@@ -10,7 +10,6 @@ export default function Page() {
           <span className="hero-line"><span className="bold">confidentially.</span></span>
         </h1>
         <p className="hero-sub">Whether you are an entrepreneur, managing director, manager, or M&amp;A advisor — we look forward to a first conversation. Discretion and reliability are a given.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
       </section>
       
       {/* KONTAKT-FORMULAR */}

@@ -10,7 +10,6 @@ export default function Page() {
           <span className="hero-line"><span className="bold">portfolio.</span></span>
         </h1>
         <p className="hero-sub">We build company groups in Business and Professional Services — with our own capital, technical expertise, and long-term partnership.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
       </section>
       
       {/* COMING SOON */}
