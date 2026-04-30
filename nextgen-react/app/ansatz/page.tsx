@@ -10,7 +10,7 @@ export default function Page() {
           <span className="hero-line"><span className="bold">arbeiten.</span></span>
         </h1>
         <p className="hero-sub">Wir hören zu, bevor wir Einschätzungen abgeben. Halten den Prozess so einfach wie möglich. Und bleiben nach dem Abschluss dabei – nicht nur in der Anfangsphase.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* KENNENLERNEN */}

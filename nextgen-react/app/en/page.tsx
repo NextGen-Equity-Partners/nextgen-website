@@ -14,7 +14,7 @@ export default function Page() {
           <a href="/en/kontakt" className="btn btn-light">Let's talk →</a>
           <a href="/en/profil" className="btn btn-ghost">About us</a>
         </div>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
         <a href="#wer-wir-sind" className="hero-scroll" aria-label="Scroll">
           <div className="mouse"><div className="wheel"></div></div>
         </a>

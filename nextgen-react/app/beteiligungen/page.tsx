@@ -10,7 +10,7 @@ export default function Page() {
           <span className="hero-line"><span className="bold">Beteiligungen.</span></span>
         </h1>
         <p className="hero-sub">Wir bauen Unternehmensgruppen im Bereich Business und Professional Services – mit eigenem Kapital, technischer Kompetenz und langfristiger Partnerschaft.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* COMING SOON */}

@@ -21,6 +21,11 @@ export function PageAnimations() {
   useEffect(() => {
     if (ranRef.current) return;
     ranRef.current = true;
+    // Window-level guard: survives React StrictMode double-invoke + dev
+    // Fast Refresh remounts so animations never replay on the same page.
+    const w = window as unknown as { __ngPageAnimRan?: boolean };
+    if (w.__ngPageAnimRan) return;
+    w.__ngPageAnimRan = true;
 
     // Header glass: toggle .nav-scrolled when user has scrolled > 30px.
     // Watermark dodge: hide .hero-mark when a glass-card / pane visibly
@@ -87,13 +92,18 @@ export function PageAnimations() {
 
       if (heroLines.length) {
         // Wrap each line in an overflow:hidden mask if not already wrapped.
+        // Padding-bottom + negative margin gives descenders (g, p, y, ß) room
+        // to hang past the baseline without being clipped. The compensating
+        // margin keeps line spacing identical to the unwrapped version.
         heroLines.forEach((line) => {
           const el = line as HTMLElement;
           if (el.dataset.masked === "1") return;
           el.dataset.masked = "1";
           el.style.display = "inline-block";
           el.style.overflow = "hidden";
-          // Inner wrapper for the actual translateY
+          el.style.paddingBottom = "0.16em";
+          el.style.marginBottom = "-0.16em";
+          el.style.lineHeight = "1.05";
           const inner = document.createElement("span");
           inner.className = "hero-line-inner";
           inner.style.display = "inline-block";

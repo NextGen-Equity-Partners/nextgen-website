@@ -14,7 +14,7 @@ export default function Page() {
           <a href="/en/team" className="btn btn-light">Meet the team →</a>
           <a href="/en/kontakt" className="btn btn-ghost">Let's talk</a>
         </div>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* 4 SÄULEN */}

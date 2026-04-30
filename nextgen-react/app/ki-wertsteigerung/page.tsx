@@ -10,7 +10,7 @@ export default function Page() {
           <span className="hero-line">die im <span className="bold">Betrieb ankommt.</span></span>
         </h1>
         <p className="hero-sub">Ob und wie ein Mittelständler digitale Werkzeuge in sein Geschäft integriert, wird in den nächsten Jahren einen spürbaren Unterschied machen – in der Marge, in der Geschwindigkeit, in der Attraktivität als Arbeitgeber. Wir beschäftigen uns seit Jahren ernsthaft damit, wie das in der Praxis gelingt.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* DIFFERENZIERUNG + TABELLE */}

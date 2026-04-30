@@ -10,7 +10,7 @@ export default function Page() {
           <span className="hero-line">with <span className="bold">entrepreneurs.</span></span>
         </h1>
         <p className="hero-sub">We listen before we form opinions. Keep the process as simple as possible. And stay with you after closing — not only in the early phase.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* KENNENLERNEN */}

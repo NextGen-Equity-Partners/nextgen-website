@@ -10,7 +10,7 @@ export default function Page() {
           <span className="hero-line">lands in <span className="bold">operations.</span></span>
         </h1>
         <p className="hero-sub">Whether and how a Mittelstand company integrates digital tools into its business will make a noticeable difference in the coming years — in margin, speed, and attractiveness as an employer. We have been seriously engaged for years with how to make it work in practice.</p>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
       </section>
       
       {/* DIFFERENZIERUNG + TABELLE */}

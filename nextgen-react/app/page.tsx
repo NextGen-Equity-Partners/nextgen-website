@@ -1,8 +1,11 @@
+import { NeuralNet } from "@/components/three/neural-net";
+
 export default function HomePage() {
   return (
     <>
       {/* HERO */}
       <section className="hero">
+        <NeuralNet />
         <div className="hero-eyebrow">DACH-Mittelstand · Business Services</div>
         <h1 className="display hero-title">
           <span className="hero-line">Ihr Partner für Mehrheitsbeteiligungen</span>
@@ -15,7 +18,7 @@ export default function HomePage() {
           <a href="/kontakt" className="btn btn-light">Lassen Sie uns sprechen →</a>
           <a href="/profil" className="btn btn-ghost">Über uns</a>
         </div>
-        <img className="hero-mark" src="/assets/logo-white.svg" alt="NextGen Equity" />
+        <img className="hero-mark" src="/assets/logo-n.svg" alt="NextGen Equity" />
         <a href="#wer-wir-sind" className="hero-scroll" aria-label="Scrollen">
           <div className="mouse"><div className="wheel"></div></div>
         </a>
