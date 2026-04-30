@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
+import { HeroShader } from "@/components/layout/hero-shader";
 
 const SITE = "https://nextgen-equity.com";
 
@@ -34,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de">
       <head>
         <meta name="color-scheme" content="dark" />
-        <link rel="preload" as="video" href="/assets/hero-bg.mp4" type="video/mp4" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -43,22 +44,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-image">
-        <video
-          id="scroll-video"
-          className="hero-image-bg"
-          src="/assets/hero-scrub.mp4"
-          muted
-          playsInline
-          preload="auto"
-          poster="/assets/hero-scrub-poster.jpg"
-          aria-hidden="true"
-        />
-        <div className="hero-image-tint"></div>
+        <HeroShader />
         <div className="grain"></div>
 
-        <Nav />
-        {children}
-        <Footer />
+        <SmoothScrollProvider>
+          <Nav />
+          {children}
+          <Footer />
+        </SmoothScrollProvider>
 
         <div className="imp-backdrop" id="imp-backdrop">
           <div className="imp-panel">

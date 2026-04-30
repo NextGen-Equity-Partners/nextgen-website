@@ -1,3 +1,5 @@
+import { FloatingShardsLazy } from "@/components/three/floating-shards-lazy";
+
 export default function HomePage() {
   return (
     <>
@@ -113,9 +115,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STORY BREAK */}
-      <section className="story-break">
-        <div className="story-break-inner">
+      {/* STORY BREAK – with R3F floating glass shards */}
+      <section className="story-break" style={{ position: "relative", overflow: "hidden" }}>
+        <FloatingShardsLazy />
+        <div className="story-break-inner" style={{ position: "relative", zIndex: 1 }}>
           <div className="eyebrow rv">Unser Suchprofil</div>
           <q className="rv rv-d1"><span className="accent">10–100 Mio. €</span> Plattform-Umsatz.<br />Add-ons ab <span className="accent">3 Mio. €.</span> DACH-weit.</q>
           <div className="signature rv rv-d2">Buy-and-Build in Business Services</div>
