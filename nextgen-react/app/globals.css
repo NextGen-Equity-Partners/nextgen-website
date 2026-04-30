@@ -1012,14 +1012,12 @@ body.bg-image .story-break.story-banner {
   transform: scale(1);
 }
 .hero-mark-letter {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 700;
-  font-size: clamp(40px, 5.2vw, 76px);
-  line-height: .85;
-  color: #fff;
-  letter-spacing: -0.04em;
+  /* Cropped "N" glyph SVG — same path data as logo-white.svg, viewBox 0 0 152 288 (~ 0.528:1). */
+  height: 100%;
+  /* Matches the SVG aspect ratio so the right-bottom anchor stays exactly at the N's right edge. */
+  width: auto;
   opacity: 0;
-  transform: scale(.65) translateY(4px);
+  transform: scale(.6);
 }
 .hero-mark.is-compact .hero-mark-full {
   opacity: 0;
@@ -1035,7 +1033,6 @@ body.bg-image .story-break.story-banner {
 }
 @media (max-width: 760px) {
   .hero-mark { right: 22px; bottom: 22px; height: 25px; width: 100px; }
-  .hero-mark-letter { font-size: 36px; }
 }
 
 /* ============================================================
@@ -2594,7 +2591,6 @@ footer a:hover, footer button:hover { color: var(--w); }
   .hero-ctas .btn { padding: 12px 18px; font-size: 12px; }
   .hero-eyebrow { font-size: 9.5px; letter-spacing: .22em; margin-bottom: 18px; }
   .hero-mark { right: 18px; bottom: 18px; height: 22px; width: 88px; }
-  .hero-mark-letter { font-size: 30px; }
   h1.display { font-size: clamp(34px, 9vw, 52px); line-height: 1.05; }
   h2.display { font-size: clamp(28px, 7vw, 40px); line-height: 1.08; }
   h3.display { font-size: clamp(22px, 5.6vw, 30px); }

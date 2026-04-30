@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 
 /**
  * Bottom-right brand watermark that morphs between full "NextGen" wordmark
- * (when the .hero section is in view) and a single "N" letter (when scrolled
- * past the hero). No pill, no glass — just typographic mark.
+ * (when the .hero section is in view) and just the "N" glyph (when scrolled
+ * past it). No pill, no glass — typographic mark only. The N glyph is the
+ * exact same SVG path as the wordmark, viewBox-cropped to the leading
+ * letter, so the morph stays visually consistent with the brand mark.
  *
  * Uses IntersectionObserver on the page's `.hero` element so the morph fires
- * exactly when you leave / re-enter the hero. Falls back to a scroll-Y rule
+ * exactly when you leave / re-enter the hero. Falls back to a scrollY rule
  * with hysteresis on pages that don't have a `.hero`.
  */
 export function HeroMark() {
@@ -57,7 +59,12 @@ export function HeroMark() {
         className="hero-mark-full"
         draggable={false}
       />
-      <span className="hero-mark-letter">N</span>
+      <img
+        src="/assets/logo-n.svg"
+        alt=""
+        className="hero-mark-letter"
+        draggable={false}
+      />
     </div>
   );
 }
