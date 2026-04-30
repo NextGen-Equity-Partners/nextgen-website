@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<style>html,body{background:#050d1f;color-scheme:dark;}html{margin:0;padding:0;}</style>
+<title>Wallpapers · NextGen Equity</title>
+<meta name="description" content="Fünf interaktive Blue-OS-Wallpaper – langsam, blau, reagieren auf Maus &amp; Klicks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="../shared.css">
+<style>
+  /* Wallpaper-specific overrides */
+  .hero.subpage {
+    min-height: 80vh;
+    padding-bottom: 200px;
+  }
+  .hero-sub {
+    bottom: 130px;
+  }
+  .wp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 64px;
+  }
+  .wp-grid > .wp-card:first-child { grid-column: 1 / -1; }
+  @media (max-width: 760px) {
+    .wp-grid { grid-template-columns: 1fr; }
+    .wp-grid > .wp-card:first-child { grid-column: auto; }
+  }
+  .wp-card {
+    --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.18);
+    transform:
+      perspective(1200px)
+      rotateX(var(--tx)) rotateY(var(--ty))
+      translateZ(calc(var(--lift) * 18px))
+      scale(calc(1 + var(--lift) * .015));
+    transform-style: preserve-3d;
+    transition: background .35s var(--ease), border-color .35s var(--ease);
+    will-change: transform;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .wp-card:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.28);
+  }
+  .wp-card iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0; pointer-events: none;
+  }
+  .wp-card::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%),
+      linear-gradient(180deg, transparent 50%, rgba(2,8,23,.65) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .wp-meta {
+    position: absolute; left: 26px; right: 26px; bottom: 22px;
+    z-index: 2; display: flex; align-items: end;
+    justify-content: space-between; gap: 14px;
+    transform: translateZ(20px);
+  }
+  .wp-meta .left { min-width: 0; }
+  .wp-meta .num {
+    font-size: 10.5px; letter-spacing: .32em;
+    text-transform: uppercase; color: rgba(255,255,255,.55);
+    font-weight: 500;
+  }
+  .wp-meta h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--w); letter-spacing: -.02em;
+    margin-top: 6px;
+    line-height: 1.1;
+  }
+  .wp-meta p {
+    font-size: 12.5px; line-height: 1.55;
+    color: rgba(255,255,255,.65); font-weight: 300;
+    margin-top: 6px;
+    max-width: 36ch;
+  }
+  .wp-meta .open {
+    flex-shrink: 0;
+    font-size: 10.5px; letter-spacing: .24em;
+    text-transform: uppercase; color: rgba(255,255,255,.85);
+    font-weight: 500; padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.16);
+    backdrop-filter: blur(10px);
+    transition: background .25s, color .25s, transform .25s var(--ease);
+  }
+  .wp-card:hover .wp-meta .open {
+    background: rgba(255,255,255,.22);
+    color: #fff;
+    transform: translateX(2px);
+  }
+</style>
+</head>
+<body>
+
+<div class="site-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="../index.html" class="brand" aria-label="NextGen Equity"><img src="../assets/logo-white.svg" alt="NextGen Equity" height="24"></a>
+  <div class="nav-links">
+    <a href="../profil.html">Profil</a>
+    <a href="../ansatz.html">Ansatz</a>
+    <a href="../ki-wertsteigerung.html">KI &amp; Wertsteigerung</a>
+    <a href="../team.html">Team</a>
+    <a href="../kontakt.html" class="nav-cta">Kontakt</a>
+  </div>
+  <button class="nav-burger" id="nav-burger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="../profil.html">Profil</a>
+  <a href="../ansatz.html">Ansatz</a>
+  <a href="../ki-wertsteigerung.html">KI &amp; Wertsteigerung</a>
+  <a href="../team.html">Team</a>
+  <a href="../kontakt.html" class="cta">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section class="hero subpage">
+  <div class="hero-eyebrow">Lab · Five Wallpapers</div>
+  <h1 class="display hero-title">
+    <span class="hero-line">Slow blue.</span>
+    <span class="hero-line"><span class="bold">Touch responsive.</span></span>
+  </h1>
+  <p class="hero-sub">Fünf interaktive Shader-Wallpaper für ein leises Betriebssystem. Bewege den Cursor, um das Feld zu verformen, klicke für eine Welle. Ein kleines Spielzeug zum Fokussieren.</p>
+</section>
+
+<!-- WALLPAPERS GRID -->
+<section class="pane" style="padding-top:0;padding-bottom:clamp(120px,12vw,180px);">
+  <div class="pane-inner">
+    <div class="wp-grid">
+
+      <a href="01-liquid.html" class="wp-card rv">
+        <iframe src="01-liquid.html" loading="lazy" tabindex="-1" title="Liquid"></iframe>
+        <div class="wp-meta">
+          <div class="left">
+            <div class="num">01 · Liquid</div>
+            <h3>Verschmelzende Tropfen.</h3>
+            <p>Langsam orbitierende Metaballs. Der Cursor zieht einen eigenen Blob mit – gedrückt halten lässt ihn wachsen.</p>
+          </div>
+          <span class="open">Öffnen →</span>
+        </div>
+      </a>
+
+      <a href="02-aurora.html" class="wp-card rv rv-d1">
+        <iframe src="02-aurora.html" loading="lazy" tabindex="-1" title="Aurora"></iframe>
+        <div class="wp-meta">
+          <div class="left">
+            <div class="num">02 · Aurora</div>
+            <h3>Polarlicht-Vorhänge.</h3>
+            <p>Geschichtete Wellen, die sich zum Cursor neigen. Klick sendet eine Welle durch das Feld.</p>
+          </div>
+          <span class="open">Öffnen →</span>
+        </div>
+      </a>
+
+      <a href="03-constellation.html" class="wp-card rv rv-d2">
+        <iframe src="03-constellation.html" loading="lazy" tabindex="-1" title="Constellation"></iframe>
+        <div class="wp-meta">
+          <div class="left">
+            <div class="num">03 · Constellation</div>
+            <h3>Verbundene Sterne.</h3>
+            <p>Driftende Partikel mit Sichtlinien. Der Cursor zieht sie an, ein Klick erzeugt eine Schockwelle.</p>
+          </div>
+          <span class="open">Öffnen →</span>
+        </div>
+      </a>
+
+      <a href="04-voronoi.html" class="wp-card rv rv-d1">
+        <iframe src="04-voronoi.html" loading="lazy" tabindex="-1" title="Voronoi"></iframe>
+        <div class="wp-meta">
+          <div class="left">
+            <div class="num">04 · Voronoi</div>
+            <h3>Atmende Zellen.</h3>
+            <p>Zellen mit leuchtenden Kanten. Der Cursor verzieht das Feld, ein Klick lässt es nach außen pulsieren.</p>
+          </div>
+          <span class="open">Öffnen →</span>
+        </div>
+      </a>
+
+      <a href="05-depth-grid.html" class="wp-card rv rv-d2">
+        <iframe src="05-depth-grid.html" loading="lazy" tabindex="-1" title="Depth Grid"></iframe>
+        <div class="wp-meta">
+          <div class="left">
+            <div class="num">05 · Depth Grid</div>
+            <h3>Endloses 3D-Raster.</h3>
+            <p>Plane mit Horizont. Der Cursor wölbt das Gitter, ein Klick sendet einen Schockwellen-Ring.</p>
+          </div>
+          <span class="open">Öffnen →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">NextGen Equity Partners GmbH · München</div>
+  <div class="fm">© 2026 · Alle Rechte vorbehalten</div>
+  <div class="fr">
+    <button data-imp>Impressum</button>
+    <button data-imp>Datenschutz</button>
+    <a href="../kontakt.html">Kontakt</a>
+  </div>
+</footer>
+
+<!-- IMPRESSUM MODAL -->
+<div class="imp-backdrop" id="imp-backdrop">
+  <div class="imp-panel">
+    <button class="imp-close" id="imp-close" aria-label="Schließen">✕</button>
+    <div class="imp-eyebrow">Rechtliches</div>
+    <div class="imp-title">Impressum</div>
+    <div class="imp-body">
+      <section>
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <p>NextGen Equity Partners GmbH<br>München, Deutschland</p>
+      </section>
+      <section>
+        <h3>Vertreten durch die Geschäftsführer</h3>
+        <p>Maximilian Göppert<br>Leander Heyken<br>Dr. Amon Göppert</p>
+      </section>
+      <section>
+        <h3>Kontakt</h3>
+        <p>E-Mail: <a href="mailto:contact@nextgen-equity.com">contact@nextgen-equity.com</a></p>
+      </section>
+      <section>
+        <h3>Registereintrag</h3>
+        <p>Eingetragen im Handelsregister.<br>Registergericht: Amtsgericht München<br>Registernummer: HRB –</p>
+      </section>
+      <section>
+        <h3>Umsatzsteuer-ID</h3>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE –</p>
+      </section>
+      <section>
+        <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+        <p>Maximilian Göppert<br>NextGen Equity Partners GmbH<br>München, Deutschland</p>
+      </section>
+      <section>
+        <h3>Haftungshinweis</h3>
+        <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+/* Bind smooth tilt on the wallpaper preview cards (they aren't .glass-card) */
+(function () {
+  const cards = document.querySelectorAll('.wp-card');
+  if (!cards.length || typeof bindTilt !== 'function') return;
+  cards.forEach(c => bindTilt(c, 7));
+  // The shared tilt loop only iterates over a fixed selector. Run a second loop for wp-card.
+  const SMOOTH = 0.16, LIFT_SMOOTH = 0.12;
+  function tick() {
+    cards.forEach(el => {
+      const s = tiltState && tiltState.get ? tiltState.get(el) : null;
+      if (!s) return;
+      const dx = s.targetX - s.currentX;
+      const dy = s.targetY - s.currentY;
+      const dgx = s.targetGx - s.currentGx;
+      const dgy = s.targetGy - s.currentGy;
+      const dl = s.targetLift - s.currentLift;
+      s.currentX += dx * SMOOTH;
+      s.currentY += dy * SMOOTH;
+      s.currentGx += dgx * SMOOTH;
+      s.currentGy += dgy * SMOOTH;
+      s.currentLift += dl * LIFT_SMOOTH;
+      el.style.setProperty('--tx', s.currentX.toFixed(2) + 'deg');
+      el.style.setProperty('--ty', s.currentY.toFixed(2) + 'deg');
+      el.style.setProperty('--gx', s.currentGx.toFixed(1) + '%');
+      el.style.setProperty('--gy', s.currentGy.toFixed(1) + '%');
+      el.style.setProperty('--lift', s.currentLift.toFixed(3));
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurora · Wallpaper 02</title>
+<style>
+  html,body{margin:0;background:#020817;overflow:hidden;height:100%;font-family:system-ui,-apple-system,sans-serif;cursor:crosshair;}
+  canvas{display:block;width:100vw;height:100vh;}
+  .label{
+    position:fixed;left:24px;bottom:22px;
+    color:rgba(255,255,255,.45);font-size:10.5px;
+    letter-spacing:.32em;text-transform:uppercase;font-weight:500;
+    pointer-events:none;
+  }
+  .nav{
+    position:fixed;right:24px;bottom:22px;
+    display:flex;gap:14px;
+    color:rgba(255,255,255,.4);font-size:10.5px;
+    letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+  }
+  .nav a{color:inherit;text-decoration:none;transition:color .2s;}
+  .nav a:hover{color:#fff;}
+  .nav a.active{color:#fff;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="label">02 · Aurora · Click for ripple</div>
+<div class="nav">
+  <a href="index.html">◀ All</a>
+  <a href="01-liquid.html">01</a>
+  <a href="02-aurora.html" class="active">02</a>
+  <a href="03-constellation.html">03</a>
+  <a href="04-voronoi.html">04</a>
+  <a href="05-depth-grid.html">05</a>
+</div>
+<script>
+const c = document.getElementById('c');
+const gl = c.getContext('webgl', { antialias: true });
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  c.width = window.innerWidth * dpr;
+  c.height = window.innerHeight * dpr;
+  c.style.width = window.innerWidth + 'px';
+  c.style.height = window.innerHeight + 'px';
+  gl.viewport(0, 0, c.width, c.height);
+}
+resize();
+window.addEventListener('resize', resize);
+
+const vs = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+
+const fs = `
+precision highp float;
+uniform vec2 res;
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 ripplePos;
+uniform float rippleAge;
+uniform float rippleAlive;
+
+float curtain(vec2 uv, float t, float seed) {
+  float v = 0.;
+  for (int i = 0; i < 4; i++) {
+    float fi = float(i);
+    float speed = 0.10 + fi * 0.04;
+    float scale = 1.6 + fi * 0.55;
+    v += sin(uv.x * scale + uv.y * (1.4 + fi * .3) + t * speed + seed + fi * 1.3) * .5 + .5;
+  }
+  return v / 4.;
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / res;
+  vec2 m  = mouse / res;
+
+  // Mouse drag – slowly bend the field toward the cursor
+  vec2 toMouse = uv - m;
+  float dm = length(toMouse);
+  uv += normalize(toMouse + vec2(.0001)) * exp(-dm * 5.0) * 0.06;
+
+  // Click ripple
+  if (rippleAlive > 0.001) {
+    vec2 rp = ripplePos / res;
+    float dr = length(uv - rp);
+    float wave = sin(dr * 24. - rippleAge * 5.) * exp(-dr * 3.5) * exp(-rippleAge * 0.7) * rippleAlive;
+    uv.y += wave * 0.06;
+    uv.x += wave * 0.03;
+  }
+
+  float t = time * 0.18;
+
+  // Stack two slowly drifting curtains for a richer field
+  float a1 = curtain(uv * vec2(2.6, 1.4) + vec2(0., t * 0.05), t, 0.0);
+  float a2 = curtain(uv * vec2(1.7, 2.2) - vec2(t * 0.04, 0.), t * 0.85, 2.7);
+  float a = mix(a1, a2, 0.55);
+
+  // Vertical falloff so the aurora floats
+  a *= smoothstep(-0.05, 0.45, uv.y) * smoothstep(1.05, 0.55, uv.y);
+  a += pow(a, 2.) * 0.4;
+
+  // Blue palette
+  vec3 deep  = vec3(0.005, 0.012, 0.045);
+  vec3 mid   = vec3(0.060, 0.150, 0.420);
+  vec3 hi    = vec3(0.350, 0.620, 1.000);
+  vec3 glow  = vec3(0.700, 0.900, 1.000);
+
+  vec3 col = mix(deep, mid, a);
+  col = mix(col, hi, smoothstep(.55, .92, a));
+  col = mix(col, glow, smoothstep(.85, 1.00, a) * .35);
+
+  // Soft horizon highlight near mouse
+  col += vec3(0.10, 0.25, 0.55) * exp(-dm * 6.0) * 0.18;
+
+  // Faint film grain
+  float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+  col += (n - .5) * .015;
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+function compile(t, src) {
+  const s = gl.createShader(t);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+  return s;
+}
+
+const prog = gl.createProgram();
+gl.attachShader(prog, compile(gl.VERTEX_SHADER, vs));
+gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fs));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+
+const buf = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const aP = gl.getAttribLocation(prog, 'p');
+gl.enableVertexAttribArray(aP);
+gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+const uRes = gl.getUniformLocation(prog, 'res');
+const uTime = gl.getUniformLocation(prog, 'time');
+const uMouse = gl.getUniformLocation(prog, 'mouse');
+const uRipplePos = gl.getUniformLocation(prog, 'ripplePos');
+const uRippleAge = gl.getUniformLocation(prog, 'rippleAge');
+const uRippleAlive = gl.getUniformLocation(prog, 'rippleAlive');
+
+let mx = window.innerWidth * 0.5, my = window.innerHeight * 0.5;
+let tx = mx, ty = my;
+let rippleX = 0, rippleY = 0, rippleStart = -1e9;
+
+window.addEventListener('mousemove', e => {
+  tx = e.clientX;
+  ty = window.innerHeight - e.clientY;
+});
+window.addEventListener('mousedown', e => {
+  rippleX = e.clientX;
+  rippleY = window.innerHeight - e.clientY;
+  rippleStart = performance.now();
+});
+
+const start = performance.now();
+function frame(now) {
+  const t = (now - start) / 1000;
+  mx += (tx - mx) * 0.05;
+  my += (ty - my) * 0.05;
+
+  const rippleAge = (now - rippleStart) / 1000;
+  const alive = rippleAge < 4 ? 1 : 0;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  gl.uniform2f(uRes, c.width, c.height);
+  gl.uniform1f(uTime, t);
+  gl.uniform2f(uMouse, mx * dpr, my * dpr);
+  gl.uniform2f(uRipplePos, rippleX * dpr, rippleY * dpr);
+  gl.uniform1f(uRippleAge, rippleAge);
+  gl.uniform1f(uRippleAlive, alive);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

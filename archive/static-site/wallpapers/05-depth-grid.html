@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Depth Grid · Wallpaper 05</title>
+<style>
+  html,body{margin:0;background:#020817;overflow:hidden;height:100%;font-family:system-ui,-apple-system,sans-serif;cursor:crosshair;}
+  canvas{display:block;width:100vw;height:100vh;}
+  .label{
+    position:fixed;left:24px;bottom:22px;
+    color:rgba(255,255,255,.45);font-size:10.5px;
+    letter-spacing:.32em;text-transform:uppercase;font-weight:500;
+    pointer-events:none;
+  }
+  .nav{
+    position:fixed;right:24px;bottom:22px;
+    display:flex;gap:14px;
+    color:rgba(255,255,255,.4);font-size:10.5px;
+    letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+  }
+  .nav a{color:inherit;text-decoration:none;transition:color .2s;}
+  .nav a:hover{color:#fff;}
+  .nav a.active{color:#fff;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="label">05 · Depth Grid · Click for shockwave</div>
+<div class="nav">
+  <a href="index.html">◀ All</a>
+  <a href="01-liquid.html">01</a>
+  <a href="02-aurora.html">02</a>
+  <a href="03-constellation.html">03</a>
+  <a href="04-voronoi.html">04</a>
+  <a href="05-depth-grid.html" class="active">05</a>
+</div>
+<script>
+const c = document.getElementById('c');
+const gl = c.getContext('webgl', { antialias: true });
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  c.width = window.innerWidth * dpr;
+  c.height = window.innerHeight * dpr;
+  c.style.width = window.innerWidth + 'px';
+  c.style.height = window.innerHeight + 'px';
+  gl.viewport(0, 0, c.width, c.height);
+}
+resize();
+window.addEventListener('resize', resize);
+
+const vs = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`;
+
+const fs = `
+precision highp float;
+uniform vec2 res;
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 shockPos;
+uniform float shockAge;
+uniform float shockAlive;
+
+// Anti-aliased grid lines
+float grid(vec2 p, float w) {
+  vec2 g = abs(fract(p - 0.5) - 0.5) / fwidth(p);
+  float l = min(g.x, g.y);
+  return 1.0 - smoothstep(0.0, w, l);
+}
+
+void main() {
+  vec2 uv = (gl_FragCoord.xy - .5*res) / res.y;
+  vec2 m  = (mouse - .5*res) / res.y;
+
+  // Faux 3D perspective: bend the plane around a horizon
+  float horizon = 0.05;
+  float depth = (uv.y - horizon);
+  // Move below horizon away from camera
+  vec2 floorUV = uv;
+  if (depth < 0.0) {
+    floorUV.y = -1.0 / (depth - 0.001) * 0.20;
+    floorUV.x = uv.x / (-depth + 0.05) * 0.55;
+  }
+
+  // Slow drift forward
+  float t = time * 0.18;
+  floorUV.y += t;
+
+  // Wave height map (computed in floor space)
+  float wave = 0.;
+
+  // Mouse swell – gentle bump that follows cursor (only while pointer is below horizon)
+  vec2 mFloor = m;
+  if (m.y < horizon) {
+    mFloor.y = -1.0 / (m.y - horizon - 0.001) * 0.20 + t;
+    mFloor.x = m.x / (-(m.y - horizon) + 0.05) * 0.55;
+    float dm = length(floorUV - mFloor);
+    wave += sin(dm * 6.0 - time * 1.2) * exp(-dm * 1.3) * 0.15;
+  }
+
+  // Click shockwave
+  if (shockAlive > 0.001) {
+    vec2 sp = (shockPos - .5*res) / res.y;
+    vec2 sFloor = sp;
+    if (sp.y < horizon) {
+      sFloor.y = -1.0 / (sp.y - horizon - 0.001) * 0.20 + t;
+      sFloor.x = sp.x / (-(sp.y - horizon) + 0.05) * 0.55;
+      float ds = length(floorUV - sFloor);
+      wave += sin(ds * 10.0 - shockAge * 6.0) * exp(-ds * 1.6) * exp(-shockAge * 0.8) * 0.30 * shockAlive;
+    }
+  }
+
+  // Slow ambient swell so it never feels static
+  wave += sin(floorUV.x * 1.5 + time * 0.4) * sin(floorUV.y * 1.2 - time * 0.3) * 0.04;
+
+  // Shift the grid coords by wave to fake height displacement
+  vec2 gridUV = floorUV + vec2(0., wave * 0.6);
+
+  // Sky vs floor
+  float onFloor = step(depth, 0.0);
+
+  // Floor grid lines
+  float lineMajor = grid(gridUV * 4.0, 1.4);
+  float lineMinor = grid(gridUV * 16.0, 1.0) * 0.35;
+  float lines = max(lineMajor, lineMinor);
+
+  // Distance fade for floor lines so far ones disappear softly
+  float far = clamp(1.0 + depth * 4.0, 0., 1.);
+  lines *= far;
+
+  // Floor base color
+  vec3 floorBase = mix(vec3(0.005, 0.015, 0.060), vec3(0.030, 0.080, 0.220), far);
+  vec3 floorLine = mix(vec3(0.10, 0.30, 0.85), vec3(0.45, 0.75, 1.00), wave * 4. + .5);
+  vec3 floorCol = mix(floorBase, floorLine, lines);
+
+  // Sky: soft blue gradient with mouse glow
+  float skyT = clamp(uv.y * 1.8, 0., 1.);
+  vec3 sky = mix(vec3(0.020, 0.055, 0.150), vec3(0.005, 0.012, 0.040), skyT);
+  // Distant horizon glow
+  sky += vec3(0.10, 0.25, 0.55) * exp(-abs(uv.y - horizon) * 18.0) * 0.50;
+  // Sun-like glow at mouse if it's in the sky
+  if (m.y >= horizon) {
+    float dm2 = length(uv - m);
+    sky += vec3(0.30, 0.55, 1.0) * exp(-dm2 * 6.0) * 0.30;
+  }
+
+  vec3 col = mix(sky, floorCol, onFloor);
+
+  // Soft horizon line
+  col += vec3(0.20, 0.40, 0.80) * exp(-abs(depth) * 80.0) * 0.30;
+
+  // Vignette
+  float vig = 1. - dot(uv, uv) * .25;
+  col *= clamp(vig, 0., 1.);
+
+  // Grain
+  float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+  col += (n - .5) * .015;
+
+  gl_FragColor = vec4(col, 1.);
+}
+`;
+
+function compile(t, src) {
+  const s = gl.createShader(t);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+  return s;
+}
+
+// Enable derivatives extension for fwidth() in fragment shader
+gl.getExtension('OES_standard_derivatives');
+
+const prog = gl.createProgram();
+gl.attachShader(prog, compile(gl.VERTEX_SHADER, vs));
+// Inject derivative extension into fragment shader if not present
+const fsFinal = '#extension GL_OES_standard_derivatives : enable\n' + fs;
+gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fsFinal));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+
+const buf = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const aP = gl.getAttribLocation(prog, 'p');
+gl.enableVertexAttribArray(aP);
+gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+const uRes = gl.getUniformLocation(prog, 'res');
+const uTime = gl.getUniformLocation(prog, 'time');
+const uMouse = gl.getUniformLocation(prog, 'mouse');
+const uShockPos = gl.getUniformLocation(prog, 'shockPos');
+const uShockAge = gl.getUniformLocation(prog, 'shockAge');
+const uShockAlive = gl.getUniformLocation(prog, 'shockAlive');
+
+let mx = window.innerWidth * 0.5, my = window.innerHeight * 0.4;
+let tx = mx, ty = my;
+let shockX = 0, shockY = 0, shockStart = -1e9;
+
+window.addEventListener('mousemove', e => {
+  tx = e.clientX;
+  ty = window.innerHeight - e.clientY;
+});
+window.addEventListener('mousedown', e => {
+  shockX = e.clientX;
+  shockY = window.innerHeight - e.clientY;
+  shockStart = performance.now();
+});
+
+const start = performance.now();
+function frame(now) {
+  const t = (now - start) / 1000;
+  mx += (tx - mx) * 0.06;
+  my += (ty - my) * 0.06;
+
+  const shockAge = (now - shockStart) / 1000;
+  const alive = shockAge < 4 ? 1 : 0;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  gl.uniform2f(uRes, c.width, c.height);
+  gl.uniform1f(uTime, t);
+  gl.uniform2f(uMouse, mx * dpr, my * dpr);
+  gl.uniform2f(uShockPos, shockX * dpr, shockY * dpr);
+  gl.uniform1f(uShockAge, shockAge);
+  gl.uniform1f(uShockAlive, alive);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

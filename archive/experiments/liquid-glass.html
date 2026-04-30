@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liquid Glass</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #06122b;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    canvas { display: block; }
+    #hint {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      color: rgba(255,255,255,0.25);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="hint">Liquid Glass · Loop</div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x06122b);
+
+    const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 9);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    document.body.appendChild(renderer.domElement);
+
+    // PMREM environment for reflections + a few colored studio lights to drive the dispersion fringes
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    const keyLight   = new THREE.PointLight(0xffffff, 80, 30); keyLight.position.set(4, 6, 5);     scene.add(keyLight);
+    const cyanRim    = new THREE.PointLight(0x66ccff, 40, 30); cyanRim.position.set(-6, -2, 4);    scene.add(cyanRim);
+    const magentaRim = new THREE.PointLight(0xff4488, 40, 30); magentaRim.position.set(5, -4, -3); scene.add(magentaRim);
+
+    // Background pattern plane — gives the transmission something to refract through,
+    // so the glass actually reads as see-through instead of solid.
+    const bgCanvas = document.createElement('canvas');
+    bgCanvas.width = 1024;
+    bgCanvas.height = 1024;
+    const bgCtx = bgCanvas.getContext('2d');
+    bgCtx.fillStyle = '#06122b';
+    bgCtx.fillRect(0, 0, 1024, 1024);
+    bgCtx.strokeStyle = 'rgba(150, 200, 255, 0.35)';
+    bgCtx.lineWidth = 1.5;
+    const gridStep = 48;
+    for (let i = 0; i <= 1024; i += gridStep) {
+      bgCtx.beginPath(); bgCtx.moveTo(i, 0); bgCtx.lineTo(i, 1024); bgCtx.stroke();
+      bgCtx.beginPath(); bgCtx.moveTo(0, i); bgCtx.lineTo(1024, i); bgCtx.stroke();
+    }
+    bgCtx.fillStyle = 'rgba(220, 235, 255, 0.85)';
+    for (let x = 0; x <= 1024; x += gridStep) {
+      for (let y = 0; y <= 1024; y += gridStep) {
+        bgCtx.beginPath();
+        bgCtx.arc(x, y, 2.2, 0, Math.PI * 2);
+        bgCtx.fill();
+      }
+    }
+    const bgTexture = new THREE.CanvasTexture(bgCanvas);
+    bgTexture.colorSpace = THREE.SRGBColorSpace;
+    const bgPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(30, 18),
+      new THREE.MeshBasicMaterial({ map: bgTexture })
+    );
+    bgPlane.position.z = -6;
+    scene.add(bgPlane);
+
+    // Crystal: low thickness keeps the body see-through, all the action sits at the edges
+    // where high dispersion + IOR produce the rainbow fringes from the reference shot.
+    const glass = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      metalness: 0,
+      roughness: 0,
+      ior: 1.75,
+      thickness: 0.5,
+      transmission: 1,
+      dispersion: 12,
+      specularIntensity: 1,
+      envMapIntensity: 1.0,
+      clearcoat: 1,
+      clearcoatRoughness: 0,
+    });
+
+    function makeBar(length, w, d) {
+      const geo = new RoundedBoxGeometry(w, length, d, 6, 0.08);
+      return new THREE.Mesh(geo, glass);
+    }
+
+    const bar1 = makeBar(4.4, 0.65, 0.65);
+    const bar2 = makeBar(4.4, 0.65, 0.65);
+
+    // Both bars share one pivot. They are locked into a fixed cross pose
+    // (bar2 rotated ~70° relative to bar1) and the whole rig rotates as a unit —
+    // they don't spin in themselves, only against each other through the shared pivot.
+    const rig = new THREE.Group();
+    bar2.rotation.z = Math.PI / 2.6;
+    bar2.rotation.x = Math.PI / 8;
+    rig.add(bar1, bar2);
+    scene.add(rig);
+
+    function animate(time) {
+      const t = time * 0.0003;
+
+      rig.rotation.y = t * 0.9;
+      rig.rotation.x = Math.sin(t * 0.5) * 0.35;
+      rig.rotation.z = Math.cos(t * 0.4) * 0.25;
+
+      camera.position.x = Math.sin(t * 0.3) * 0.4;
+      camera.position.y = Math.cos(t * 0.25) * 0.3;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+  </script>
+</body>
+</html>

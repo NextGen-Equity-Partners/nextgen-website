@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NextGen Equity Partners – Wir machen digitale Marktführer.</title>
+<meta name="description" content="NextGen Equity – Unternehmerkapital, KI-Kompetenz und Branchenexpertise für Business und Professional Services im DACH-Mittelstand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap">
+<style>
+/* ============================================================
+   NEXTGEN EQUITY · ONE-PAGE · DESIGN SYSTEM
+============================================================ */
+:root {
+  --bg-deep:    #050d1f;
+  --bg-mid:     #0a1a40;
+  --bg-soft:    #112555;
+  --w:          #F9F7F4;
+  --w-soft:     #E8E3D9;
+  --mute:       rgba(249,247,244,.55);
+  --mute-2:     rgba(249,247,244,.35);
+  --line:       rgba(255,255,255,.10);
+  --line-2:     rgba(255,255,255,.18);
+  --ink-card:   #1A1916;
+  --ease:       cubic-bezier(.16,1,.3,1);
+}
+
+* , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-padding-top: 110px;
+  scroll-behavior: smooth;
+  background: var(--bg-deep);
+}
+html, body {
+  color: var(--w);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background: transparent;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ============================================================
+   ANIMATED COSMIC BACKGROUND
+============================================================ */
+.site-bg {
+  position: fixed; inset: 0; z-index: -2;
+  pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 0%, #16306e 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, #0e2867 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, #0a1f50 0%, transparent 55%),
+    linear-gradient(180deg, #050d1f 0%, #0a1a40 50%, #050d1f 100%);
+}
+.orb {
+  position: fixed; z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .35;
+  pointer-events: none;
+  animation: orb-drift 22s ease-in-out infinite;
+}
+.orb-1 {
+  width: 480px; height: 480px;
+  top: 10%; left: -8%;
+  background: radial-gradient(circle, #2a4ea3 0%, transparent 70%);
+}
+.orb-2 {
+  width: 560px; height: 560px;
+  top: 45%; right: -10%;
+  background: radial-gradient(circle, #1c3884 0%, transparent 70%);
+  animation-delay: -8s;
+}
+.orb-3 {
+  width: 420px; height: 420px;
+  bottom: 5%; left: 25%;
+  background: radial-gradient(circle, #1a2f74 0%, transparent 70%);
+  animation-delay: -15s;
+}
+@keyframes orb-drift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%     { transform: translate(40px,-30px) scale(1.08); }
+  66%     { transform: translate(-30px,40px) scale(.95); }
+}
+.grain {
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none; opacity: .04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ============================================================
+   NAV · LIQUID GLASS PILL
+============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 76px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  transition: all .45s var(--ease);
+}
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 14px 22px;
+  border-radius: 999px;
+  background: rgba(10,20,52,.45);
+  backdrop-filter: blur(28px) saturate(1.4) brightness(1.05);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4) brightness(1.05);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 6px 40px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -0.5px 0 rgba(255,255,255,.04);
+  transition: all .45s var(--ease);
+  pointer-events: none;
+  z-index: -1;
+}
+.nav.scrolled::before {
+  background: rgba(8,16,42,.7);
+  border-color: rgba(255,255,255,.18);
+  box-shadow:
+    0 8px 50px rgba(0,0,0,.5),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -0.5px 0 rgba(255,255,255,.04);
+}
+.nav .brand {
+  display: flex; align-items: center;
+  padding: 0 22px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  letter-spacing: .18em;
+  font-size: 13px;
+  color: var(--w);
+  text-transform: uppercase;
+}
+.nav .brand img { height: 22px; width: auto; }
+.nav-links {
+  display: flex; gap: 2px; align-items: center;
+  font-size: 10.5px;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 0 8px;
+}
+.nav-links a {
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: rgba(255,255,255,.55);
+  transition: color .25s, background .25s;
+}
+.nav-links a:hover { color: rgba(255,255,255,.95); background: rgba(255,255,255,.06); }
+.nav-links a.active {
+  color: #fff; font-weight: 700;
+  background: rgba(255,255,255,.14);
+}
+.nav-cta {
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+  color: rgba(255,255,255,.95);
+  border: 1px solid rgba(255,255,255,.22);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: background .25s, transform .25s var(--ease);
+  white-space: nowrap;
+  margin-right: 14px;
+}
+.nav-cta:hover { background: rgba(255,255,255,.26); transform: translateY(-1px); }
+
+/* Mobile */
+.nav-burger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  width: 30px; cursor: pointer; padding: 6px; margin-right: 14px;
+}
+.nav-burger span {
+  display: block; height: 1.5px; width: 100%;
+  background: var(--w); border-radius: 2px;
+  transition: transform .35s var(--ease), opacity .25s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile {
+  display: none;
+  position: fixed; inset: 0; z-index: 99;
+  background: rgba(5,13,31,.92);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+}
+.nav-mobile.open { opacity: 1; pointer-events: all; }
+.nav-mobile a {
+  font-size: 28px; font-weight: 200;
+  letter-spacing: -.02em; color: var(--w);
+  opacity: .8; padding: 8px 0;
+  transition: opacity .2s;
+}
+.nav-mobile a.cta {
+  margin-top: 24px;
+  padding: 14px 36px; border-radius: 999px;
+  background: var(--w); color: var(--bg-deep);
+  font-size: 14px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 999px;
+  font-size: 13px; font-weight: 500; letter-spacing: .01em;
+  transition: background .25s, transform .25s var(--ease), color .25s, border-color .25s;
+  white-space: nowrap;
+}
+.btn-light { background: var(--w); color: var(--bg-deep); }
+.btn-light:hover { background: #fff; transform: translateY(-2px); }
+.btn-ghost {
+  border: 1px solid rgba(249,247,244,.22);
+  color: rgba(249,247,244,.85);
+  font-weight: 400;
+}
+.btn-ghost:hover { border-color: rgba(249,247,244,.5); color: var(--w); transform: translateY(-2px); }
+
+/* ============================================================
+   SECTIONS · PANE FRAMEWORK
+============================================================ */
+.pane {
+  position: relative;
+  padding: clamp(96px, 11vw, 160px) 48px;
+}
+.pane-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.s-tag {
+  display: inline-flex; align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--mute); font-weight: 500; margin-bottom: 28px;
+}
+
+h1.display, h2.display {
+  font-family: 'Outfit', sans-serif;
+  color: var(--w);
+  letter-spacing: -.04em;
+  line-height: 1.04;
+}
+h1.display {
+  font-weight: 200;
+  font-size: clamp(44px, 6vw, 84px);
+}
+h2.display {
+  font-weight: 200;
+  font-size: clamp(36px, 4.6vw, 66px);
+  line-height: 1.06;
+}
+h3.display {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 200;
+  font-size: clamp(28px, 3vw, 44px);
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--w);
+}
+.bold { font-weight: 800; }
+
+.body-text {
+  font-size: 15px; line-height: 1.85;
+  color: var(--w); opacity: .78; font-weight: 300;
+}
+
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.twocol .sticky-col { position: sticky; top: 130px; }
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 96px;
+  overflow: hidden;
+}
+.hero-eyebrow {
+  font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--w); opacity: .8; font-weight: 400;
+  margin-bottom: 26px;
+}
+.hero-title {
+  max-width: 1100px;
+}
+.hero-line {
+  display: block; opacity: 0;
+  animation: hero-line-in .9s var(--ease) forwards;
+}
+.hero-line:nth-child(2) { animation-delay: .12s; }
+@keyframes hero-line-in {
+  from { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.hero-sub {
+  max-width: 580px; margin-top: 28px;
+  font-size: 15px; line-height: 1.75;
+  color: var(--w); opacity: .78; font-weight: 300;
+}
+.hero-ctas {
+  margin-top: 38px;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+}
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: .55; transition: opacity .3s;
+}
+.hero-scroll:hover { opacity: 1; }
+.hero-scroll .mouse {
+  width: 22px; height: 34px;
+  border: 1.5px solid rgba(249,247,244,.6);
+  border-radius: 11px;
+  display: flex; justify-content: center; padding-top: 5px;
+}
+.hero-scroll .wheel {
+  width: 3px; height: 6px;
+  background: var(--w); border-radius: 2px;
+  animation: scroll-wheel 2s ease-in-out infinite;
+}
+@keyframes scroll-wheel {
+  0% { transform: translateY(0); opacity: .9; }
+  60% { transform: translateY(10px); opacity: .1; }
+  100% { transform: translateY(0); opacity: .9; }
+}
+
+/* ============================================================
+   STATS BAND · LIQUID GLASS
+============================================================ */
+.stats {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  margin: 0 48px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 20px 60px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.12);
+  transform: perspective(1400px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .12s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .4s var(--ease);
+  will-change: transform;
+  position: relative;
+}
+.stats::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.14) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.stats:hover::after { opacity: 1; }
+.s-box {
+  padding: 44px 36px;
+  border-right: 1px solid rgba(255,255,255,.07);
+  position: relative; overflow: hidden;
+  transition: background .35s var(--ease);
+}
+.s-box:last-child { border-right: none; }
+.s-box:hover { background: rgba(255,255,255,.04); }
+.s-n {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 100;
+  font-size: clamp(38px, 4.2vw, 70px);
+  line-height: 1; letter-spacing: -.06em;
+  color: var(--w);
+}
+.s-n .unit { font-size: 42%; vertical-align: baseline; font-weight: 200; letter-spacing: 0; margin-left: 4px; }
+.s-l {
+  font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(249,247,244,.55); margin-top: 14px;
+  line-height: 1.55; font-weight: 400;
+}
+.s-box::after {
+  content: attr(data-bg);
+  position: absolute; right: -8px; bottom: -28px;
+  font-family: 'Outfit', sans-serif; font-weight: 900;
+  font-size: 8rem; line-height: 1;
+  color: rgba(255,255,255,.03); pointer-events: none;
+  letter-spacing: -.06em; user-select: none;
+}
+
+/* ============================================================
+   GLASS CARDS · LIQUID GLASS WITH 3D TILT
+============================================================ */
+.glass-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 16px; margin-top: 56px;
+}
+.glass-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+.glass-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+
+.glass-card {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  position: relative;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(22px) saturate(1.5) brightness(1.08);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5) brightness(1.08);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px;
+  padding: 34px 30px;
+  min-height: 260px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  overflow: hidden;
+  box-shadow:
+    0 8px 36px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(var(--tx)) rotateY(var(--ty));
+  transition:
+    transform .12s var(--ease),
+    background .4s var(--ease),
+    border-color .4s var(--ease),
+    box-shadow .4s var(--ease);
+  will-change: transform;
+}
+.glass-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.18) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.glass-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 50%);
+  pointer-events: none;
+}
+.glass-card:hover {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.28);
+  box-shadow:
+    0 16px 50px rgba(0,0,0,.3),
+    inset 0 1px 0 rgba(255,255,255,.24);
+}
+.glass-card:hover::before { opacity: 1; }
+.glass-card .num,
+.glass-card .label {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); font-weight: 500;
+}
+.glass-card h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 21px; font-weight: 600;
+  line-height: 1.22; margin-top: 28px;
+  letter-spacing: -.02em; color: var(--w);
+}
+.glass-card p {
+  font-size: 13.5px; line-height: 1.75;
+  color: var(--w); opacity: .72;
+  margin-top: 12px; font-weight: 300;
+}
+.glass-card > * { position: relative; z-index: 1; }
+
+/* Variant: with strong number/index */
+.glass-card.with-num h3 { margin-top: 32px; }
+
+/* ============================================================
+   LIST ITEM CARDS · for steps / approach
+============================================================ */
+.j-list { display: flex; flex-direction: column; gap: 14px; margin-top: 48px; }
+.j-item {
+  --tx: 0deg; --ty: 0deg;
+  display: grid; grid-template-columns: 64px 1fr; gap: 26px;
+  padding: 26px 32px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 18px;
+  align-items: start;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 6px 28px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.16);
+  transform: perspective(1000px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .12s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+}
+.j-item:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.24); }
+.j-item .n {
+  font-size: 11px; letter-spacing: .24em; color: rgba(249,247,244,.6);
+  font-weight: 500; padding-top: 5px;
+}
+.j-item h4 {
+  font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 600;
+  color: var(--w); letter-spacing: -.01em;
+}
+.j-item p {
+  font-size: 13.5px; line-height: 1.78; color: var(--w); opacity: .72;
+  margin-top: 10px; font-weight: 300;
+}
+
+/* ============================================================
+   COMPARISON TABLE
+============================================================ */
+.compare {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  position: relative;
+  width: 100%; margin-top: 52px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 20px; overflow: hidden;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  transform: perspective(1400px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .12s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+}
+.compare::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.compare:hover::after { opacity: 1; }
+.compare-head, .compare-row {
+  display: grid; grid-template-columns: 1fr 56px 1fr;
+  align-items: center;
+}
+.compare-head {
+  padding: 16px 28px;
+  background: rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(249,247,244,.55); font-weight: 500;
+}
+.compare-row {
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 14px; color: var(--w); font-weight: 300;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row .a { color: rgba(249,247,244,.55); }
+.compare-row .b { color: var(--w); font-weight: 500; }
+.compare-row .arrow { color: rgba(249,247,244,.3); text-align: center; }
+
+/* ============================================================
+   QUOTE
+============================================================ */
+.quote {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  margin-top: 64px;
+  padding: 48px 56px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 24px;
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  box-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.16);
+  position: relative;
+  transform: perspective(1400px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .12s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+  overflow: hidden;
+}
+.quote::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.14) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+.quote:hover::after { opacity: 1; }
+.quote::before {
+  content: "\201C";
+  position: absolute; top: 12px; left: 32px;
+  font-family: 'Outfit', sans-serif; font-weight: 200;
+  font-size: 110px; line-height: 1;
+  color: rgba(255,255,255,.08);
+  user-select: none; pointer-events: none;
+}
+.quote p {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 200;
+  font-size: clamp(18px, 1.8vw, 26px);
+  line-height: 1.5; letter-spacing: -.01em;
+  color: var(--w); opacity: .92;
+  position: relative; z-index: 1;
+}
+.quote .author {
+  display: block; margin-top: 24px;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(249,247,244,.55); font-weight: 500;
+}
+
+/* ============================================================
+   TAGS
+============================================================ */
+.tag-list { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.tag {
+  display: inline-flex; padding: 8px 18px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(249,247,244,.75); font-weight: 500;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ============================================================
+   TEAM
+============================================================ */
+.team-grid { display: flex; flex-direction: column; gap: 56px; margin-top: 64px; }
+.team-row-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 36px; }
+.team-row-2 {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 36px;
+  max-width: calc(66.666% - 12px);
+}
+.tm {
+  --tx: 0deg; --ty: 0deg;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 36px 28px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 22px;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.15);
+  transform: perspective(1000px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .12s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+}
+.tm:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.22); }
+.portrait {
+  width: 150px; height: 150px; border-radius: 50%; overflow: hidden;
+  background: linear-gradient(140deg, #1f3a7a 0%, #112555 100%);
+  position: relative; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 8px 28px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.portrait .glyph {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-weight: 300;
+  font-size: 56px; color: rgba(255,255,255,.7); letter-spacing: -.02em;
+}
+.tm-body { margin-top: 22px; }
+.tm .role {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.55); font-weight: 500;
+}
+.tm h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px; font-weight: 600;
+  line-height: 1.2; margin-top: 8px;
+  letter-spacing: -.015em; color: var(--w);
+}
+.tm p {
+  font-size: 13px; line-height: 1.7; color: var(--w);
+  opacity: .65; margin-top: 12px; font-weight: 300; max-width: 26ch;
+}
+
+/* ============================================================
+   CONTACT FORM · GLASS PANEL
+============================================================ */
+.cf-wrap {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: start;
+  margin-top: 64px;
+}
+.cf {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  position: relative;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 24px;
+  padding: 44px 48px 48px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.16);
+  transform: perspective(1400px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .15s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+}
+.cf::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.cf:hover::after { opacity: 1; }
+.cf > * { position: relative; z-index: 1; }
+
+.cf-side {
+  --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%;
+  position: relative;
+  padding: 36px 36px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 22px;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.14);
+  transform: perspective(1400px) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-style: preserve-3d;
+  transition: transform .15s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  will-change: transform;
+  overflow: hidden;
+}
+.cf-side::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.12) 0%, transparent 45%);
+  opacity: 0; transition: opacity .35s var(--ease);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.cf-side:hover::after { opacity: 1; }
+.cf-side > * { position: relative; z-index: 1; }
+.cf-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.cf-row.full { grid-template-columns: 1fr; }
+.cf label {
+  display: block;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); font-weight: 500;
+  margin-bottom: 8px;
+}
+.cf input, .cf select, .cf textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.05);
+  color: var(--w);
+  font: inherit; font-size: 14px;
+  outline: none;
+  transition: border-color .25s, background .25s;
+  font-weight: 300;
+  -webkit-appearance: none; appearance: none;
+}
+.cf input:focus, .cf select:focus, .cf textarea:focus {
+  border-color: rgba(249,247,244,.5);
+  background: rgba(255,255,255,.09);
+}
+.cf input::placeholder, .cf textarea::placeholder { color: rgba(249,247,244,.3); }
+.cf select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(249,247,244,.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+  padding-right: 42px;
+}
+.cf select option { background: #112555; color: var(--w); }
+.cf textarea { resize: none; height: 120px; line-height: 1.6; }
+.cf-submit {
+  width: 100%; margin-top: 24px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--w); color: var(--bg-deep);
+  font: inherit; font-size: 14px; font-weight: 600;
+  letter-spacing: .04em; cursor: pointer;
+  border: none;
+  transition: background .25s, transform .25s var(--ease);
+}
+.cf-submit:hover { background: #fff; transform: translateY(-2px); }
+.cf-submit.sent { background: rgba(249,247,244,.2); color: rgba(249,247,244,.7); cursor: default; transform: none; }
+
+.cf-side .cf-block {
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.cf-side .cf-block:last-child { border-bottom: none; }
+.cf-side .cf-eyebrow {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); font-weight: 500; margin-bottom: 14px;
+}
+.cf-side h4 {
+  font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 600;
+  color: var(--w); letter-spacing: -.015em;
+}
+.cf-side p {
+  font-size: 14px; line-height: 1.7; color: var(--w); opacity: .72;
+  margin-top: 8px; font-weight: 300;
+}
+.cf-side a { color: var(--w); border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 1px; transition: border-color .2s; }
+.cf-side a:hover { border-color: var(--w); }
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  position: relative;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: rgba(249,247,244,.55);
+  padding: 32px 48px;
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 18px;
+}
+footer .fl { text-align: left; }
+footer .fm { text-align: center; }
+footer .fr { display: flex; gap: 24px; justify-content: flex-end; }
+footer a, footer button {
+  font: inherit; font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(249,247,244,.55); transition: color .2s;
+  background: none; border: none; cursor: pointer; padding: 0;
+}
+footer a:hover, footer button:hover { color: var(--w); }
+
+/* ============================================================
+   IMPRESSUM MODAL
+============================================================ */
+.imp-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.imp-backdrop.open { opacity: 1; pointer-events: all; }
+.imp-panel {
+  background: rgba(20,32,72,.92);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.14);
+  max-width: 720px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  border-radius: 22px;
+  padding: 56px 60px 52px;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.16);
+  transform: translateY(20px);
+  transition: transform .35s var(--ease);
+}
+.imp-backdrop.open .imp-panel { transform: translateY(0); }
+.imp-close {
+  position: absolute; top: 22px; right: 22px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(249,247,244,.7); font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s;
+}
+.imp-close:hover { background: rgba(255,255,255,.14); color: var(--w); }
+.imp-eyebrow {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); margin-bottom: 14px; font-weight: 500;
+}
+.imp-title {
+  font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 700;
+  color: var(--w); letter-spacing: -.03em; margin-bottom: 38px; line-height: 1;
+}
+.imp-body section { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.imp-body section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.imp-body h3 {
+  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(249,247,244,.5); font-weight: 500; margin-bottom: 12px;
+}
+.imp-body p { font-size: 14px; line-height: 1.8; color: var(--w); opacity: .85; font-weight: 300; }
+.imp-body a { color: var(--w); border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 1px; }
+.imp-body a:hover { border-color: var(--w); }
+
+/* ============================================================
+   REVEAL ANIMATION
+============================================================ */
+.rv {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv-d1 { transition-delay: .08s; }
+.rv-d2 { transition-delay: .16s; }
+.rv-d3 { transition-delay: .24s; }
+.rv-d4 { transition-delay: .32s; }
+
+/* ============================================================
+   SECTION DIVIDER
+============================================================ */
+.sec-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.14) 50%, transparent 100%);
+  margin: 0 48px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 1024px) {
+  .glass-grid, .glass-grid.cols-3, .glass-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+  .team-row-3 { grid-template-columns: repeat(2,1fr); }
+  .team-row-2 { grid-template-columns: repeat(2,1fr); max-width: 100%; }
+  .compare-head, .compare-row { grid-template-columns: 1fr 40px 1fr; }
+}
+@media (max-width: 760px) {
+  .nav { padding: 0 16px; }
+  .nav::before { inset: 12px 14px; }
+  .nav .brand { padding: 0 12px; font-size: 12px; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .nav-mobile { display: flex; }
+  .pane { padding: clamp(72px, 9vw, 110px) 22px; }
+  .stats { margin: 0 22px; grid-template-columns: repeat(2,1fr); border-radius: 18px; }
+  .s-box { padding: 32px 22px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .s-box:nth-child(2n) { border-right: none; }
+  .s-box:nth-child(3), .s-box:nth-child(4) { border-bottom: none; }
+  .hero { padding: 0 22px 96px; }
+  .twocol { grid-template-columns: 1fr; gap: 32px; }
+  .twocol .sticky-col { position: static; }
+  .glass-grid, .glass-grid.cols-3, .glass-grid.cols-2 { grid-template-columns: 1fr; }
+  .j-item { grid-template-columns: 48px 1fr; gap: 18px; padding: 22px 22px; }
+  .team-row-3, .team-row-2 { grid-template-columns: 1fr; gap: 20px; max-width: 100%; }
+  .cf-wrap { grid-template-columns: 1fr; gap: 36px; }
+  .cf { padding: 32px 26px 36px; border-radius: 18px; }
+  .cf-row { grid-template-columns: 1fr; }
+  .compare-head, .compare-row { grid-template-columns: 1fr; gap: 4px; padding: 14px 18px; }
+  .compare-row .arrow { display: none; }
+  footer { grid-template-columns: 1fr; text-align: center; gap: 12px; padding: 22px; }
+  footer .fl, footer .fr { text-align: center; justify-content: center; }
+  .quote { padding: 36px 30px; }
+  .imp-panel { padding: 40px 28px 36px; }
+  .imp-title { font-size: 28px; }
+  .sec-divider { margin: 0 22px; }
+  .hero-title { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- COSMIC BACKGROUND -->
+<div class="site-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#home" class="brand">NEXTGEN</a>
+  <div class="nav-links">
+    <a href="#home" data-link>Home</a>
+    <a href="#profil" data-link>Profil</a>
+    <a href="#ansatz" data-link>Ansatz</a>
+    <a href="#ki" data-link>KI &amp; Wertsteigerung</a>
+    <a href="#beteiligungen" data-link>Beteiligungen</a>
+    <a href="#team" data-link>Team</a>
+    <a href="#kontakt" class="nav-cta">Kontakt</a>
+  </div>
+  <button class="nav-burger" id="nav-burger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#home" data-link>Home</a>
+  <a href="#profil" data-link>Profil</a>
+  <a href="#ansatz" data-link>Ansatz</a>
+  <a href="#ki" data-link>KI &amp; Wertsteigerung</a>
+  <a href="#beteiligungen" data-link>Beteiligungen</a>
+  <a href="#team" data-link>Team</a>
+  <a href="#kontakt" class="cta">Kontakt</a>
+</div>
+
+<!-- ============================================================
+     HERO · HOME
+============================================================ -->
+<section class="hero" id="home">
+  <div class="hero-eyebrow">DACH-Mittelstand · Buy &amp; Build</div>
+  <h1 class="display hero-title">
+    <span class="hero-line">Wir machen digitale</span>
+    <span class="hero-line"><span class="bold">Marktführer.</span></span>
+  </h1>
+  <p class="hero-sub">Unternehmerkapital, KI-Kompetenz und Branchenexpertise für Business und Professional Services im DACH-Mittelstand. Mehrheitsbeteiligungen an profitablen Unternehmen – mit dem Anspruch, sie gemeinsam zur Branchenführerschaft zu führen.</p>
+  <div class="hero-ctas">
+    <a href="#kontakt" class="btn btn-light">Unternehmen verkaufen →</a>
+    <a href="#profil" class="btn btn-ghost">Über uns</a>
+  </div>
+  <a href="#stats" class="hero-scroll" aria-label="Scrollen">
+    <div class="mouse"><div class="wheel"></div></div>
+  </a>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats" id="stats">
+  <div class="s-box rv" data-bg="10">
+    <div class="s-n">10–100<span class="unit">Mio. €</span></div>
+    <div class="s-l">Umsatz Plattform-Investments</div>
+  </div>
+  <div class="s-box rv rv-d1" data-bg="3">
+    <div class="s-n">3–10<span class="unit">Mio. €</span></div>
+    <div class="s-l">Umsatz Add-on-Akquisitionen</div>
+  </div>
+  <div class="s-box rv rv-d2" data-bg="3">
+    <div class="s-n">3</div>
+    <div class="s-l">Fokus-Vertikale</div>
+  </div>
+  <div class="s-box rv rv-d3" data-bg="DACH">
+    <div class="s-n" style="font-size:clamp(34px,3.6vw,56px);letter-spacing:-.04em;">DACH</div>
+    <div class="s-l">Investitionsraum</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PROFIL · WER WIR SIND
+============================================================ -->
+<section class="pane" id="profil">
+  <div class="pane-inner">
+    <div class="twocol">
+      <div class="sticky-col">
+        <div class="s-tag rv">Wer wir sind</div>
+        <h2 class="display rv">Aus Familienunternehmen.<br><span class="bold">Für Familienunternehmen.</span></h2>
+      </div>
+      <div>
+        <p class="body-text rv" style="margin-bottom:22px;">NextGen Equity wurde von Unternehmern gegründet, die selbst aus dem Mittelstand kommen. Wir wissen, was es bedeutet, ein Lebenswerk aufzubauen – und was es bedeutet, es weiterzugeben.</p>
+        <p class="body-text rv rv-d1">NextGen Equity ist eine von Unternehmern für Unternehmer gegründete Beteiligungsgesellschaft mit Sitz in München. Vertrauen, Verlässlichkeit und Verantwortung sind für uns keine Floskeln, sondern die Grundlage jeder Beteiligung. Wir denken in Unternehmensgenerationen, nicht in Fondslaufzeiten.</p>
+        <div class="rv rv-d2" style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="#team" class="btn btn-ghost">Das Team kennenlernen →</a>
+          <a href="#kontakt" class="btn btn-light">Gespräch anfragen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Säulen -->
+    <div class="glass-grid cols-2" data-tilt-grid>
+      <div class="glass-card rv rv-d1">
+        <div class="num">Kapital</div>
+        <div>
+          <h3>Unternehmerkapital</h3>
+          <p>Wir investieren als Unternehmer für Unternehmer. Jedes Engagement wird signifikant aus eigenen Mitteln mitgetragen.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d2">
+        <div class="num">Technologie</div>
+        <div>
+          <h3>KI-Powerhouse mit Kapital</h3>
+          <p>Mit einem eigenen KI- und Digital-Team heben wir die zentralen Hebel der KI-Welle – im Tagesgeschäft, in der Skalierung, in der Wettbewerbsposition.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d1">
+        <div class="num">Strategie</div>
+        <div>
+          <h3>Plattformen statt Einzeltransaktionen</h3>
+          <p>Wir bauen Gruppen, die ihre Branche definieren – durch organisches Wachstum, gezielte Zukäufe und eine klare strategische Logik.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d2">
+        <div class="num">Kultur</div>
+        <div>
+          <h3>Familienwerte. Starke Arbeitgeber.</h3>
+          <p>Wir investieren bewusst in Kultur, Standorte und Belegschaften. Wer ein Lebenswerk übergibt, verdient einen Partner, der es als solches behandelt.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gründungsstory -->
+    <div class="twocol" style="margin-top:120px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Warum wir das tun</div>
+        <h2 class="display rv">Die Überzeugung hinter <span class="bold">NextGen.</span></h2>
+      </div>
+      <div>
+        <p class="body-text rv" style="margin-bottom:18px;">Mehr als 12 Jahre Erfahrung im europäischen Mid-Market. Komplexe Transaktionen, anspruchsvolle Exits, direkte Verantwortung. Dabei lernten wir das Handwerk: die Disziplin der Due Diligence, die Kunst, Vertrauen bei Mittelstandsgründern aufzubauen.</p>
+        <p class="body-text rv rv-d1" style="margin-bottom:18px;">Aber nach einem Jahrzehnt derselben Playbooks wurde klar: Die Welt ändert sich schneller als das klassische Modell. Wer heute als Generalist in dispersen Sektoren agiert, ist reaktiv statt proaktiv. Die traditionellen Werthebel reichen nicht mehr.</p>
+        <p class="body-text rv rv-d2" style="margin-bottom:18px;">Wir haben uns von KI-Enthusiasten zu KI-nativen Operatoren entwickelt – diese Tools in unserem eigenen Tagesgeschäft eingesetzt. Und erkannt: Der deutsche Mittelstand hat enormes Potenzial, von dieser Transformation zu profitieren. Wir bringen das technische Know-how.</p>
+        <p class="body-text rv rv-d3">Das Ergebnis ist NextGen Equity – eine agile, zweckgebaute Plattform für die nächste Generation von Wertschöpfung. Die Zukunft gehört denen, die Investitionsdisziplin mit technischer Tiefe verbinden.</p>
+      </div>
+    </div>
+
+    <!-- Werte -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Unsere Werte</div>
+      <h2 class="display rv">Vertrauen. Verlässlichkeit. <span class="bold">Verantwortung.</span></h2>
+      <div class="glass-grid cols-3" data-tilt-grid style="margin-top:48px;">
+        <div class="glass-card rv rv-d1">
+          <div class="num">01 · Vertrauen</div>
+          <div>
+            <h3>Auf Augenhöhe.</h3>
+            <p>Wir beginnen jeden Prozess mit echtem Zuhören. Vision, Prioritäten und Sorgen – auf Augenhöhe, ohne Agenda. Vertrauen wird verdient, nicht eingefordert.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d2">
+          <div class="num">02 · Verlässlichkeit</div>
+          <div>
+            <h3>Verbindlich, nicht überbietend.</h3>
+            <p>Was wir sagen, halten wir. Kein Überbieten in Letters of Intent, die dann nicht halten. Kein Bieterwettbewerb – verbindliche Worte, verbindliche Konditionen.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d3">
+          <div class="num">03 · Verantwortung</div>
+          <div>
+            <h3>Für das Lebenswerk.</h3>
+            <p>Für das Lebenswerk der Gründer. Für die Mitarbeiter an jedem Standort. Für die langfristige Wettbewerbsfähigkeit der Plattform – nicht nur die nächste Rendite.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESG -->
+    <div class="twocol" style="margin-top:120px;align-items:center;">
+      <div>
+        <div class="s-tag rv">Verantwortung</div>
+        <h2 class="display rv">Verantwortungsvolles <span class="bold">Investieren.</span></h2>
+        <div class="tag-list rv rv-d2">
+          <span class="tag">Langfristige Partnerschaften</span>
+          <span class="tag">Mitarbeiter im Mittelpunkt</span>
+          <span class="tag">Verantwortungsvolle Unternehmensführung</span>
+        </div>
+      </div>
+      <div>
+        <p class="body-text rv rv-d1">Nachhaltigkeit ist für uns kein Reporting-Thema, sondern Teil unseres unternehmerischen Selbstverständnisses. Wir investieren langfristig in Menschen, Standorte und Strukturen – und berücksichtigen soziale und ökologische Faktoren als natürlichen Bestandteil unserer Beteiligungspraxis. Starke Arbeitgeber sind nachhaltige Arbeitgeber.</p>
+      </div>
+    </div>
+
+    <!-- Vision -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Mittel- &amp; Langfristige Vision</div>
+      <h2 class="display rv">DACH-Marktführer.<br><span class="bold">In fünf Jahren.</span></h2>
+      <div class="glass-grid cols-2" data-tilt-grid style="margin-top:48px;">
+        <div class="glass-card rv rv-d1">
+          <div class="num">Mittelfristig · 5 Jahre</div>
+          <div>
+            <h3>Tech-enabled Buy &amp; Build.</h3>
+            <p>Führender tech-enabled Partner für Buy &amp; Build in DACH. KI-native Betriebsmodelle in allen Portfoliounternehmen. Proprietäre Tech-Capabilities als Alleinstellungsmerkmal.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d2">
+          <div class="num">Langfristig · 10+ Jahre</div>
+          <div>
+            <h3>Europäische Marktführerschaft.</h3>
+            <p>Europäische Marktführerschaft im Segment. Von Buy &amp; Build zu Platform Incubation. Standard setzen für KI-augmentierte Belegschaften in Europa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ============================================================
+     ANSATZ
+============================================================ -->
+<section class="pane" id="ansatz">
+  <div class="pane-inner">
+    <div class="s-tag rv">Wie wir arbeiten</div>
+    <h2 class="display rv" style="max-width:900px;">Identifizieren. Erwerben. <span class="bold">Aufbauen.</span></h2>
+    <p class="body-text rv rv-d1" style="max-width:700px;margin-top:22px;">Kein Einzelfall. Kein Zufall. Drei Schritte. Eine Überzeugung. Rendite entsteht durch Prozess und technologischen Vorsprung – nicht durch Marktlage. Ein Playbook, das wir mit jeder Transaktion präzisieren.</p>
+
+    <!-- Sourcing -->
+    <div class="twocol" style="margin-top:96px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Identifizieren</div>
+        <h3 class="display rv">Wir warten <span class="bold">nicht auf Mandate.</span></h3>
+      </div>
+      <div>
+        <p class="body-text rv" style="margin-bottom:18px;">Weg von der reinen Abhängigkeit von M&amp;A-Beratern. Wir behandeln Deal-Sourcing als technologisch getriebene Sales-Operation. Wir identifizieren Targets mit modernsten Go-to-Market-Datenquellen und führen strukturierte, CRM-basierte Direktansprache bei Unternehmern durch.</p>
+        <p class="body-text rv rv-d1">Unser internes Tool <strong style="color:var(--w);font-weight:500;">Atlas Intelligence</strong> zentralisiert alle Datenquellen, CRM-Workflows und Outreach-Aufgaben in einem Ökosystem.</p>
+      </div>
+    </div>
+    <div class="j-list" data-tilt-grid>
+      <div class="j-item rv rv-d1">
+        <div class="n">01</div>
+        <div>
+          <h4>KI-Screening</h4>
+          <p>Automatisiertes Market Mapping und Company Screening über alle relevanten Datenquellen hinweg – bevor ein Mandat den Markt erreicht.</p>
+        </div>
+      </div>
+      <div class="j-item rv rv-d2">
+        <div class="n">02</div>
+        <div>
+          <h4>Direktansprache</h4>
+          <p>Strukturierter, CRM-basierter Outreach direkt bei Unternehmern. Persönlich, verbindlich, ohne Mittelsmann.</p>
+        </div>
+      </div>
+      <div class="j-item rv rv-d3">
+        <div class="n">03</div>
+        <div>
+          <h4>Erstgespräch</h4>
+          <p>Auf Augenhöhe, ohne Kaufdruck. Wir hören zuerst zu – Vision, Prioritäten und operative Potenziale stehen im Mittelpunkt.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Erwerben -->
+    <div class="twocol" style="margin-top:120px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Erwerben</div>
+        <h3 class="display rv">Verlässlichkeit schlägt <span class="bold">Preisführerschaft.</span></h3>
+      </div>
+      <div>
+        <p class="body-text rv" style="margin-bottom:18px;">Gründerorientierter Prozess, schlanke Due Diligence und ein Team mit Dutzenden erfolgreich abgeschlossener Transaktionen im DACH-Mittelstand. Unternehmer öffnen uns die Tür, weil wir ihre Sprache sprechen – und weil unser Wachstumsbild greifbar ist.</p>
+        <p class="body-text rv rv-d1">Wir kommen nicht als Käufer, sondern als Partner, der das Unternehmen zur Branchenführerschaft führen kann.</p>
+      </div>
+    </div>
+    <div class="glass-grid" data-tilt-grid>
+      <div class="glass-card rv rv-d1"><div class="num">01</div><div><h3>Nachfolgelösungen</h3><p>Diskret, verlässlich, langfristig orientiert.</p></div></div>
+      <div class="glass-card rv rv-d2"><div class="num">02</div><div><h3>Konzernausgliederungen</h3><p>Strukturen lösen, Substanz erhalten.</p></div></div>
+      <div class="glass-card rv rv-d3"><div class="num">03</div><div><h3>Wachstumsfinanzierungen</h3><p>Kapital und Operating-Power für die nächste Stufe.</p></div></div>
+      <div class="glass-card rv rv-d4"><div class="num">04</div><div><h3>Buy-In Partnerschaften</h3><p>Gemeinsam mit Management-Teams ans Ziel.</p></div></div>
+    </div>
+
+    <!-- 100 Tage -->
+    <div class="twocol" style="margin-top:120px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Aufbauen</div>
+        <h3 class="display rv">100 Tage. Fundament für die <span class="bold">Plattform.</span></h3>
+      </div>
+      <div>
+        <p class="body-text rv">Wir gestalten die ersten 100 Tage strukturiert – vier Hebel, die in jeder Beteiligung greifen. Aus Einzelunternehmen wird eine skalierbare Plattform.</p>
+      </div>
+    </div>
+    <div class="glass-grid" data-tilt-grid>
+      <div class="glass-card rv rv-d1">
+        <div class="num">01 · Governance</div>
+        <div>
+          <h3>Klare Strukturen.</h3>
+          <p>Reporting-Automatisierung, gemeinsamer Betriebsrhythmus ab Tag 1. Keine Überraschungen – keine Zweideutigkeiten.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d2">
+        <div class="num">02 · KI-Implementierung</div>
+        <div>
+          <h3>Tools von Tag 1.</h3>
+          <p>Proprietäre Tools von Anfang an: Kapazitäten freisetzen, Prozesse standardisieren, Margen verbessern – systematisch, nicht zufällig.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d3">
+        <div class="num">03 · Add-ons</div>
+        <div>
+          <h3>Add-on-Akquisitionen.</h3>
+          <p>Organisches Wachstum kombiniert mit gezielten Zukäufen nach bewährter Logik. Jedes Add-on stärkt die Plattform strategisch.</p>
+        </div>
+      </div>
+      <div class="glass-card rv rv-d4">
+        <div class="num">04 · Exit</div>
+        <div>
+          <h3>Exit-Vorbereitung.</h3>
+          <p>Jede Plattform ist von Anfang an für den nächsten Eigentümer konzipiert – professionalisiert, KI-gestützt, für eine Premium-Transaktion positioniert.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KI im Prozess -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Technologie im GP-Prozess</div>
+      <h2 class="display rv">KI im gesamten <span class="bold">Investitionsprozess.</span></h2>
+      <div class="j-list" data-tilt-grid>
+        <div class="j-item rv rv-d1">
+          <div class="n">01</div>
+          <div><h4>Sourcing &amp; Origination · Identifizieren</h4><p>KI-gestütztes Market Mapping, Company Screening, Off-Market-Identifikation – wir führen die Gespräche, bevor ein Mandat entsteht.</p></div>
+        </div>
+        <div class="j-item rv rv-d1">
+          <div class="n">02</div>
+          <div><h4>Team Building &amp; Buy-In · Erwerben</h4><p>Technologisch unterstützte Assessment-Prozesse für Management-Teams. Das richtige Team macht Plattformen.</p></div>
+        </div>
+        <div class="j-item rv rv-d2">
+          <div class="n">03</div>
+          <div><h4>Due Diligence · Erwerben</h4><p>Proprietäre technische DD-Capabilities weit über klassische Standards. Wir sehen, was andere nicht sehen.</p></div>
+        </div>
+        <div class="j-item rv rv-d2">
+          <div class="n">04</div>
+          <div><h4>Portfolio-Wertschöpfung · Aufbauen</h4><p>Systematischer KI-Einsatz für Margenverbesserung und Wachstum – direkt im Tagesbetrieb, nicht als Beratungsleistung.</p></div>
+        </div>
+        <div class="j-item rv rv-d3">
+          <div class="n">05</div>
+          <div><h4>Exit-Vorbereitung · Exit</h4><p>Performance-Tracking, Dateninfrastruktur, operative Optimierung. Jede Plattform ist von Anfang an auf den Exit ausgelegt.</p></div>
+        </div>
+      </div>
+      <div class="rv rv-d4" style="margin-top:40px;">
+        <a href="#ki" class="btn btn-ghost">Mehr zu KI &amp; Wertsteigerung →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ============================================================
+     KI & WERTSTEIGERUNG
+============================================================ -->
+<section class="pane" id="ki">
+  <div class="pane-inner">
+    <div class="s-tag rv">Differenzierung · Technologie · Wertschöpfung</div>
+    <h2 class="display rv" style="max-width:900px;">KI-Hebel ab <span class="bold">Tag eins.</span></h2>
+    <p class="body-text rv rv-d1" style="max-width:740px;margin-top:24px;">Die KI-Welle wird in den nächsten zehn Jahren entscheiden, welche Mittelständler Marktführer werden – und welche zugekauft werden. Wir sind angetreten, um auf der richtigen Seite dieser Welle zu stehen.</p>
+
+    <!-- Differenzierung -->
+    <div class="twocol" style="margin-top:96px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Warum wir anders sind</div>
+        <h3 class="display rv">Kein Investor, der <span class="bold">Digitalisierung delegiert.</span></h3>
+      </div>
+      <div>
+        <p class="body-text rv" style="margin-bottom:18px;">Andere Beteiligungsgesellschaften sagen „Digitalisierung". Wir tun es – mit einem eigenen KI- und Digital-Team, das direkt an der Seite jedes Beteiligungsunternehmens arbeitet.</p>
+        <p class="body-text rv rv-d1">Unsere KI-Expertise wird nicht eingekauft. Sie wird intern gebaut, iteriert und in den Unternehmen unserer Plattform eingesetzt. Eine Kombination, die im DACH-Mittelstand kaum existiert.</p>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="compare rv rv-d2">
+      <div class="compare-head">
+        <div>Traditionelles PE</div>
+        <div></div>
+        <div>NextGen Equity</div>
+      </div>
+      <div class="compare-row">
+        <div class="a">Berater beauftragen</div>
+        <div class="arrow">→</div>
+        <div class="b">Eigenes KI-Team, täglich operativ</div>
+      </div>
+      <div class="compare-row">
+        <div class="a">Jahresabschluss-Due Diligence</div>
+        <div class="arrow">→</div>
+        <div class="b">Technische DD mit proprietären Tools</div>
+      </div>
+      <div class="compare-row">
+        <div class="a">Reporting manuell erstellt</div>
+        <div class="arrow">→</div>
+        <div class="b">Atlas Intelligence – automatisiert</div>
+      </div>
+      <div class="compare-row">
+        <div class="a">KI als Buzzword im Pitch</div>
+        <div class="arrow">→</div>
+        <div class="b">KI im Tagesbetrieb, messbar</div>
+      </div>
+      <div class="compare-row">
+        <div class="a">Generalist in dispersen Sektoren</div>
+        <div class="arrow">→</div>
+        <div class="b">Fokus: drei Sektoren, maximale Tiefe</div>
+      </div>
+    </div>
+
+    <!-- 3 Kernbereiche -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Drei Kernbereiche</div>
+      <h2 class="display rv">Wo KI <span class="bold">wirklich wirkt.</span></h2>
+      <div class="glass-grid cols-3" data-tilt-grid style="margin-top:48px;">
+        <div class="glass-card rv rv-d1">
+          <div class="num">01 · Operative KI-Hebel</div>
+          <div>
+            <h3>Effizienz &amp; Marge.</h3>
+            <p>Effizienz und Marge in den Kernprozessen unserer Beteiligungen – von der Angebotserstellung über Service-Automatisierung bis zur Produktivität in den Backoffices. Technologie als Enabler für hochqualifizierte Mitarbeiter: der Fachkräftemangel wird adressiert, nicht ignoriert.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d2">
+          <div class="num">02 · KI-getriebene Skalierung</div>
+          <div>
+            <h3>Skalierung ohne Kostensprung.</h3>
+            <p>Wir helfen unseren Plattformen, mit konstanten Strukturen ein Vielfaches an Volumen zu verarbeiten. Skalierung ohne lineare Kostenentwicklung ist kein Versprechen – es ist die Voraussetzung für die Marktführerschaft, die wir anstreben.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d3">
+          <div class="num">03 · Wettbewerbsposition</div>
+          <div>
+            <h3>Sichtbar für Kunden.</h3>
+            <p>KI verändert, welche Anbieter Kunden in fünf Jahren noch beauftragen. Wir verankern KI dort, wo sie für die Kunden unserer Beteiligungen sichtbar wird – in Geschwindigkeit, Qualität und Tiefe der Leistung.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atlas Intelligence -->
+    <div class="twocol" style="margin-top:120px;">
+      <div class="sticky-col">
+        <div class="s-tag rv">Proprietäre Technologie</div>
+        <h3 class="display rv">Atlas Intelligence: Unser internes <span class="bold">Betriebssystem.</span></h3>
+      </div>
+      <div>
+        <p class="body-text rv">Unser proprietäres Tool zentralisiert alle Datenquellen, CRM-Workflows und Outreach-Aufgaben in einem Ökosystem. Von der Zielidentifikation bis zur Portfolio-Performance – alles in einer Plattform, die wir selbst entwickeln und kontinuierlich verbessern.</p>
+      </div>
+    </div>
+    <div class="glass-grid cols-3" data-tilt-grid>
+      <div class="glass-card rv rv-d1">
+        <div class="num">01</div>
+        <div><h3>Deal-Sourcing Engine</h3><p>KI-gestützte Zielidentifikation, automatisiertes Market Mapping und strukturierter Off-Market-Dealflow – wir sprechen Unternehmer an, bevor ein Mandat entsteht.</p></div>
+      </div>
+      <div class="glass-card rv rv-d2">
+        <div class="num">02</div>
+        <div><h3>Portfolio-Monitoring</h3><p>Real-time Performance-Tracking über alle Beteiligungen hinweg. Klare Dashboards, automatisierte Reportings, operative Frühindikatoren auf einen Blick.</p></div>
+      </div>
+      <div class="glass-card rv rv-d3">
+        <div class="num">03</div>
+        <div><h3>Value Creation Tracking</h3><p>KI-Implementierungs-Status aller Portfoliounternehmen in einer Plattform. Wir messen, was wir versprechen – Schritt für Schritt, transparent, nachvollziehbar.</p></div>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="quote rv rv-d2">
+      <p>Tech und KI sind bei uns kein Schlagwort, sondern operatives Handwerk. Wir verankern Digitalisierung dort, wo sie Marge, Skalierung und Kundennutzen messbar verändert – ohne den Charakter eines mittelständischen Unternehmens zu zerstören.</p>
+      <span class="author">– Dr. Amon Göppert · Partner Technologie, NextGen Equity</span>
+    </div>
+
+    <div class="rv rv-d3" style="margin-top:40px;">
+      <a href="#kontakt" class="btn btn-light">Gespräch anfragen →</a>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ============================================================
+     BETEILIGUNGEN
+============================================================ -->
+<section class="pane" id="beteiligungen">
+  <div class="pane-inner">
+    <div class="s-tag rv">Portfolio · DACH-Mittelstand</div>
+    <h2 class="display rv">Unsere <span class="bold">Beteiligungen.</span></h2>
+    <p class="body-text rv rv-d1" style="max-width:700px;margin-top:24px;">Wir bauen marktführende Gruppen im Bereich Business &amp; Professional Services – mit Unternehmerkapital, KI-Kompetenz und langfristiger Partnerschaft.</p>
+
+    <!-- Portfolio im Aufbau -->
+    <div style="margin-top:96px;">
+      <div class="s-tag rv">Portfolio im Aufbau</div>
+      <h3 class="display rv">Business Services. <span class="bold">DACH-weit.</span></h3>
+      <div class="glass-grid cols-3" data-tilt-grid style="margin-top:48px;">
+        <div class="glass-card rv rv-d1">
+          <div class="num">Plattform I · DACH · In Aufbau</div>
+          <div>
+            <h3>Spezialisierte Dienstleistungen.</h3>
+            <p>Spezialisierte Dienstleistungen mit stabilen Kundenbeziehungen und klarem Konsolidierungspotenzial im DACH-Raum.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d2">
+          <div class="num">Plattform II · DACH · In Aufbau</div>
+          <div>
+            <h3>Wissensintensive Services.</h3>
+            <p>Wissensintensive Dienstleistungen mit wiederkehrenden Umsätzen und starkem Wachstumspotenzial durch KI-Hebel.</p>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d3">
+          <div class="num">Plattform III · DACH · In Aufbau</div>
+          <div>
+            <h3>Professional Services.</h3>
+            <p>Professionelle Dienstleistungen mit fragmentiertem Markt und Potenzial für eine marktführende Gruppenstruktur.</p>
+          </div>
+        </div>
+      </div>
+      <p class="rv rv-d4" style="margin-top:32px;font-size:13px;color:rgba(249,247,244,.55);text-align:center;font-weight:300;">
+        Aktuelle Beteiligungen werden nach Closing kommuniziert. Sprechen Sie uns direkt an, wenn Sie mehr erfahren möchten.
+      </p>
+    </div>
+
+    <!-- Investment-Kriterien -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Investment-Kriterien</div>
+      <h2 class="display rv">Was wir <span class="bold">suchen.</span></h2>
+      <div class="glass-grid cols-2" data-tilt-grid style="margin-top:48px;">
+        <div class="glass-card rv rv-d1" style="min-height:340px;">
+          <div class="num">Profil</div>
+          <div>
+            <h3 style="margin-bottom:18px;">Wonach wir suchen.</h3>
+            <ul style="list-style:none;font-size:14px;line-height:2;color:rgba(249,247,244,.78);font-weight:300;">
+              <li>· Branchen: Business Services &amp; Professional Services</li>
+              <li>· Plattform-Investments: 10–100 Mio. € Umsatz</li>
+              <li>· Add-on-Akquisitionen: 3–10 Mio. € Umsatz</li>
+              <li>· Gesunde Unternehmen mit Wachstumsperspektive</li>
+              <li>· Fragmentierte Märkte mit Konsolidierungspotenzial</li>
+            </ul>
+          </div>
+        </div>
+        <div class="glass-card rv rv-d2" style="min-height:340px;">
+          <div class="num">Konditionen</div>
+          <div>
+            <h3 style="margin-bottom:18px;">Wie wir investieren.</h3>
+            <ul style="list-style:none;font-size:14px;line-height:2;color:rgba(249,247,244,.78);font-weight:300;">
+              <li>· Mehrheitsbeteiligungen</li>
+              <li>· Nachfolgelösungen, Konzernausgliederungen, Wachstumsfinanzierungen</li>
+              <li>· Region: Deutschland, Österreich, Schweiz</li>
+              <li>· Partnerschaftlich, langfristig, unternehmerisch</li>
+              <li>· Kein Bieterwettbewerb – verbindliche Prozesse</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d3" style="margin-top:40px;">
+        <a href="#kontakt" class="btn btn-light">Unternehmen vorstellen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ============================================================
+     TEAM
+============================================================ -->
+<section class="pane" id="team">
+  <div class="pane-inner">
+    <div class="s-tag rv">Menschen hinter NextGen</div>
+    <h2 class="display rv">Das Team hinter <span class="bold">NextGen.</span></h2>
+    <p class="body-text rv rv-d1" style="max-width:700px;margin-top:24px;">Investoren, Operatoren und KI-Ingenieure unter einem Dach – die Kombination, die im DACH-Mittelstand kaum existiert. Ein Team, das gemeinsam kauft, baut und Wert schafft – mit voller Haftung und eigenem Kapital im Spiel.</p>
+
+    <div class="team-grid">
+      <!-- Partner-Reihe -->
+      <div class="team-row-3" data-tilt-grid>
+        <div class="tm rv rv-d1">
+          <div class="portrait"><div class="glyph">MG</div></div>
+          <div class="tm-body">
+            <div class="role">Partner</div>
+            <h4>Maximilian Göppert</h4>
+            <p>Über 12 Jahre M&amp;A-Erfahrung im europäischen Mid-Market. Begleitet Unternehmen vom ersten Gespräch bis zum Closing – und denkt dabei immer in Plattformen, nicht in Einzeltransaktionen.</p>
+          </div>
+        </div>
+        <div class="tm rv rv-d2">
+          <div class="portrait"><div class="glyph">LH</div></div>
+          <div class="tm-body">
+            <div class="role">Partner</div>
+            <h4>Leander Heyken</h4>
+            <p>Langjährige Erfahrung in Transaktionen und operativer Unternehmensführung. Treibt Deals von der Erstansprache bis zum Signing und begleitet den Aufbau danach.</p>
+          </div>
+        </div>
+        <div class="tm rv rv-d3">
+          <div class="portrait"><div class="glyph">AG</div></div>
+          <div class="tm-body">
+            <div class="role">Partner · Technologie</div>
+            <h4>Dr. Amon Göppert</h4>
+            <p>Forscher und Praktiker zugleich. Bringt akademische Tiefe aus Informatik und Engineering direkt in den Betrieb – und baut KI-Lösungen, die im Alltag funktionieren.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zweite Reihe -->
+      <div class="team-row-2" data-tilt-grid>
+        <div class="tm rv rv-d1">
+          <div class="portrait"><div class="glyph">AR</div></div>
+          <div class="tm-body">
+            <div class="role">Wertschöpfung</div>
+            <h4>Alexander Rien</h4>
+            <p>Jahrelange Erfahrung in operativer Führung und Prozessoptimierung. Sorgt dafür, dass Strategie im Alltag ankommt – direkt vor Ort in den Unternehmen.</p>
+          </div>
+        </div>
+        <div class="tm rv rv-d2">
+          <div class="portrait"><div class="glyph">GW</div></div>
+          <div class="tm-body">
+            <div class="role">Origination &amp; BD</div>
+            <h4>Gerald Weitbrecht</h4>
+            <p>Jahrzehntelange Erfahrung in Vertrieb und Business Development im Mittelstand. Kennt die Menschen hinter den Unternehmen – und weiß, wann der richtige Moment für ein Gespräch ist.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team-Philosophie -->
+    <div style="margin-top:120px;">
+      <div class="s-tag rv">Team-Philosophie</div>
+      <h2 class="display rv">Gemeinsam kaufen.<br>Gemeinsam <span class="bold">aufbauen.</span></h2>
+      <div class="twocol" style="margin-top:48px;">
+        <div>
+          <p class="body-text rv" style="margin-bottom:18px;">Wir bringen kein Berater-Netzwerk mit, das auf Abruf kommt. Unser Team kauft gemeinsam, baut gemeinsam und schafft Wert gemeinsam – mit voller Haftung und eigenem Kapital im Spiel.</p>
+          <p class="body-text rv rv-d1">Investoren, Operatoren und KI-Ingenieure unter einem Dach – eine Kombination, die im DACH-Mittelstand kaum existiert. Kein ausgelagertes Consulting, keine Berater auf Abruf: ein Team, das gemeinsam kauft, baut und Wert schafft.</p>
+        </div>
+        <div class="glass-grid cols-2" data-tilt-grid style="margin-top:0;">
+          <div class="glass-card rv rv-d1">
+            <div class="num">PE</div>
+            <div>
+              <h3>Transaktionale Strenge.</h3>
+              <p>Jahrzehnte Deal-Erfahrung im DACH-Mittelstand. Disciplin, Verlässlichkeit, Präzision.</p>
+            </div>
+          </div>
+          <div class="glass-card rv rv-d2">
+            <div class="num">KI</div>
+            <div>
+              <h3>KI-Engineering.</h3>
+              <p>Proprietäre Tools, intern entwickelt – direkt im Tagesbetrieb der Beteiligungen eingesetzt.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d3" style="margin-top:48px;">
+        <a href="#kontakt" class="btn btn-light">Gespräch anfragen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ============================================================
+     KONTAKT
+============================================================ -->
+<section class="pane" id="kontakt" style="padding-bottom:clamp(120px,12vw,180px);">
+  <div class="pane-inner">
+    <div class="s-tag rv">Gespräch anfragen</div>
+    <h2 class="display rv">Lass uns etwas <span class="bold">Bleibendes</span> aufbauen.</h2>
+    <p class="body-text rv rv-d1" style="max-width:680px;margin-top:24px;">Sie überlegen, Ihr Unternehmen in die nächste Generation zu führen? Sprechen Sie direkt mit uns. Diskretion und Verbindlichkeit sind selbstverständlich.</p>
+
+    <div class="cf-wrap">
+      <form class="cf rv rv-d1" id="contact-form">
+        <div class="cf-row">
+          <div>
+            <label for="cf-name">Name *</label>
+            <input id="cf-name" name="name" type="text" placeholder="Maximilian Mustermann" required>
+          </div>
+          <div>
+            <label for="cf-company">Unternehmen</label>
+            <input id="cf-company" name="company" type="text" placeholder="Mustermann GmbH">
+          </div>
+        </div>
+        <div class="cf-row">
+          <div>
+            <label for="cf-email">E-Mail *</label>
+            <input id="cf-email" name="email" type="email" placeholder="max@mustermann.de" required>
+          </div>
+          <div>
+            <label for="cf-topic">Anliegen</label>
+            <select id="cf-topic" name="topic">
+              <option>Bitte wählen</option>
+              <option>Unternehmensverkauf</option>
+              <option>Co-Investment</option>
+              <option>Beratung / Netzwerk</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+        </div>
+        <div class="cf-row full">
+          <div>
+            <label for="cf-msg">Kurze Nachricht</label>
+            <textarea id="cf-msg" name="message" placeholder="Womit können wir helfen?"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="cf-submit">Gespräch anfragen →</button>
+      </form>
+
+      <div class="cf-side rv rv-d2">
+        <div class="cf-block">
+          <div class="cf-eyebrow">Direkter Kontakt</div>
+          <h4>Maximilian Göppert</h4>
+          <p>Partner</p>
+          <p style="margin-top:6px;"><a href="mailto:max@nextgen-equity.com">max@nextgen-equity.com</a></p>
+        </div>
+        <div class="cf-block">
+          <div class="cf-eyebrow">Allgemein</div>
+          <p><a href="mailto:contact@nextgen-equity.com">contact@nextgen-equity.com</a></p>
+        </div>
+        <div class="cf-block">
+          <div class="cf-eyebrow">Standort</div>
+          <h4>München, Deutschland</h4>
+          <p>Für den gesamten DACH-Raum:<br>Deutschland · Österreich · Schweiz</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="fl">NextGen Equity Partners GmbH · München</div>
+  <div class="fm">© 2026 · Alle Rechte vorbehalten</div>
+  <div class="fr">
+    <button data-modal="impressum">Impressum</button>
+    <button data-modal="datenschutz">Datenschutz</button>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</footer>
+
+<!-- IMPRESSUM MODAL -->
+<div class="imp-backdrop" id="imp-backdrop">
+  <div class="imp-panel">
+    <button class="imp-close" id="imp-close" aria-label="Schließen">✕</button>
+    <div class="imp-eyebrow">Rechtliches</div>
+    <div class="imp-title" id="imp-title">Impressum</div>
+    <div class="imp-body" id="imp-body"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   NAV · scroll state + active link
+============================================================ */
+const nav = document.getElementById('nav');
+const links = document.querySelectorAll('.nav-links a[data-link], .nav-mobile a[data-link]');
+const sections = document.querySelectorAll('section[id]');
+
+function onScroll() {
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+
+  let cur = 'home';
+  const y = window.scrollY + 130;
+  sections.forEach(s => {
+    if (s.offsetTop <= y) cur = s.id;
+  });
+  links.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ============================================================
+   MOBILE NAV
+============================================================ */
+const burger = document.getElementById('nav-burger');
+const mobile = document.getElementById('nav-mobile');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobile.classList.toggle('open');
+});
+mobile.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobile.classList.remove('open');
+  });
+});
+
+/* ============================================================
+   REVEAL ON SCROLL
+============================================================ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* ============================================================
+   3D TILT · cards follow cursor
+============================================================ */
+function bindTilt(el, max) {
+  const TILT_MAX = max || 7;
+  let raf = 0, rect = null;
+  const update = (e) => {
+    if (!rect) rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    const ry = Math.max(-1, Math.min(1, dx)) * TILT_MAX;
+    const rx = Math.max(-1, Math.min(1, -dy)) * TILT_MAX;
+    const gx = ((e.clientX - rect.left) / rect.width) * 100;
+    const gy = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty('--tx', rx.toFixed(2) + 'deg');
+    el.style.setProperty('--ty', ry.toFixed(2) + 'deg');
+    el.style.setProperty('--gx', gx.toFixed(1) + '%');
+    el.style.setProperty('--gy', gy.toFixed(1) + '%');
+  };
+  el.addEventListener('mouseenter', () => { rect = el.getBoundingClientRect(); });
+  el.addEventListener('mousemove', (e) => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => update(e));
+  });
+  el.addEventListener('mouseleave', () => {
+    rect = null;
+    el.style.setProperty('--tx', '0deg');
+    el.style.setProperty('--ty', '0deg');
+  });
+}
+// Card-level tilt – stronger
+document.querySelectorAll('.glass-card, .j-item, .tm').forEach(el => bindTilt(el, 7));
+// Larger box-level tilt – gentler so big surfaces feel subtle
+document.querySelectorAll('.stats, .compare, .quote, .cf, .cf-side').forEach(el => bindTilt(el, 4));
+
+/* ============================================================
+   IMPRESSUM MODAL
+============================================================ */
+const impBackdrop = document.getElementById('imp-backdrop');
+const impClose = document.getElementById('imp-close');
+document.querySelectorAll('[data-imp]').forEach(b => {
+  b.addEventListener('click', (e) => { e.preventDefault(); impBackdrop.classList.add('open'); });
+});
+impClose.addEventListener('click', () => impBackdrop.classList.remove('open'));
+impBackdrop.addEventListener('click', (e) => { if (e.target === impBackdrop) impBackdrop.classList.remove('open'); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') impBackdrop.classList.remove('open'); });
+
+/* ============================================================
+   CONTACT FORM
+============================================================ */
+const form = document.getElementById('contact-form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('.cf-submit');
+  btn.classList.add('sent');
+  btn.textContent = 'Vielen Dank – wir melden uns bald ✓';
+  form.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
+});
+
+/* ============================================================
+   ORB PARALLAX (subtle)
+============================================================ */
+const orbs = document.querySelectorAll('.orb');
+window.addEventListener('mousemove', (e) => {
+  const cx = (e.clientX / window.innerWidth) - 0.5;
+  const cy = (e.clientY / window.innerHeight) - 0.5;
+  orbs.forEach((o, i) => {
+    const f = (i + 1) * 18;
+    o.style.transform = `translate(${cx * f}px, ${cy * f}px)`;
+  });
+});
+</script>
+
+</body>
+</html>

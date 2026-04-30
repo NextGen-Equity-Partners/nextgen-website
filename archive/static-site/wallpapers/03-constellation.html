@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constellation · Wallpaper 03</title>
+<style>
+  html,body{margin:0;background:#020817;overflow:hidden;height:100%;font-family:system-ui,-apple-system,sans-serif;cursor:crosshair;}
+  canvas{display:block;width:100vw;height:100vh;}
+  .label{
+    position:fixed;left:24px;bottom:22px;
+    color:rgba(255,255,255,.45);font-size:10.5px;
+    letter-spacing:.32em;text-transform:uppercase;font-weight:500;
+    pointer-events:none;
+  }
+  .nav{
+    position:fixed;right:24px;bottom:22px;
+    display:flex;gap:14px;
+    color:rgba(255,255,255,.4);font-size:10.5px;
+    letter-spacing:.24em;text-transform:uppercase;font-weight:500;
+  }
+  .nav a{color:inherit;text-decoration:none;transition:color .2s;}
+  .nav a:hover{color:#fff;}
+  .nav a.active{color:#fff;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="label">03 · Constellation · Drag &amp; click</div>
+<div class="nav">
+  <a href="index.html">◀ All</a>
+  <a href="01-liquid.html">01</a>
+  <a href="02-aurora.html">02</a>
+  <a href="03-constellation.html" class="active">03</a>
+  <a href="04-voronoi.html">04</a>
+  <a href="05-depth-grid.html">05</a>
+</div>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+
+let w = 0, h = 0;
+const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+function resize() {
+  w = window.innerWidth;
+  h = window.innerHeight;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  c.style.width = w + 'px';
+  c.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+}
+resize();
+window.addEventListener('resize', () => {
+  resize();
+  // Re-seed particles on resize
+  particles.forEach(p => p.respawn(true));
+});
+
+const N = Math.min(180, Math.floor((window.innerWidth * window.innerHeight) / 9000));
+const particles = [];
+
+let mx = w * 0.5, my = h * 0.5;
+const shocks = [];
+
+window.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+});
+window.addEventListener('mousedown', e => {
+  shocks.push({ x: e.clientX, y: e.clientY, born: performance.now() });
+  // Trim old shocks
+  if (shocks.length > 6) shocks.shift();
+});
+
+class Particle {
+  constructor() { this.respawn(true); }
+  respawn(scatter) {
+    this.x = scatter ? Math.random() * w : (Math.random() < 0.5 ? -10 : w + 10);
+    this.y = scatter ? Math.random() * h : Math.random() * h;
+    this.vx = (Math.random() - 0.5) * 0.25;
+    this.vy = (Math.random() - 0.5) * 0.25;
+    this.r = Math.random() * 1.6 + 0.6;
+    this.hue = 200 + Math.random() * 30;   // blue range
+    this.alpha = 0.45 + Math.random() * 0.4;
+  }
+  update(now) {
+    // Gentle drift
+    this.vx += (Math.random() - 0.5) * 0.005;
+    this.vy += (Math.random() - 0.5) * 0.005;
+
+    // Mouse attraction (soft)
+    const dx = mx - this.x, dy = my - this.y;
+    const d2 = dx * dx + dy * dy;
+    const R = 260;
+    if (d2 < R * R) {
+      const d = Math.sqrt(d2) + 0.1;
+      const f = (1 - d / R) * 0.04;
+      this.vx += (dx / d) * f;
+      this.vy += (dy / d) * f;
+    }
+
+    // Shockwaves push outward
+    for (let i = shocks.length - 1; i >= 0; i--) {
+      const s = shocks[i];
+      const age = (now - s.born) / 1000;
+      if (age > 2.5) { shocks.splice(i, 1); continue; }
+      const sx = this.x - s.x, sy = this.y - s.y;
+      const sd = Math.sqrt(sx * sx + sy * sy) + 0.01;
+      const ringR = age * 480;
+      const band = Math.abs(sd - ringR);
+      if (band < 60) {
+        const k = (1 - band / 60) * (1 - age / 2.5) * 1.6;
+        this.vx += (sx / sd) * k;
+        this.vy += (sy / sd) * k;
+      }
+    }
+
+    // Friction
+    this.vx *= 0.965;
+    this.vy *= 0.965;
+
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Wrap edges
+    if (this.x < -20) this.x = w + 20;
+    if (this.x > w + 20) this.x = -20;
+    if (this.y < -20) this.y = h + 20;
+    if (this.y > h + 20) this.y = -20;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${this.hue}, 90%, 78%, ${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < N; i++) particles.push(new Particle());
+
+function frame(now) {
+  // Trail fade for the cinematic blue background
+  ctx.fillStyle = 'rgba(2, 8, 23, 0.18)';
+  ctx.fillRect(0, 0, w, h);
+
+  // Update + draw particles
+  for (const p of particles) p.update(now);
+
+  // Lines between near particles
+  ctx.lineWidth = 0.6;
+  for (let i = 0; i < particles.length; i++) {
+    const a = particles[i];
+    for (let j = i + 1; j < particles.length; j++) {
+      const b = particles[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const d2 = dx * dx + dy * dy;
+      const D = 130;
+      if (d2 < D * D) {
+        const t = 1 - Math.sqrt(d2) / D;
+        ctx.strokeStyle = `rgba(120, 180, 255, ${t * 0.32})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw particles on top
+  for (const p of particles) p.draw();
+
+  // Shockwave rings
+  for (const s of shocks) {
+    const age = (now - s.born) / 1000;
+    const r = age * 480;
+    ctx.strokeStyle = `rgba(150, 200, 255, ${(1 - age / 2.5) * 0.35})`;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Mouse aura
+  const grad = ctx.createRadialGradient(mx, my, 0, mx, my, 180);
+  grad.addColorStop(0, 'rgba(120, 180, 255, 0.10)');
+  grad.addColorStop(1, 'rgba(120, 180, 255, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(mx - 200, my - 200, 400, 400);
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
