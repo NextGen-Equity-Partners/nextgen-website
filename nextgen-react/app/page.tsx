@@ -1,192 +1,192 @@
-export default function HomePage() {
+"use client";
+
+import { useEffect, useRef } from "react";
+
+const personas = [
+  {
+    id: "inhaber",
+    label: "Inhaber",
+    sub: "Nachfolge & Wachstum",
+    desc: "Wer ein Unternehmen aufgebaut hat und über das nächste Kapitel nachdenkt.",
+    href: "/inhaber",
+  },
+  {
+    id: "nachfolgeunternehmer",
+    label: "Nachfolgeunternehmer",
+    sub: "Unternehmen übernehmen",
+    desc: "Führungspersönlichkeiten, die bereit sind, Verantwortung als Mitgesellschafter zu übernehmen.",
+    href: "/nachfolgeunternehmer",
+  },
+  {
+    id: "berater",
+    label: "M&A Berater",
+    sub: "Mandate & Zusammenarbeit",
+    desc: "Berater und Intermediäre, die passende Mandate an einen verlässlichen Partner vermitteln.",
+    href: "/berater",
+  },
+  {
+    id: "investor",
+    label: "Investor",
+    sub: "Wachstumskapital",
+    desc: "Investoren und Family Offices, die den DACH-Mittelstand als Assetklasse verstehen.",
+    href: "/investor",
+  },
+];
+
+export default function EntryPage() {
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    import("gsap").then(({ gsap }) => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      if (headlineRef.current) {
+        const words = headlineRef.current.querySelectorAll(".word");
+        tl.fromTo(words,
+          { y: 60, opacity: 0, rotateX: -20 },
+          { y: 0, opacity: 1, rotateX: 0, duration: 1.1, stagger: 0.08 }
+        );
+      }
+      if (subRef.current) {
+        tl.fromTo(subRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          "-=0.5"
+        );
+      }
+      if (cardsRef.current) {
+        const cards = cardsRef.current.querySelectorAll(".entry-card");
+        tl.fromTo(cards,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, stagger: 0.1 },
+          "-=0.3"
+        );
+      }
+    });
+  }, []);
+
+  const words = "Wir bauen Unternehmen, die neu definieren wie Menschen arbeiten.".split(" ");
+
   return (
-    <>
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-eyebrow">DACH-Mittelstand · Business Services</div>
-        <h1 className="display hero-title">
-          <span className="hero-line">Ihr Partner für Mehrheitsbeteiligungen</span>
-          <span className="hero-line">im <span className="bold">Mittelstand.</span></span>
+    <main className="entry-page">
+      <section className="entry-hero">
+        <h1 className="entry-headline" ref={headlineRef}>
+          {words.map((word, i) => (
+            <span key={i} className="word-wrap">
+              <span className="word">{word}</span>
+              {i < words.length - 1 && <span className="word-space">&nbsp;</span>}
+            </span>
+          ))}
         </h1>
-        <p className="hero-sub">
-          Wir erwerben Mehrheitsbeteiligungen an gesunden Unternehmen im Bereich Business Services und entwickeln sie gemeinsam mit dem bestehenden Team weiter – mit eigenem Kapital, langfristigem Horizont und einem Team, das kauft, führt und umsetzt.
+        <p className="entry-sub" ref={subRef}>
+          Wachstumskapital und digitale Transformation für den Mittelstand.
         </p>
-        <div className="hero-ctas">
-          <a href="/kontakt" className="btn btn-light">Lassen Sie uns sprechen →</a>
-          <a href="/profil" className="btn btn-ghost">Über uns</a>
-        </div>
-        <a href="#wer-wir-sind" className="hero-scroll" aria-label="Scrollen">
-          <div className="mouse"><div className="wheel"></div></div>
-        </a>
       </section>
 
-      {/* WER WIR SIND */}
-      <section className="pane" id="wer-wir-sind">
-        <div className="pane-inner">
-          <div className="s-tag rv">Wer wir sind</div>
-          <h2 className="display rv" style={{ maxWidth: 1100 }}>Was Sie aufgebaut haben,<br /><span className="bold">soll bleiben.</span></h2>
-          <p className="body-text rv rv-d1" style={{ maxWidth: 980, marginTop: 32, fontSize: 17, lineHeight: 1.75 }}>
-            NextGen Equity ist ein kleines Team aus München – Investoren, Unternehmer und Technikexperten. Wir übernehmen mittelständische Unternehmen in Business Services und arbeiten gemeinsam mit dem bestehenden Team daran weiter. Nicht auf Zeit, nicht auf Exit. Das Unternehmen soll nach uns stärker dastehen.
-          </p>
-
-          <div className="glass-grid cols-2">
-            <div className="glass-card rv rv-d1">
-              <div className="num">Kapital</div>
-              <div>
-                <h3>Eigenes Kapital</h3>
-                <p>Wir investieren mit eigenem Geld – nicht mit dem Geld anderer. Das verändert, wie man Entscheidungen trifft.</p>
-              </div>
-            </div>
-            <div className="glass-card rv rv-d2">
-              <div className="num">Technologie</div>
-              <div>
-                <h3>Digitale Kompetenz im eigenen Haus</h3>
-                <p>Wir haben ein eigenes Team für Digitalisierung und Automatisierung – keine externen Berater, die einmalig vorbeikommen. Die Expertise bleibt im Unternehmen.</p>
-              </div>
-            </div>
-            <div className="glass-card rv rv-d1">
-              <div className="num">Strategie</div>
-              <div>
-                <h3>Gruppen mit Substanz</h3>
-                <p>Wir bauen Unternehmensgruppen, die in ihrer Branche wachsen – durch organisches Wachstum und gezielte Zukäufe, die strategisch Sinn ergeben.</p>
-              </div>
-            </div>
-            <div className="glass-card rv rv-d2">
-              <div className="num">Kultur</div>
-              <div>
-                <h3>Wer ein Lebenswerk übergibt, verdient einen Partner, der das versteht.</h3>
-                <p>Wir investieren in Standorte, Teams und Strukturen – nicht, weil es gut klingt, sondern weil es die Grundlage für alles andere ist.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="sec-divider"></div>
-
-      {/* WHITE SLOGAN BREAK */}
-      <section className="slogan-break">
-        <div className="slogan-inner">
-          <p className="rv">Wir bleiben –<br /><span className="bold">auch nach dem Closing.</span></p>
-        </div>
-      </section>
-
-      <div className="sec-divider"></div>
-
-      {/* WAS WIR SUCHEN */}
-      <section className="pane">
-        <div className="pane-inner">
-          <div className="s-tag rv">Was wir suchen</div>
-          <h2 className="display rv" style={{ maxWidth: 1100 }}>Unternehmen mit Substanz –<br /><span className="bold">und Wachstum vor sich.</span></h2>
-          <p className="body-text rv rv-d1" style={{ maxWidth: 980, marginTop: 32, fontSize: 17, lineHeight: 1.75 }}>
-            Wir suchen profitable Unternehmen im Bereich Business und Professional Services – mit stabilem Geschäftsmodell, verlässlichen Umsätzen und einem Markt, der noch Spielraum lässt. Die Branche ist zweitrangig; die Substanz zählt.
-          </p>
-
-          <div className="glass-grid cols-3">
-            <div className="glass-card rv rv-d1">
-              <div className="num">Profil</div>
-              <div>
-                <h3>Beziehung und Vertrauen</h3>
-                <p>Branchen, in denen die Kundenbeziehung zählt, in denen Erfahrung und Verlässlichkeit den Ausschlag geben – und in denen ein Zusammenwachsen mehrerer Unternehmen echten Sinn ergibt.</p>
-              </div>
-            </div>
-            <div className="glass-card rv rv-d2">
-              <div className="num">Umsatz</div>
-              <div>
-                <h3>10–100 Mio. € Umsatz</h3>
-                <p>Etablierte Unternehmen mit stabilem Geschäft als Kern. Ergänzende Zukäufe ab 3 Mio. € Umsatz.</p>
-              </div>
-            </div>
-            <div className="glass-card rv rv-d3">
-              <div className="num">Region</div>
-              <div>
-                <h3>Deutschland, Österreich, Schweiz</h3>
-                <p>Unternehmen, die etwas aufgebaut haben – und mit dem richtigen Partner die nächste Phase angehen wollen.</p>
-              </div>
-            </div>
-          </div>
-
-          <p className="rv" style={{ marginTop: 32, fontSize: 11.5, color: "var(--mute)", letterSpacing: ".16em", textAlign: "center", textTransform: "uppercase" }}>
-            Partnerschaftlich · Langfristig · Mit eigenem Kapital
-          </p>
-        </div>
-      </section>
-
-      {/* STORY BREAK */}
-      <section className="story-break">
-        <div className="story-break-inner">
-          <div className="eyebrow rv">Unser Suchprofil</div>
-          <q className="rv rv-d1"><span className="accent">10–100 Mio. €</span> Plattform-Umsatz.<br />Add-ons ab <span className="accent">3 Mio. €.</span> DACH-weit.</q>
-          <div className="signature rv rv-d2">Buy-and-Build in Business Services</div>
-        </div>
-      </section>
-
-      {/* UNSER ANSATZ */}
-      <section className="pane">
-        <div className="pane-inner">
-          <div className="twocol" style={{ alignItems: "start" }}>
-            <div>
-              <div className="s-tag rv">Unser Ansatz</div>
-              <h2 className="display rv">Wie wir<br /><span className="bold">zusammenarbeiten.</span></h2>
-              <p className="body-text rv rv-d1" style={{ marginTop: 24, maxWidth: "44ch" }}>
-                Wir nehmen uns Zeit, bevor wir Einschätzungen abgeben – und sind verbindlich, sobald beide Seiten weitermachen wollen. Kein Bieterwettbewerb, keine Überraschungen.
-              </p>
-              <div className="rv rv-d2" style={{ marginTop: 32 }}>
-                <a href="/ansatz" className="btn btn-ghost">So arbeiten wir →</a>
-              </div>
-            </div>
-            <div className="glass-grid cols-2" style={{ marginTop: 42 }}>
-              <div className="glass-card rv rv-d1">
-                <div className="num">01</div>
-                <div>
-                  <h3>Kennenlernen</h3>
-                  <p>Erstgespräch und erste Einschätzung. Wir verstehen Geschäftsmodell, Zahlen und Perspektive – und sagen früh, wenn wir nicht der richtige Partner sind.</p>
+      <section className="entry-cards-section">
+        <div className="entry-cards" ref={cardsRef}>
+          {personas.map((p) => (
+            <a key={p.id} href={p.href} className="entry-card">
+              <div className="entry-card-inner">
+                <div className="entry-card-top">
+                  <span className="entry-card-label">{p.label}</span>
+                  <span className="entry-card-sub">{p.sub}</span>
                 </div>
+                <p className="entry-card-desc">{p.desc}</p>
+                <div className="entry-card-arrow">→</div>
               </div>
-              <div className="glass-card rv rv-d2">
-                <div className="num">02</div>
-                <div>
-                  <h3>Kooperieren</h3>
-                  <p>Strukturierte Prüfung, klare Bewertung, verbindliche Konditionen. Kein Bieterwettbewerb, keine Überraschungen kurz vor dem Abschluss.</p>
-                </div>
-              </div>
-              <div className="glass-card rv rv-d3">
-                <div className="num">03</div>
-                <div>
-                  <h3>Aufbauen</h3>
-                  <p>Gemeinsamer Plan für die ersten Monate: organisches Wachstum, gezielte Zukäufe, Digitalisierung im Tagesgeschäft – umgesetzt mit dem bestehenden Team.</p>
-                </div>
-              </div>
-              <div className="glass-card rv rv-d4">
-                <div className="num">04</div>
-                <div>
-                  <h3>Begleiten</h3>
-                  <p>Langfristige Partnerschaft mit klarem Reporting, operativer Unterstützung und einem Netzwerk, das mit der Gruppe wächst.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </a>
+          ))}
         </div>
       </section>
 
-      <div className="sec-divider"></div>
-
-      {/* KONTAKT TEASER */}
-      <section className="pane kontakt-teaser-pane" style={{ textAlign: "center", padding: "clamp(40px,6vw,76px) 48px" }}>
-        <div className="pane-inner" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <img className="kontakt-portrait rv" src="/assets/team/max.jpeg" alt="Maximilian Göppert" />
-          <div className="s-tag rv rv-d1">Nächster Schritt</div>
-          <h2 className="display rv rv-d1" style={{ maxWidth: 880, margin: "0 auto" }}>
-            Lassen Sie uns über Ihr<br /><span className="bold">Unternehmen sprechen.</span>
-          </h2>
-          <p className="body-text rv rv-d2" style={{ marginTop: 24, maxWidth: "58ch", marginLeft: "auto", marginRight: "auto" }}>
-            Ob Unternehmer, Geschäftsführer oder M&amp;A-Berater – wir sind offen für ein vertrauliches Gespräch. Diskretion und Verbindlichkeit sind selbstverständlich.
-          </p>
-          <div className="rv rv-d3" style={{ marginTop: 36 }}>
-            <a href="/kontakt" className="btn btn-light" style={{ fontSize: 14, padding: "16px 36px" }}>Unverbindliches Gespräch vereinbaren →</a>
-          </div>
-        </div>
-      </section>
-    </>
+      <style>{`
+        .entry-page {
+          min-height: 100dvh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: clamp(80px, 10vw, 120px) clamp(24px, 6vw, 80px) clamp(48px, 6vw, 80px);
+          position: relative;
+          z-index: 1;
+        }
+        .entry-hero { max-width: 1100px; margin-bottom: clamp(48px, 6vw, 80px); }
+        .entry-headline {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 300;
+          font-size: clamp(2rem, 4.8vw, 4.2rem);
+          line-height: 1.18;
+          letter-spacing: -0.02em;
+          color: var(--w);
+          perspective: 800px;
+        }
+        .word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+        .word { display: inline-block; }
+        .word-space { display: inline-block; width: 0.28em; }
+        .entry-sub {
+          margin-top: clamp(20px, 2.5vw, 28px);
+          font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+          font-weight: 300;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--mute);
+          opacity: 0;
+        }
+        .entry-cards {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          max-width: 1400px;
+        }
+        .entry-card {
+          display: block;
+          opacity: 0;
+          border-radius: 20px;
+          background: rgba(255,255,255,0.05);
+          backdrop-filter: blur(32px) saturate(1.4);
+          -webkit-backdrop-filter: blur(32px) saturate(1.4);
+          border: 1px solid rgba(255,255,255,0.10);
+          box-shadow: 0 16px 48px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+          transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+          position: relative;
+          overflow: hidden;
+        }
+        .entry-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 20px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+          pointer-events: none;
+        }
+        .entry-card:hover {
+          background: rgba(255,255,255,0.09);
+          border-color: rgba(255,255,255,0.20);
+          transform: translateY(-4px);
+          box-shadow: 0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
+        .entry-card-inner {
+          padding: clamp(24px, 2.8vw, 36px);
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          min-height: 200px;
+        }
+        .entry-card-top { display: flex; flex-direction: column; gap: 6px; margin-bottom: auto; }
+        .entry-card-label { font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 500; color: var(--w); letter-spacing: -0.01em; }
+        .entry-card-sub { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
+        .entry-card-desc { margin-top: 20px; font-size: 0.88rem; font-weight: 300; line-height: 1.65; color: var(--mute); }
+        .entry-card-arrow { margin-top: 24px; font-size: 1.1rem; color: var(--w-soft); transition: transform 0.25s var(--ease); }
+        .entry-card:hover .entry-card-arrow { transform: translateX(5px); }
+        @media (max-width: 900px) { .entry-cards { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+        @media (max-width: 540px) {
+          .entry-page { padding-top: 100px; padding-bottom: 40px; }
+          .entry-cards { grid-template-columns: 1fr; gap: 10px; }
+          .entry-card-inner { min-height: unset; }
+          .entry-card-desc { display: none; }
+        }
+      `}</style>
+    </main>
   );
 }
