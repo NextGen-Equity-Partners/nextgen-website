@@ -114,6 +114,12 @@ export function LegalModal() {
   const [active, setActive] = useState<LegalKey | null>(null);
 
   useEffect(() => {
+    // Direct opener — dispatched by the footer's client-side buttons.
+    const onOpen = (e: Event) => {
+      const detail = (e as CustomEvent<LegalKey>).detail;
+      if (detail && CONTENT[detail]) setActive(detail);
+    };
+    // Fallback for any legacy [data-modal] markup elsewhere.
     const onClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest("[data-modal]");
       if (!target) return;
@@ -126,9 +132,11 @@ export function LegalModal() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActive(null);
     };
+    document.addEventListener("legal-modal-open", onOpen);
     document.addEventListener("click", onClick);
     document.addEventListener("keydown", onKey);
     return () => {
+      document.removeEventListener("legal-modal-open", onOpen);
       document.removeEventListener("click", onClick);
       document.removeEventListener("keydown", onKey);
     };
@@ -141,7 +149,7 @@ export function LegalModal() {
     <div className={`imp-backdrop${open ? " open" : ""}`} onClick={(e) => {
       if (e.target === e.currentTarget) setActive(null);
     }}>
-      <div className="imp-panel">
+      <div className="imp-panel" data-lenis-prevent>
         <button className="imp-close" aria-label="Schließen" onClick={() => setActive(null)}>✕</button>
         <div className="imp-eyebrow">Rechtliches</div>
         <div className="imp-title">{data?.title ?? "Impressum"}</div>

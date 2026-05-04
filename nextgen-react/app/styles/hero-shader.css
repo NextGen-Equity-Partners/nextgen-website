@@ -1,14 +1,27 @@
 /* Blue background + animated color glows + liquid-metal */
 
-.hero-bg-base {
+/* Background video — fills the viewport, sits behind everything. */
+.hero-bg-video {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center center;
   z-index: -4;
   pointer-events: none;
+  user-select: none;
+}
+
+/* Soft dark tint so foreground white text stays readable across all
+   video frames. */
+.hero-bg-tint {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at 20% 0%, #061128 0%, transparent 60%),
-    radial-gradient(ellipse at 100% 100%, #040c20 0%, transparent 60%),
-    linear-gradient(180deg, #01040c 0%, #03081a 50%, #050d22 100%);
+    linear-gradient(180deg, rgba(2, 6, 18, .30) 0%, rgba(2, 6, 18, .55) 100%);
 }
 
 .hero-bg-glow {
@@ -70,33 +83,117 @@
   100% { transform: translate(14vw, 10vh) scale(1.2); }
 }
 
-/* WebGL LiquidMetal canvas — anchored on the right of the viewport.
-   Layered drop-shadows simulate depth so the form reads as a 3D liquid
-   object floating in front of the background. */
+/* WebGL liquid-glass blob — upper-right, screen blend so it lifts
+   the video underneath into a translucent white drop without tinting it. */
 .liquid-metal-stage {
   position: fixed;
   top: 0;
   right: -10vw;
-  width: 75vw;
+  width: 70vw;
   height: 100vh;
   z-index: -2;
   pointer-events: none;
   overflow: visible;
-  opacity: .9;
+  opacity: .7;
   mix-blend-mode: screen;
-  /* sepia + saturate + hue-rotate map every non-transparent pixel toward the
-     brand peach-orange. Transparent pixels stay transparent — no leak into
-     the dark blue background. */
   filter:
-    sepia(1)
-    saturate(3.2)
-    hue-rotate(-28deg)
-    brightness(0.72)
-    contrast(1.12)
-    drop-shadow(0 2px 4px rgba(8, 14, 30, .55))
-    drop-shadow(0 12px 26px rgba(8, 14, 30, .50))
-    drop-shadow(0 36px 80px rgba(80, 40, 20, .35))
-    drop-shadow(0 60px 140px rgba(251, 114, 78, .30));
+    brightness(1.05)
+    drop-shadow(0 18px 50px rgba(255, 255, 255, .12))
+    drop-shadow(0 40px 110px rgba(180, 210, 255, .10));
+}
+
+/* Binary rain — full-height, right-aligned with ragged left edge from
+   variable line lengths. Static stream + occasional white blinks for
+   subtle dynamics. Masked on the left so it stays clear of the headline. */
+.hero-network-binary {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 100%);
+}
+
+.hero-network-binary .stream {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.15;
+  letter-spacing: 0.05em;
+  color: rgba(150, 190, 240, 0.07);
+  white-space: pre;
+  text-align: right;
+}
+
+/* "Writers" — short binary sequences being typed in. Each writer reveals
+   its text via a clip-path animation (typewriter feel) with a blinking
+   caret at the right edge, then fades out. Multiple writers staggered
+   across the field create a quiet "code being written" texture. */
+.hero-network-binary .writer {
+  position: absolute;
+  display: inline-flex;
+  align-items: baseline;
+  font-family: 'Fira Code', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: rgba(220, 230, 250, 0.40);
+  text-shadow: 0 0 4px rgba(180, 210, 255, 0.18);
+  opacity: 0;
+  animation-name: writer-cycle;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.hero-network-binary .writer-text {
+  /* Hidden until the caret has typed past it. clip-path slides from
+     fully clipped right (text invisible) toward fully visible. */
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  animation: writer-type 9s infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+
+.hero-network-binary .writer-caret {
+  margin-left: 1px;
+  color: rgba(255, 255, 255, 0.55);
+  animation: writer-caret-blink 0.55s steps(2, end) infinite;
+}
+
+/* Whole-writer fade in/out, scoped to the parent so its own delay
+   propagates. */
+@keyframes writer-cycle {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  82%  { opacity: 1; }
+  92%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Typing reveal: clip-path inset opens from right to left at first,
+   then sits open for the rest of the cycle while the writer fades out. */
+@keyframes writer-type {
+  0%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+  4%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+  60%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0); }
+}
+
+@keyframes writer-caret-blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-network-binary .writer,
+  .hero-network-binary .writer-text,
+  .hero-network-binary .writer-caret { animation: none; opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
