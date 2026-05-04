@@ -244,25 +244,43 @@ export default function HomePage() {
         <div className="phase-block">
           <div className="buy-build-anim" aria-hidden="true">
             <svg viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
-              <g className="bba-links">
-                <line x1="150" y1="100" x2="450" y2="100" />
-                <line x1="450" y1="100" x2="750" y2="100" />
-                <line x1="450" y1="100" x2="380" y2="40" />
-                <line x1="450" y1="100" x2="520" y2="40" />
-                <line x1="450" y1="100" x2="380" y2="160" />
-                <line x1="450" y1="100" x2="520" y2="160" />
-                <line x1="450" y1="100" x2="320" y2="70" />
-                <line x1="450" y1="100" x2="580" y2="130" />
+              <g className="bba-zone bba-z1">
+                <circle cx="150" cy="100" r="22" />
               </g>
-              <circle cx="450" cy="100" r="0" className="bba-platform" />
-              <circle cx="150" cy="100" r="0" className="bba-addon bba-a1" />
-              <circle cx="750" cy="100" r="0" className="bba-addon bba-a2" />
-              <circle cx="380" cy="40"  r="0" className="bba-addon bba-a3" />
-              <circle cx="520" cy="40"  r="0" className="bba-addon bba-a4" />
-              <circle cx="380" cy="160" r="0" className="bba-addon bba-a5" />
-              <circle cx="520" cy="160" r="0" className="bba-addon bba-a6" />
-              <circle cx="320" cy="70"  r="0" className="bba-addon bba-a7" />
-              <circle cx="580" cy="130" r="0" className="bba-addon bba-a8" />
+              <g className="bba-zone bba-z2">
+                <line x1="450" y1="100" x2="380" y2="60" />
+                <line x1="450" y1="100" x2="520" y2="60" />
+                <line x1="450" y1="100" x2="380" y2="140" />
+                <line x1="450" y1="100" x2="520" y2="140" />
+                <circle cx="450" cy="100" r="22" />
+                <circle className="bba-sat" cx="380" cy="60"  r="9" />
+                <circle className="bba-sat" cx="520" cy="60"  r="9" />
+                <circle className="bba-sat" cx="380" cy="140" r="9" />
+                <circle className="bba-sat" cx="520" cy="140" r="9" />
+              </g>
+              <g className="bba-zone bba-z3">
+                <line x1="750" y1="100" x2="680" y2="60" />
+                <line x1="750" y1="100" x2="820" y2="60" />
+                <line x1="750" y1="100" x2="680" y2="140" />
+                <line x1="750" y1="100" x2="820" y2="140" />
+                <line x1="750" y1="100" x2="640" y2="100" />
+                <line x1="750" y1="100" x2="860" y2="100" />
+                <line x1="750" y1="100" x2="700" y2="40" />
+                <line x1="750" y1="100" x2="800" y2="40" />
+                <line x1="680" y1="60" x2="820" y2="60" />
+                <line x1="680" y1="140" x2="820" y2="140" />
+                <line x1="680" y1="60" x2="700" y2="40" />
+                <line x1="820" y1="60" x2="800" y2="40" />
+                <circle cx="750" cy="100" r="22" />
+                <circle className="bba-sat" cx="680" cy="60"  r="9" />
+                <circle className="bba-sat" cx="820" cy="60"  r="9" />
+                <circle className="bba-sat" cx="680" cy="140" r="9" />
+                <circle className="bba-sat" cx="820" cy="140" r="9" />
+                <circle className="bba-sat" cx="640" cy="100" r="9" />
+                <circle className="bba-sat" cx="860" cy="100" r="9" />
+                <circle className="bba-sat" cx="700" cy="40"  r="9" />
+                <circle className="bba-sat" cx="800" cy="40"  r="9" />
+              </g>
             </svg>
             <div className="phase-connectors" aria-hidden="true">
               <span /><span /><span />

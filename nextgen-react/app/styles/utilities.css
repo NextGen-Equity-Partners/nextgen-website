@@ -186,98 +186,45 @@
   background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0));
 }
 
-/* Lines drawn after the dots are in. */
-.bba-links line {
-  stroke: rgba(255, 255, 255, .35);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-dasharray: 350;
-  stroke-dashoffset: 350;
-  fill: none;
+/* Three zones — one per phase card, lighting up in sequence so the
+   animation reads left → right across the card row:
+     0–33%  zone 1 (Plattform)         visible above card 1
+     33–66% zone 2 (Add-ons)           visible above card 2
+     66–95% zone 3 (Integrierte Gruppe) visible above card 3
+     95–100% all fade for the loop. */
+.bba-zone {
   opacity: 0;
-  animation: bba-link 12s ease-in-out infinite;
+  animation: bba-zone 12s ease-in-out infinite;
 }
-.bba-links line:nth-child(1) { animation-delay: 0s; }
-.bba-links line:nth-child(2) { animation-delay: .15s; }
-.bba-links line:nth-child(3) { animation-delay: .30s; }
-.bba-links line:nth-child(4) { animation-delay: .45s; }
-.bba-links line:nth-child(5) { animation-delay: .60s; }
-.bba-links line:nth-child(6) { animation-delay: .75s; }
-.bba-links line:nth-child(7) { animation-delay: .90s; }
-.bba-links line:nth-child(8) { animation-delay: 1.05s; }
-
-@keyframes bba-link {
-  0%, 55%   { stroke-dashoffset: 350; opacity: 0; }
-  62%       { opacity: 1; }
-  78%, 95%  { stroke-dashoffset: 0;   opacity: 1; }
-  100%      { stroke-dashoffset: 350; opacity: 0; }
+.bba-zone circle {
+  fill: rgba(255, 255, 255, .92);
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, .45));
 }
-
-/* Platform — big bright dot in the middle. */
-.bba-platform {
-  fill: rgba(255, 255, 255, .95);
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, .55));
-  animation: bba-platform 12s ease-in-out infinite;
+.bba-zone .bba-sat {
+  fill: rgba(255, 255, 255, .82);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .3));
 }
-@keyframes bba-platform {
-  0%, 5%    { r: 0;  opacity: 0; }
-  12%, 95%  { r: 22; opacity: 1; }
-  100%      { r: 0;  opacity: 0; }
+.bba-zone line {
+  stroke: rgba(255, 255, 255, .42);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  fill: none;
 }
 
-/* Add-ons — smaller dots that pop in one after another. */
-.bba-addon {
-  fill: rgba(255, 255, 255, .85);
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .35));
-  animation: bba-addon 12s ease-in-out infinite;
-}
-.bba-a1 { animation-delay: .10s; }
-.bba-a2 { animation-delay: .25s; }
-.bba-a3 { animation-delay: .40s; }
-.bba-a4 { animation-delay: .55s; }
-.bba-a5 { animation-delay: .70s; }
-.bba-a6 { animation-delay: .85s; }
-.bba-a7 { animation-delay: 1.00s; }
-.bba-a8 { animation-delay: 1.15s; }
+.bba-z1 { animation-delay: 0s; }
+.bba-z2 { animation-delay: 3.6s; }
+.bba-z3 { animation-delay: 7.2s; }
 
-@keyframes bba-addon {
-  0%, 25%   { r: 0; opacity: 0; }
-  35%, 95%  { r: 9; opacity: 1; }
-  100%      { r: 0; opacity: 0; }
+@keyframes bba-zone {
+  0%       { opacity: 0; transform: scale(.92); }
+  6%, 38%  { opacity: 1; transform: scale(1); }
+  55%, 95% { opacity: .35; transform: scale(1); }
+  100%     { opacity: 0;  transform: scale(.92); }
 }
-
-/* Phase labels under the graphic, brighten in sync with the active step. */
-.bba-labels {
-  display: flex;
-  gap: clamp(20px, 3vw, 56px);
-  margin-top: 4px;
-  font-size: 10.5px;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: rgba(249, 247, 244, .35);
-}
-.bba-label {
-  transition: color .4s var(--ease);
-  animation: bba-label-cycle 12s ease-in-out infinite;
-}
-.bba-label-1 { animation-delay: 0s; }
-.bba-label-2 { animation-delay: 3s; }
-.bba-label-3 { animation-delay: 6.5s; }
-
-@keyframes bba-label-cycle {
-  0%, 8%      { color: var(--w); }
-  25%, 100%   { color: rgba(249, 247, 244, .25); }
-}
+.bba-zone { transform-box: fill-box; transform-origin: center; }
 
 @media (prefers-reduced-motion: reduce) {
-  .bba-platform, .bba-addon, .bba-links line, .bba-label {
-    animation: none;
-  }
-  .bba-platform { r: 22; opacity: 1; }
-  .bba-addon { r: 9; opacity: 1; }
-  .bba-links line { stroke-dashoffset: 0; opacity: 1; }
-  .bba-label { color: rgba(249, 247, 244, .55); }
+  .bba-zone { animation: none; opacity: .85; transform: none; }
 }
 
 @media (max-width: 1024px) {
