@@ -431,6 +431,38 @@ export default function HomePage() {
 
       <div className="sec-divider" />
 
+      <Section
+        title={
+          <>
+            Umsetzung von <span className="bold">Nachhaltigkeit &amp; ESG.</span>
+          </>
+        }
+        contentMaxWidth={1100}
+      >
+        <div className="glass-grid cols-3">
+          <GlassCard
+            num="Environment"
+            title="Operative Effizienz"
+            body="Energiesparmaßnahmen und Dekarbonisierungs-Roadmaps werden in den Unternehmenszielen verankert."
+            delay={1}
+          />
+          <GlassCard
+            num="Social"
+            title="Mitarbeiterorientierte Unternehmenskultur"
+            body="Fachliche Weiterbildungen, Führungskräftetrainings und Programme für Mental Health und Arbeitssicherheit dienen einer mitarbeiterorientierten Unternehmenskultur."
+            delay={2}
+          />
+          <GlassCard
+            num="Governance"
+            title="Verantwortung im Management"
+            body="Die Vergütung des Managements wird unmittelbar an die ESG-Ziele gekoppelt, wodurch diese in der Unternehmensgovernance institutionalisiert werden."
+            delay={3}
+          />
+        </div>
+      </Section>
+
+      <div className="sec-divider" />
+
       <section className="kontakt-teaser-section">
         <div className="kontakt-teaser-inner">
           <h2 className="display rv rv-d1 kontakt-teaser-title">
