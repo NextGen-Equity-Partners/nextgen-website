@@ -21,21 +21,19 @@ export default function HomePage() {
         }
       />
 
-      <Section
-        id="mission"
-        eyebrow="Mission"
-        intro={
-          <>
+      <section id="mission" className="mission-section">
+        <div className="mission-inner">
+          <div className="s-tag rv">Mission</div>
+          <p className="rv rv-d1 mission-body">
             Unsere Mission bei NextGen Equity Partners ist der Aufbau von kleinen und mittleren{" "}
             <span className="bold">B2B-Dienstleistungsunternehmen im DACH-Raum</span> zu{" "}
             <span className="bold">skalierbaren Unternehmensgruppen als Marktführer</span>. Wir setzen{" "}
             <span className="bold">Wachstumskapital</span> ein, um damit die{" "}
             <span className="bold">Substanz des Mittelstands</span> zu stärken und durch{" "}
             <span className="bold">KI befähigte Wissensträger</span> in den Mittelpunkt zu stellen.
-          </>
-        }
-        contentMaxWidth={900}
-      />
+          </p>
+        </div>
+      </section>
 
       <div className="sec-divider" />
 

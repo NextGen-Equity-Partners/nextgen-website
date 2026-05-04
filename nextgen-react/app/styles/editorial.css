@@ -66,6 +66,44 @@ body.bg-image .story-break::before { content: none; }
   box-shadow: 0 18px 44px rgba(0,0,0,.30);
 }
 
+/* Mission statement — large editorial text on the page bg, no pane/box. */
+.mission-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(64px, 9vw, 140px) clamp(28px, 6vw, 96px);
+  text-align: center;
+}
+.mission-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.mission-section .s-tag {
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.mission-body {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(26px, 3.2vw, 44px);
+  line-height: 1.4;
+  letter-spacing: -.015em;
+  color: var(--w);
+  margin: 0 auto;
+  max-width: 1100px;
+}
+.mission-body .bold {
+  font-weight: 700;
+  color: var(--w);
+}
+
+@media (max-width: 760px) {
+  .mission-section { padding: 80px 22px; }
+  .mission-body {
+    font-size: clamp(20px, 5.5vw, 30px);
+    line-height: 1.45;
+  }
+}
+
 .slogan-break {
   padding: clamp(48px, 6vw, 84px) clamp(28px, 6vw, 96px);
   text-align: center;
