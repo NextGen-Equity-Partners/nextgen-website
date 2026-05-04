@@ -27,7 +27,7 @@ body.bg-image .story-break::before { content: none; }
   font-size: 10.5px;
   letter-spacing: .32em;
   text-transform: uppercase;
-  color: var(--warm);
+  color: var(--w);
   opacity: .7;
   font-weight: 500;
   margin-bottom: 32px;
@@ -45,14 +45,14 @@ body.bg-image .story-break::before { content: none; }
 }
 .story-break q::before,
 .story-break q::after { content: ''; }
-.story-break .accent { color: var(--warm); font-weight: 400; }
+.story-break .accent { color: var(--w); font-weight: 400; }
 .story-break .signature {
   display: inline-block;
   margin-top: 36px;
   font-size: 11px;
   letter-spacing: .26em;
   text-transform: uppercase;
-  color: rgba(232,223,208,.6);
+  color: rgba(249,247,244,.6);
   font-weight: 500;
 }
 
@@ -83,7 +83,7 @@ body.bg-image .story-break::before { content: none; }
   color: var(--w);
   margin: 0;
 }
-.slogan-inner .bold { font-weight: 800; color: #FB724E; }
+.slogan-inner .bold { font-weight: 800; color: var(--w); }
 
 .amon-quote-grid {
   display: grid;

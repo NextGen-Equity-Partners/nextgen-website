@@ -76,7 +76,7 @@
   font-style: italic;
 }
 .cmp-counter .cmp-vs {
-  color: var(--warm);
+  color: var(--w);
   font-style: normal;
   font-weight: 600;
   letter-spacing: .02em;

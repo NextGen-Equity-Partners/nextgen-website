@@ -47,7 +47,7 @@ h3.display {
   line-height: 1.1;
   color: var(--w);
 }
-.bold { font-weight: 800; color: #FB724E; }
+.bold { font-weight: 800; color: var(--w); }
 
 .body-text {
   font-size: 15px; line-height: 1.85;

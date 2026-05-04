@@ -1,0 +1,115 @@
+/* Blue background + animated color glows + liquid-metal */
+
+.hero-bg-base {
+  position: fixed;
+  inset: 0;
+  z-index: -4;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 0%, #061128 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 100%, #040c20 0%, transparent 60%),
+    linear-gradient(180deg, #01040c 0%, #03081a 50%, #050d22 100%);
+}
+
+.hero-bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg-glow .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.hero-bg-glow .glow-1 {
+  width: 560px;
+  height: 560px;
+  top: 8%;
+  left: 6%;
+  background: radial-gradient(circle, rgba(76, 124, 255, .85) 0%, transparent 70%);
+  opacity: .55;
+  animation: glow-drift-1 22s ease-in-out infinite alternate;
+}
+
+.hero-bg-glow .glow-2 {
+  width: 460px;
+  height: 460px;
+  bottom: 12%;
+  right: 14%;
+  background: radial-gradient(circle, rgba(251, 114, 78, .60) 0%, transparent 70%);
+  opacity: .42;
+  animation: glow-drift-2 28s ease-in-out infinite alternate;
+}
+
+.hero-bg-glow .glow-3 {
+  width: 380px;
+  height: 380px;
+  top: 48%;
+  left: 38%;
+  background: radial-gradient(circle, rgba(76, 215, 255, .60) 0%, transparent 70%);
+  opacity: .35;
+  animation: glow-drift-3 32s ease-in-out infinite alternate;
+}
+
+@keyframes glow-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(28vw, 16vh) scale(1.15); }
+}
+@keyframes glow-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-22vw, -14vh) scale(0.9); }
+}
+@keyframes glow-drift-3 {
+  0%   { transform: translate(-10vw, 0) scale(1); }
+  100% { transform: translate(14vw, 10vh) scale(1.2); }
+}
+
+/* WebGL LiquidMetal canvas — anchored on the right of the viewport.
+   Layered drop-shadows simulate depth so the form reads as a 3D liquid
+   object floating in front of the background. */
+.liquid-metal-stage {
+  position: fixed;
+  top: 0;
+  right: -10vw;
+  width: 75vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  overflow: visible;
+  opacity: .9;
+  mix-blend-mode: screen;
+  /* sepia + saturate + hue-rotate map every non-transparent pixel toward the
+     brand peach-orange. Transparent pixels stay transparent — no leak into
+     the dark blue background. */
+  filter:
+    sepia(1)
+    saturate(3.2)
+    hue-rotate(-28deg)
+    brightness(0.72)
+    contrast(1.12)
+    drop-shadow(0 2px 4px rgba(8, 14, 30, .55))
+    drop-shadow(0 12px 26px rgba(8, 14, 30, .50))
+    drop-shadow(0 36px 80px rgba(80, 40, 20, .35))
+    drop-shadow(0 60px 140px rgba(251, 114, 78, .30));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-glow .glow {
+    animation: none;
+  }
+  .liquid-metal-stage { opacity: .6; }
+}
+
+@media (max-width: 760px) {
+  .liquid-metal-stage {
+    right: -20vw;
+    width: 110vw;
+    opacity: .65;
+  }
+}

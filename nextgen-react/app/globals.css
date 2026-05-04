@@ -5,6 +5,7 @@
 
 /* Layout primitives */
 @import "./styles/bg-image.css";
+@import "./styles/hero-shader.css";
 @import "./styles/sections.css";
 
 /* Components */

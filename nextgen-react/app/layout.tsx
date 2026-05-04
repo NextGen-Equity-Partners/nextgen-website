@@ -8,8 +8,6 @@ import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
-import { MagneticButtons } from "@/components/animations/magnetic-buttons";
-import { CursorProxy } from "@/components/animations/cursor-proxy";
 import { PageEffects } from "@/components/runtime/page-effects";
 
 const SITE = "https://nextgen-equity.com";
@@ -61,8 +59,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <PageAnimations />
           <PageEffects />
-          <MagneticButtons />
-          <CursorProxy />
         </SmoothScrollProvider>
 
         <LegalModal />
