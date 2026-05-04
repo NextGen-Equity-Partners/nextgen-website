@@ -34,9 +34,11 @@
   pointer-events: none; mix-blend-mode: screen;
   z-index: 0;
 }
-.tm:hover::after { opacity: 1; }
 .tm > * { position: relative; z-index: 1; }
-.tm:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.22); }
+@media (hover: hover) and (pointer: fine) {
+  .tm:hover::after { opacity: 1; }
+  .tm:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.22); }
+}
 .portrait {
   width: 120px; height: 120px; border-radius: 50%; overflow: hidden;
   background: rgba(255,255,255,.04);
@@ -52,7 +54,9 @@
   filter: saturate(.98) contrast(1.02);
   transition: transform .8s var(--ease), filter .35s var(--ease);
 }
-.tm:hover .portrait img { transform: scale(1.04); filter: saturate(1.05) contrast(1.05); }
+@media (hover: hover) and (pointer: fine) {
+  .tm:hover .portrait img { transform: scale(1.04); filter: saturate(1.05) contrast(1.05); }
+}
 .tm-body { margin-top: 16px; }
 .tm .role {
   font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase;

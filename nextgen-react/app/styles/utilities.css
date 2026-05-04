@@ -384,41 +384,64 @@
   .phase-index { font-size: 44px; margin-bottom: 12px; }
 }
 
-/* Tech orb — round photo of a glowing laptop in the top-right of the
-   Differenzierung section. Soft outer glow + subtle ring, scaled image
-   inside so the laptop sits centred and bright. */
-.tech-orb {
-  position: absolute;
-  top: clamp(16px, 2vw, 32px);
-  right: clamp(16px, 2vw, 32px);
-  width: clamp(170px, 16vw, 220px);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
+/* Differenzierung layout — atmospheric laptop photo on the left, three
+   cards stacked vertically on the right. The photo carries the emotion;
+   the cards carry the structure. Mirrors the Mehrwerte composition but
+   with a single column of cards for the 3 capability areas. */
+.tech-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.25fr;
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: 32px;
+  align-items: stretch;
+}
+.tech-image {
+  position: relative;
+  border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .18);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, .04),
-    0 18px 60px rgba(0, 0, 0, .55),
-    0 0 80px rgba(255, 130, 90, .12);
-  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .5);
+  min-height: 100%;
+  max-height: 460px;
+  align-self: stretch;
+}
+.tech-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, .25) 0%, transparent 45%, rgba(255, 100, 60, .08) 100%);
   pointer-events: none;
 }
-.tech-orb img {
+.tech-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 56%;
+  object-position: center;
   display: block;
-  transform: scale(1.35);
-  transform-origin: center 60%;
+  transform: scale(1.05);
+}
+.tech-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tech-cards .glass-card {
+  padding: 22px 24px 24px;
+  min-height: 0;
+}
+.tech-cards .glass-card h3 {
+  font-size: 20px;
+  margin-top: 0;
+}
+.tech-cards .glass-card p {
+  font-size: 15.5px;
+  line-height: 1.65;
+  margin-top: 10px;
 }
 
 @media (max-width: 1024px) {
-  .tech-orb {
-    position: static;
-    width: clamp(160px, 32vw, 220px);
-    margin: 8px auto 20px;
-  }
+  .tech-layout { grid-template-columns: 1fr; }
+  .tech-image { aspect-ratio: 16 / 10; min-height: 0; max-height: none; }
 }
 
 /* Beteiligungen: card with min-height to match neighbour. */

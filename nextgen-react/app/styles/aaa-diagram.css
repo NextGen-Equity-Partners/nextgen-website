@@ -94,11 +94,13 @@
   pointer-events: none;
   mix-blend-mode: screen;
 }
-.aaa-tool:hover {
-  background: rgba(255,255,255,.08);
-  border-color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .aaa-tool:hover {
+    background: rgba(255,255,255,.08);
+    border-color: var(--accent);
+  }
+  .aaa-tool:hover::after { opacity: 1; }
 }
-.aaa-tool:hover::after { opacity: 1; }
 .aaa-tool > * { position: relative; z-index: 1; }
 .aaa-tool .tool-name {
   font-family: 'Outfit', sans-serif;

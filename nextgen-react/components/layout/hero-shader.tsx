@@ -1,18 +1,30 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
 /**
  * Hero-scrub video as the page background. Driven directly by Lenis's
  * scroll progress so it scrubs frame-perfect with the smooth scroll.
  * Past ~2 viewport heights of scroll, the video locks at its last frame.
+ *
+ * On touch / narrow viewports (≤760px) Lenis-driven scrubbing is unreliable
+ * (touch scroll, momentum), so we fall back to a normal autoplay loop.
  */
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const rafRef = useRef(0);
   const targetRef = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 760px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Cache duration once metadata loads.
   useEffect(() => {
@@ -26,9 +38,22 @@ export function HeroShader() {
     return () => video.removeEventListener("loadedmetadata", onMeta);
   }, []);
 
+  // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.loop = isMobile;
+    if (isMobile) {
+      void video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [isMobile]);
+
   // Drive video.currentTime from Lenis's scroll position. RAF coalesces
   // bursts of scroll events into a single seek per frame.
   useLenis(({ scroll }) => {
+    if (isMobile) return;
     const video = videoRef.current;
     if (!video || !durationRef.current) return;
     // Reversed mapping across the entire page scroll: top = video end

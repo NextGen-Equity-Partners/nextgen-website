@@ -14,3 +14,18 @@
   -webkit-backdrop-filter: blur(16px);
 }
 
+@media (max-width: 760px) {
+  .tag-list { gap: 8px; margin-top: 22px; }
+  .tag {
+    padding: 7px 14px;
+    font-size: 10px;
+    letter-spacing: .12em;
+  }
+}
+
+@media (max-width: 420px) {
+  .tag {
+    padding: 6px 12px;
+    font-size: 9.5px;
+  }
+}

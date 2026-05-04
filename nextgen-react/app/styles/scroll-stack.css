@@ -180,3 +180,28 @@ section.story-break > .story-break-inner,
   }
 }
 
+@media (max-width: 420px) {
+  body.bg-image section.pane,
+  body.bg-image section.story-break,
+  body.bg-image section.kontakt-teaser-section,
+  body.bg-image section.bare-section,
+  body.bg-image section.testimonial-section,
+  body.bg-image .mission-section,
+  section.pane,
+  section.story-break,
+  section.kontakt-teaser-section,
+  section.bare-section,
+  section.testimonial-section,
+  .mission-section {
+    /* On 360–420px viewports, 34px×2 = 68px is too much chrome. Tighten
+       to 18px so the inner box gets ~324px content width on a 360px screen. */
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  section.pane > .pane-inner {
+    border-radius: 18px;
+    padding: 28px 18px;
+  }
+}
+

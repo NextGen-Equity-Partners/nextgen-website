@@ -398,34 +398,30 @@ export default function HomePage() {
         intro="Wissensträger im Mittelstand sind das Rückgrat unserer Wirtschaft. KI verändert wissensintensive Dienstleistungen aktuell grundlegend — eine Chance, den Mittelstand durch neue Technologien zukunftsfähig zu machen. Wissensträger können sich auf das fokussieren, was wirklich Wert schafft: Kreativität, fachliche Analyse und Kundenverständnis."
         contentMaxWidth={1100}
       >
-        <div className="tech-orb rv" aria-hidden="true">
-          <img
-            src="/assets/photos/New%20photos/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
-            alt=""
-          />
-        </div>
-        <div className="glass-grid cols-3">
-          <GlassCard
-
-            icon="chart"
-            title="Management"
-            body="Mehr Transparenz für die Geschäftsführung: datenbasierte Entscheidungsgrundlagen, entlastete Engpass-Prozesse, ein klares Bild davon, was im Unternehmen wirklich passiert."
-            delay={1}
-          />
-          <GlassCard
-
-            icon="layers"
-            title="Operatives Kerngeschäft"
-            body="Tief im Tagesgeschäft, zugeschnitten auf die Branche und den Prozess: höhere Qualität, verfügbares Wissen, schnellere Planungs- und Umsetzungszyklen."
-            delay={2}
-          />
-          <GlassCard
-
-            icon="shield"
-            title="Supportfunktionen"
-            body="Backoffice entlastet, Risiko reduziert, mehr Zeit für das, was wirklich zählt."
-            delay={3}
-          />
+        <div className="tech-layout">
+          <div className="tech-image rv">
+            <img
+              src="/assets/photos/New%20photos/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              alt=""
+            />
+          </div>
+          <div className="tech-cards">
+            <GlassCard
+              title="Management"
+              body="Mehr Transparenz für die Geschäftsführung: datenbasierte Entscheidungsgrundlagen, entlastete Engpass-Prozesse, ein klares Bild davon, was im Unternehmen wirklich passiert."
+              delay={1}
+            />
+            <GlassCard
+              title="Operatives Kerngeschäft"
+              body="Tief im Tagesgeschäft, zugeschnitten auf die Branche und den Prozess: höhere Qualität, verfügbares Wissen, schnellere Planungs- und Umsetzungszyklen."
+              delay={2}
+            />
+            <GlassCard
+              title="Supportfunktionen"
+              body="Backoffice entlastet, Risiko reduziert, mehr Zeit für das, was wirklich zählt."
+              delay={3}
+            />
+          </div>
         </div>
       </Section>
 
