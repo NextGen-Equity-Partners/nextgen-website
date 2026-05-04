@@ -439,10 +439,7 @@ export default function HomePage() {
         }
         contentMaxWidth={1100}
       >
-        <div className="tech-layout">
-          <div className="tech-image rv">
-            <img src="/assets/photos/New%20photos/esg.jpg" alt="" />
-          </div>
+        <div className="tech-layout tech-layout-reverse">
           <div className="tech-cards">
             <GlassCard
               num="Environment"
@@ -462,6 +459,9 @@ export default function HomePage() {
               body="Die Vergütung des Managements wird unmittelbar an die ESG-Ziele gekoppelt, wodurch diese in der Unternehmensgovernance institutionalisiert werden."
               delay={3}
             />
+          </div>
+          <div className="tech-image rv">
+            <img src="/assets/photos/New%20photos/esg.jpg" alt="" />
           </div>
         </div>
       </Section>

@@ -470,6 +470,9 @@
   margin-top: 32px;
   align-items: stretch;
 }
+.tech-layout.tech-layout-reverse {
+  grid-template-columns: 1.25fr 0.95fr;
+}
 .tech-image {
   position: relative;
   border-radius: 22px;
