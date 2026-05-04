@@ -461,7 +461,7 @@ export default function HomePage() {
             />
           </div>
           <div className="tech-image rv">
-            <img src="/assets/photos/New%20photos/esg.jpg" alt="" />
+            <img src="/assets/photos/New%20photos/esg-forest.jpg" alt="" />
           </div>
         </div>
       </Section>
