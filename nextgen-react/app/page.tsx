@@ -439,25 +439,30 @@ export default function HomePage() {
         }
         contentMaxWidth={1100}
       >
-        <div className="glass-grid cols-3">
-          <GlassCard
-            num="Environment"
-            title="Operative Effizienz"
-            body="Energiesparmaßnahmen und Dekarbonisierungs-Roadmaps werden in den Unternehmenszielen verankert."
-            delay={1}
-          />
-          <GlassCard
-            num="Social"
-            title="Mitarbeiterorientierte Unternehmenskultur"
-            body="Fachliche Weiterbildungen, Führungskräftetrainings und Programme für Mental Health und Arbeitssicherheit dienen einer mitarbeiterorientierten Unternehmenskultur."
-            delay={2}
-          />
-          <GlassCard
-            num="Governance"
-            title="Verantwortung im Management"
-            body="Die Vergütung des Managements wird unmittelbar an die ESG-Ziele gekoppelt, wodurch diese in der Unternehmensgovernance institutionalisiert werden."
-            delay={3}
-          />
+        <div className="tech-layout">
+          <div className="tech-image rv">
+            <img src="/assets/photos/New%20photos/esg.jpg" alt="" />
+          </div>
+          <div className="tech-cards">
+            <GlassCard
+              num="Environment"
+              title="Operative Effizienz"
+              body="Energiesparmaßnahmen und Dekarbonisierungs-Roadmaps werden in den Unternehmenszielen verankert."
+              delay={1}
+            />
+            <GlassCard
+              num="Social"
+              title="Mitarbeiterorientierte Unternehmenskultur"
+              body="Fachliche Weiterbildungen, Führungskräftetrainings und Programme für Mental Health und Arbeitssicherheit dienen einer mitarbeiterorientierten Unternehmenskultur."
+              delay={2}
+            />
+            <GlassCard
+              num="Governance"
+              title="Verantwortung im Management"
+              body="Die Vergütung des Managements wird unmittelbar an die ESG-Ziele gekoppelt, wodurch diese in der Unternehmensgovernance institutionalisiert werden."
+              delay={3}
+            />
+          </div>
         </div>
       </Section>
 
