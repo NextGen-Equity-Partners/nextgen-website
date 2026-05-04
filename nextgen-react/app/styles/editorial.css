@@ -66,11 +66,30 @@ body.bg-image .story-break::before { content: none; }
   box-shadow: 0 18px 44px rgba(0,0,0,.30);
 }
 
-/* Mission statement — large editorial text on the page bg, no pane/box. */
+/* Bare section — same pane content padding rhythm but no glass plate
+   background. Used for sections that should sit directly on the page
+   background (mission, team header). */
+.bare-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(48px, 6vw, 88px) clamp(36px, 6vw, 96px);
+}
+.bare-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Mission statement — large editorial text on the page bg, no pane/box.
+   min-height 100vh + flex centering ensures the mission text only enters
+   the viewport after the hero (with its CTA) has fully scrolled past. */
 .mission-section {
   position: relative;
   z-index: 1;
+  min-height: 100vh;
   padding: clamp(64px, 9vw, 140px) clamp(28px, 6vw, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 .mission-inner {
@@ -100,6 +119,85 @@ body.bg-image .story-break::before { content: none; }
   .mission-section { padding: 80px 22px; }
   .mission-body {
     font-size: clamp(20px, 5.5vw, 30px);
+    line-height: 1.45;
+  }
+}
+
+/* Testimonial — centered portrait + quote, no glass box. Used inline
+   between content sections to break the rhythm with a personal note. */
+.testimonial-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(48px, 7vw, 96px) clamp(28px, 6vw, 72px);
+  text-align: center;
+}
+.testimonial-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.testimonial-portrait {
+  width: clamp(120px, 14vw, 180px);
+  height: clamp(120px, 14vw, 180px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .20);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .32);
+  margin-bottom: 36px;
+  position: relative;
+}
+.testimonial-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+/* Amon's ChatGPT portrait is square (1254×1254) so object-fit: cover
+   doesn't crop. Scale the inner img inside the wrapper so the face
+   fills the circle the same way the portrait jpegs do — without
+   changing the wrapper size or position. */
+.tm .portrait img[src*="ChatGPT"],
+.testimonial-portrait img[src*="ChatGPT"] {
+  transform: scale(1.15);
+  transform-origin: center 32%;
+}
+.testimonial-quote {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.4;
+  letter-spacing: -.01em;
+  color: var(--w);
+  margin: 0 auto;
+  max-width: 880px;
+}
+.testimonial-attribution {
+  margin-top: 32px;
+}
+.testimonial-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--w);
+  letter-spacing: -.01em;
+}
+.testimonial-role {
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(249, 247, 244, .55);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+@media (max-width: 760px) {
+  .testimonial-section { padding: 60px 22px; }
+  .testimonial-quote {
+    font-size: clamp(18px, 5vw, 24px);
     line-height: 1.45;
   }
 }

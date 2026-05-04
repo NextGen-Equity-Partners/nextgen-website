@@ -1,6 +1,8 @@
 /* Blue background + animated color glows + liquid-metal */
 
-/* Background video — fills the viewport, sits behind everything. */
+/* Background video — fills the viewport, sits behind everything.
+   Horizontally mirrored so the sun rises from left to right as the
+   user scrolls down (combined with the reverse scroll-scrub). */
 .hero-bg-video {
   position: fixed;
   inset: 0;
@@ -11,6 +13,7 @@
   z-index: -4;
   pointer-events: none;
   user-select: none;
+  transform: scaleX(-1);
 }
 
 /* Soft dark tint so foreground white text stays readable across all

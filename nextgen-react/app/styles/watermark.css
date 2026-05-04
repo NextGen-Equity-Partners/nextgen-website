@@ -3,7 +3,7 @@
 .site-watermark {
   position: fixed;
   right: 48px;
-  bottom: 58px;
+  bottom: 24px;
   width: 200px;
   height: 50px;
   display: flex;

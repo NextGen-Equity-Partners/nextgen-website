@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/footer";
 import { LegalModal } from "@/components/layout/legal-modal";
 import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
+import { ScrollSnap } from "@/components/providers/scroll-snap";
+import { NextSectionArrow } from "@/components/providers/next-section-arrow";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { PageEffects } from "@/components/runtime/page-effects";
@@ -59,6 +61,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <PageAnimations />
           <PageEffects />
+          <ScrollSnap />
+          <NextSectionArrow />
         </SmoothScrollProvider>
 
         <LegalModal />

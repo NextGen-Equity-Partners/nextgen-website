@@ -50,8 +50,8 @@ h3.display {
 .bold { font-weight: 800; color: var(--w); }
 
 .body-text {
-  font-size: 15px; line-height: 1.85;
-  color: var(--w); opacity: .78; font-weight: 300;
+  font-size: 17px; line-height: 1.8;
+  color: var(--w); opacity: .82; font-weight: 300;
 }
 
 .twocol {

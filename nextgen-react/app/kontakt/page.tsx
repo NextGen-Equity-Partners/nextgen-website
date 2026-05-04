@@ -15,12 +15,12 @@ export default function Page() {
       </section>
       
       {/* KONTAKT-FORMULAR */}
-      <section className="pane" style={{ paddingTop: "48px", paddingBottom: "clamp(120px,12vw,180px)" }}>
-        <div className="pane-inner">
+      <section className="kontakt-section">
+        <div className="kontakt-inner">
           <div className="cf-wrap" style={{ marginTop: "0" }}>
             <ContactForm />
-      
-            <div className="cf-side rv rv-d1">
+
+            <div className="cf-side cf-side-bare rv rv-d1">
               <div className="cf-block cf-greeting">
                 <img className="cf-portrait" src="/assets/team/max.jpeg" alt="Maximilian Göppert" />
                 <div className="cf-eyebrow">Wir freuen uns</div>
@@ -30,14 +30,14 @@ export default function Page() {
               </div>
             </div>
           </div>
-      
-          {/* Kontakt-Info: zwei Bubbles unter Form + Max */}
+
+          {/* Kontakt-Info: zwei Bereiche unter Form + Max — bare */}
           <div className="cf-bottom">
-            <div className="cf-bottom-block rv rv-d2">
+            <div className="cf-bottom-block cf-bottom-block-bare rv rv-d2">
               <div className="cf-eyebrow">Direkter Kontakt</div>
               <p>E-Mail: <a href="mailto:contact@nextgen-equity.com">contact@nextgen-equity.com</a></p>
             </div>
-            <div className="cf-bottom-block rv rv-d3">
+            <div className="cf-bottom-block cf-bottom-block-bare rv rv-d3">
               <div className="cf-eyebrow">Standort</div>
               <p>München, Deutschland<br />Für den gesamten DACH-Raum: Deutschland · Österreich · Schweiz</p>
             </div>

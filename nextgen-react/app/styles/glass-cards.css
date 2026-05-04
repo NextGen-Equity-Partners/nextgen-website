@@ -103,8 +103,8 @@
   letter-spacing: -.02em; color: var(--w);
 }
 .glass-card p {
-  font-size: 15.5px; line-height: 1.7;
-  color: var(--w); opacity: .80;
+  font-size: 16.5px; line-height: 1.7;
+  color: var(--w); opacity: .82;
   margin-top: 14px; font-weight: 300;
 }
 .glass-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
