@@ -48,32 +48,41 @@ export default function HomePage() {
         intro="Wir als Team verstehen sowohl den Aufbau von Unternehmensgruppen als Beteiligungsmanager, die Integration von Technologien im Mittelstand, als auch die operative Führung von Unternehmen."
         contentMaxWidth={1100}
       >
-        <div className="layered-grid">
-          <article className="layered-card rv rv-d1">
-            <div className="layered-photo">
-              <img src="/assets/photos/New%20photos/max-bender-3rNvnnO7avY-unsplash.jpg" alt="" />
-            </div>
-            <div className="layered-glass">
-              <h3>Zugang zu langfristigem Wachstumskapital</h3>
-              <p>25+ Jahre kombinierte Erfahrung im Aufbau und der Betreuung von 20+ Unternehmensgruppen.</p>
-            </div>
-          </article>
-          <article className="layered-card rv rv-d2">
-            <div className="layered-photo">
-              <img src="/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg" alt="" />
-            </div>
-            <div className="layered-glass">
-              <h3>Wertsteigerung durch KI &amp; Digitalisierung</h3>
-              <p>30+ Projekte zur Technologie-Integration im Mittelstand.</p>
+        <div className="glass-grid cols-3">
+          <article className="glass-card image-card rv rv-d1">
+            <div
+              className="image-card-img"
+              style={{ backgroundImage: "url('/assets/photos/New%20photos/max-bender-3rNvnnO7avY-unsplash.jpg')" }}
+            />
+            <div className="image-card-body">
+              <div>
+                <h3>Zugang zu langfristigem Wachstumskapital</h3>
+                <p>25+ Jahre kombinierte Erfahrung im Aufbau und der Betreuung von 20+ Unternehmensgruppen.</p>
+              </div>
             </div>
           </article>
-          <article className="layered-card rv rv-d3">
-            <div className="layered-photo">
-              <img src="/assets/photos/New%20photos/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg" alt="" />
+          <article className="glass-card image-card rv rv-d2">
+            <div
+              className="image-card-img"
+              style={{ backgroundImage: "url('/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg')" }}
+            />
+            <div className="image-card-body">
+              <div>
+                <h3>Wertsteigerung durch KI &amp; Digitalisierung</h3>
+                <p>30+ Projekte zur Technologie-Integration im Mittelstand.</p>
+              </div>
             </div>
-            <div className="layered-glass">
-              <h3>Operativer Einsatz als Führungskräfte</h3>
-              <p>Erfahrung als Software- und KI-Unternehmer.</p>
+          </article>
+          <article className="glass-card image-card rv rv-d3">
+            <div
+              className="image-card-img"
+              style={{ backgroundImage: "url('/assets/photos/New%20photos/charlesdeluvio-rRWiVQzLm7k-unsplash.jpg')" }}
+            />
+            <div className="image-card-body">
+              <div>
+                <h3>Operativer Einsatz als Führungskräfte</h3>
+                <p>Erfahrung als Software- und KI-Unternehmer.</p>
+              </div>
             </div>
           </article>
         </div>
