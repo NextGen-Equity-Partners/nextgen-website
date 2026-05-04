@@ -104,7 +104,7 @@ section.story-break > .story-break-inner,
 .next-arrow {
   position: fixed;
   left: 50%;
-  bottom: 28px;
+  bottom: 88px;
   transform: translateX(-50%);
   z-index: 5;
   width: 52px;
@@ -151,6 +151,10 @@ section.story-break > .story-break-inner,
     bottom: 18px;
   }
 }
+
+/* When the iOS page indicator is mounted (desktop only), drop the arrow
+   so it sits above the pill instead of overlapping it. The pill itself
+   already hides on mobile via its own media query. */
 
 @media (max-width: 760px) {
   body.bg-image section.pane,

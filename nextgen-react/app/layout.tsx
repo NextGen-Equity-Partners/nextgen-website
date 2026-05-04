@@ -8,6 +8,7 @@ import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { ScrollSnap } from "@/components/providers/scroll-snap";
 import { NextSectionArrow } from "@/components/providers/next-section-arrow";
+import { PageIndicator } from "@/components/providers/page-indicator";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { PageEffects } from "@/components/runtime/page-effects";
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PageEffects />
           <ScrollSnap />
           <NextSectionArrow />
+          <PageIndicator />
         </SmoothScrollProvider>
 
         <LegalModal />
