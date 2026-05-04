@@ -7,7 +7,7 @@ import { LegalModal } from "@/components/layout/legal-modal";
 import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { ScrollSnap } from "@/components/providers/scroll-snap";
-import { NextSectionArrow } from "@/components/providers/next-section-arrow";
+import { SideNavArrows } from "@/components/providers/side-nav-arrows";
 import { PageIndicator } from "@/components/providers/page-indicator";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PageAnimations />
           <PageEffects />
           <ScrollSnap />
-          <NextSectionArrow />
+          <SideNavArrows />
           <PageIndicator />
         </SmoothScrollProvider>
 
