@@ -241,35 +241,34 @@ export default function HomePage() {
         intro="Unsere Buy & Build Plattformstrategie fokussiert den Aufbau integrierter Gruppen: vom Nukleus bis zum Mittelstandsführer innerhalb von 5 Jahren."
         contentMaxWidth={1100}
       >
-        <div className="buy-build-anim" aria-hidden="true">
-          <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet">
-            <g className="bba-links">
-              <line x1="300" y1="110" x2="180" y2="80" />
-              <line x1="300" y1="110" x2="420" y2="80" />
-              <line x1="300" y1="110" x2="160" y2="160" />
-              <line x1="300" y1="110" x2="440" y2="160" />
-              <line x1="300" y1="110" x2="240" y2="40" />
-              <line x1="300" y1="110" x2="360" y2="40" />
-              <line x1="300" y1="110" x2="100" y2="120" />
-              <line x1="300" y1="110" x2="500" y2="120" />
-            </g>
-            <circle cx="300" cy="110" r="0" className="bba-platform" />
-            <circle cx="180" cy="80" r="0" className="bba-addon bba-a1" />
-            <circle cx="420" cy="80" r="0" className="bba-addon bba-a2" />
-            <circle cx="160" cy="160" r="0" className="bba-addon bba-a3" />
-            <circle cx="440" cy="160" r="0" className="bba-addon bba-a4" />
-            <circle cx="240" cy="40" r="0" className="bba-addon bba-a5" />
-            <circle cx="360" cy="40" r="0" className="bba-addon bba-a6" />
-            <circle cx="100" cy="120" r="0" className="bba-addon bba-a7" />
-            <circle cx="500" cy="120" r="0" className="bba-addon bba-a8" />
-          </svg>
-          <div className="bba-labels">
-            <span className="bba-label bba-label-1">1 · Plattform</span>
-            <span className="bba-label bba-label-2">2 · Add-ons</span>
-            <span className="bba-label bba-label-3">3 · Integrierte Gruppe</span>
+        <div className="phase-block">
+          <div className="buy-build-anim" aria-hidden="true">
+            <svg viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+              <g className="bba-links">
+                <line x1="150" y1="100" x2="450" y2="100" />
+                <line x1="450" y1="100" x2="750" y2="100" />
+                <line x1="450" y1="100" x2="380" y2="40" />
+                <line x1="450" y1="100" x2="520" y2="40" />
+                <line x1="450" y1="100" x2="380" y2="160" />
+                <line x1="450" y1="100" x2="520" y2="160" />
+                <line x1="450" y1="100" x2="320" y2="70" />
+                <line x1="450" y1="100" x2="580" y2="130" />
+              </g>
+              <circle cx="450" cy="100" r="0" className="bba-platform" />
+              <circle cx="150" cy="100" r="0" className="bba-addon bba-a1" />
+              <circle cx="750" cy="100" r="0" className="bba-addon bba-a2" />
+              <circle cx="380" cy="40"  r="0" className="bba-addon bba-a3" />
+              <circle cx="520" cy="40"  r="0" className="bba-addon bba-a4" />
+              <circle cx="380" cy="160" r="0" className="bba-addon bba-a5" />
+              <circle cx="520" cy="160" r="0" className="bba-addon bba-a6" />
+              <circle cx="320" cy="70"  r="0" className="bba-addon bba-a7" />
+              <circle cx="580" cy="130" r="0" className="bba-addon bba-a8" />
+            </svg>
+            <div className="phase-connectors" aria-hidden="true">
+              <span /><span /><span />
+            </div>
           </div>
-        </div>
-        <ol className="phase-list">
+          <ol className="phase-list">
           <li className="phase-item rv rv-d1">
             <div className="phase-index">01</div>
             <div className="phase-content">
@@ -300,7 +299,8 @@ export default function HomePage() {
               </p>
             </div>
           </li>
-        </ol>
+          </ol>
+        </div>
       </Section>
 
       <div className="sec-divider" />
@@ -322,25 +322,21 @@ export default function HomePage() {
           </div>
           <div className="mehrwerte-cards">
             <GlassCard
-              icon="users"
               title="Attraktiver Arbeitgeber"
               body="Stärkere Arbeitgebermarke, neue Leitungsrollen und Zugang zu modernen Technologien — ein Umfeld, in dem Talente bleiben und sich entwickeln."
               delay={1}
             />
             <GlassCard
-              icon="shield"
               title="Resiliente Strukturen"
               body="Mehr Marktdiversifikation, Balance zwischen Endmärkten und Kapazitäten. Eine zweite Führungsebene gibt der Gruppe organisatorische Tiefe."
               delay={2}
             />
             <GlassCard
-              icon="cpu"
               title="Neue Technologien"
               body="Zentrale Teams und gezielte Investitionen in Innovation und Digitalisierung — als gemeinsame Plattform für alle Standorte der Gruppe."
               delay={3}
             />
             <GlassCard
-              icon="globe"
               title="Marktzugänge"
               body="Zugang zu Großprojekten und Ausschreibungen, die bestimmte Kapazitäten und Referenzen voraussetzen — als Gruppe erreichbar, einzeln oft nicht."
               delay={4}
@@ -383,46 +379,11 @@ export default function HomePage() {
         intro="Wissensträger im Mittelstand sind das Rückgrat unserer Wirtschaft. KI verändert wissensintensive Dienstleistungen aktuell grundlegend — eine Chance, den Mittelstand durch neue Technologien zukunftsfähig zu machen. Wissensträger können sich auf das fokussieren, was wirklich Wert schafft: Kreativität, fachliche Analyse und Kundenverständnis."
         contentMaxWidth={1100}
       >
-        <div className="neural-anim" aria-hidden="true">
-          <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
-            <g className="nn-links">
-              <line x1="40" y1="40" x2="120" y2="60" />
-              <line x1="40" y1="40" x2="120" y2="110" />
-              <line x1="40" y1="100" x2="120" y2="60" />
-              <line x1="40" y1="100" x2="120" y2="110" />
-              <line x1="40" y1="100" x2="120" y2="160" />
-              <line x1="40" y1="160" x2="120" y2="110" />
-              <line x1="40" y1="160" x2="120" y2="160" />
-              <line x1="120" y1="60" x2="200" y2="50" />
-              <line x1="120" y1="60" x2="200" y2="100" />
-              <line x1="120" y1="110" x2="200" y2="50" />
-              <line x1="120" y1="110" x2="200" y2="100" />
-              <line x1="120" y1="110" x2="200" y2="150" />
-              <line x1="120" y1="160" x2="200" y2="100" />
-              <line x1="120" y1="160" x2="200" y2="150" />
-              <line x1="200" y1="50" x2="270" y2="100" />
-              <line x1="200" y1="100" x2="270" y2="100" />
-              <line x1="200" y1="150" x2="270" y2="100" />
-            </g>
-            <g className="nn-pulses">
-              <circle className="nn-pulse nn-p1" r="2.5" />
-              <circle className="nn-pulse nn-p2" r="2.5" />
-              <circle className="nn-pulse nn-p3" r="2.5" />
-              <circle className="nn-pulse nn-p4" r="2.5" />
-            </g>
-            <g className="nn-nodes">
-              <circle cx="40" cy="40" r="5" />
-              <circle cx="40" cy="100" r="5" />
-              <circle cx="40" cy="160" r="5" />
-              <circle cx="120" cy="60" r="5" />
-              <circle cx="120" cy="110" r="5" />
-              <circle cx="120" cy="160" r="5" />
-              <circle cx="200" cy="50" r="5" />
-              <circle cx="200" cy="100" r="5" />
-              <circle cx="200" cy="150" r="5" />
-              <circle className="nn-output" cx="270" cy="100" r="6" />
-            </g>
-          </svg>
+        <div className="tech-orb rv" aria-hidden="true">
+          <img
+            src="/assets/photos/New%20photos/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+            alt=""
+          />
         </div>
         <div className="glass-grid cols-3">
           <GlassCard
