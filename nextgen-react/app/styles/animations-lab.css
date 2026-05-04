@@ -113,6 +113,19 @@
   font-size: 14px;
   line-height: 1.7;
 }
+.alab-2d-note {
+  max-width: 680px;
+  margin-top: 18px;
+  color: rgba(249,247,244,.64);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.alab-2d-pane.is-proposals .alab-2d-card {
+  min-height: 286px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.035)),
+    rgba(5,13,31,.36);
+}
 .ad2d-stage {
   position: relative;
   width: 100%;
@@ -700,6 +713,469 @@
   10% { opacity: 1; }
   /* Each drop reaches a fraction of the way down based on --life. */
   100% { top: calc(var(--life) * 100%); opacity: 0; }
+}
+
+/* ============================================================
+   NEW 2D CANDIDATES
+============================================================ */
+.ad2d-decision {
+  background:
+    radial-gradient(circle at 82% 24%, rgba(251,114,78,.18), transparent 36%),
+    radial-gradient(circle at 18% 70%, rgba(124,155,255,.18), transparent 40%),
+    rgba(5,13,31,.42);
+}
+.ad2d-decision-path {
+  position: absolute;
+  inset: 18px 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 36px);
+  overflow: visible;
+}
+.ad2d-decision-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ad2d-decision-line.base {
+  stroke: rgba(249,247,244,.14);
+  stroke-width: 2;
+}
+.ad2d-decision-line.active {
+  stroke: #ffc48a;
+  stroke-width: 3;
+  stroke-dasharray: 640;
+  stroke-dashoffset: 640;
+  filter: drop-shadow(0 0 12px rgba(251,114,78,.55));
+  animation: ad2d-decision-draw 6.8s var(--ease-cinema) infinite;
+}
+.ad2d-decision-steps {
+  position: absolute;
+  inset: 32px 28px 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  z-index: 2;
+}
+.ad2d-decision-step {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  opacity: .45;
+  animation: ad2d-decision-step 6.8s var(--ease-cinema) infinite;
+  animation-delay: calc(var(--i) * .55s);
+}
+.ad2d-decision-step:nth-child(1) { transform: translateY(40px); }
+.ad2d-decision-step:nth-child(2) { transform: translateY(2px); }
+.ad2d-decision-step:nth-child(3) { transform: translateY(34px); }
+.ad2d-decision-step:nth-child(4) { transform: translateY(-22px); }
+.ad2d-decision-step i {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(249,247,244,.96) 0 22%, rgba(251,114,78,.82) 24% 38%, transparent 41%),
+    rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 0 24px rgba(251,114,78,.28);
+}
+.ad2d-decision-step b {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.7);
+}
+.ad2d-decision-pulse,
+.ad2d-decision-reject {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 3;
+}
+.ad2d-decision-pulse {
+  width: 10px;
+  height: 10px;
+  background: #f9f7f4;
+  box-shadow: 0 0 22px rgba(255,196,138,.9);
+  animation: ad2d-decision-pulse 6.8s var(--ease-cinema) infinite;
+}
+.ad2d-decision-pulse.p2 { animation-delay: 2.1s; opacity: .72; }
+.ad2d-decision-reject {
+  width: 6px;
+  height: 6px;
+  background: rgba(124,155,255,.88);
+  box-shadow: 0 0 14px rgba(124,155,255,.58);
+  animation: ad2d-decision-reject 6.8s ease-in-out infinite;
+}
+.ad2d-decision-reject.r1 { left: 31%; top: 54%; animation-delay: 1.2s; }
+.ad2d-decision-reject.r2 { left: 51%; top: 66%; animation-delay: 2.4s; }
+.ad2d-decision-reject.r3 { left: 67%; top: 55%; animation-delay: 3.2s; }
+@keyframes ad2d-decision-draw {
+  0%, 8% { stroke-dashoffset: 640; opacity: .25; }
+  58%, 82% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 640; opacity: .25; }
+}
+@keyframes ad2d-decision-step {
+  0%, 10% { opacity: .36; }
+  24%, 78% { opacity: 1; }
+  100% { opacity: .36; }
+}
+@keyframes ad2d-decision-pulse {
+  0% { left: 7%; top: 65%; opacity: 0; transform: scale(.75); }
+  10% { opacity: 1; }
+  28% { left: 36%; top: 42%; opacity: 1; }
+  50% { left: 53%; top: 55%; opacity: 1; }
+  74% { left: 76%; top: 38%; opacity: 1; }
+  90% { left: 91%; top: 31%; opacity: 1; }
+  100% { left: 91%; top: 31%; opacity: 0; transform: scale(1.5); }
+}
+@keyframes ad2d-decision-reject {
+  0%, 18% { opacity: 0; transform: translateY(-8px) scale(.7); }
+  28% { opacity: .9; }
+  58% { opacity: 0; transform: translateY(42px) scale(.35); }
+  100% { opacity: 0; transform: translateY(42px) scale(.35); }
+}
+
+.ad2d-mosaic {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,196,138,.18), transparent 42%),
+    radial-gradient(circle at 80% 22%, rgba(124,155,255,.14), transparent 34%),
+    rgba(5,13,31,.42);
+}
+.ad2d-mosaic-grid {
+  position: absolute;
+  inset: 20px;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: .36;
+}
+.ad2d-mosaic-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 112px;
+  height: 72px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  color: #f9f7f4;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.17), rgba(255,255,255,.05)),
+    rgba(251,114,78,.18);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 0 34px rgba(251,114,78,.2),
+    inset 0 1px 0 rgba(255,255,255,.22);
+  z-index: 3;
+  animation: ad2d-mosaic-core 7s ease-in-out infinite;
+}
+.ad2d-mosaic-core em,
+.ad2d-mosaic-value {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.55);
+}
+.ad2d-mosaic-core strong {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.ad2d-mosaic-tile {
+  position: absolute;
+  left: var(--to-x);
+  top: var(--to-y);
+  min-width: 58px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0 10px;
+  border-radius: 9px;
+  transform: translate(-50%, -50%);
+  background: rgba(249,247,244,.9);
+  color: #1a1916;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  box-shadow: 0 0 24px rgba(255,196,138,.22);
+  z-index: 2;
+  animation: ad2d-mosaic-tile 7s var(--ease-cinema) infinite;
+  animation-delay: calc(var(--i) * .28s);
+}
+.ad2d-mosaic-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,196,138,.34);
+  transform: translate(-50%, -50%) scale(.6);
+  opacity: 0;
+  animation: ad2d-mosaic-ring 7s ease-out infinite;
+}
+.ad2d-mosaic-ring.one { width: 168px; height: 168px; animation-delay: 2.3s; }
+.ad2d-mosaic-ring.two { width: 220px; height: 220px; animation-delay: 2.8s; }
+.ad2d-mosaic-value {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  color: rgba(255,196,138,.78);
+  opacity: 0;
+  animation: ad2d-mosaic-value 7s ease-in-out infinite;
+}
+@keyframes ad2d-mosaic-tile {
+  0%, 8% { left: var(--from-x); top: var(--from-y); opacity: 0; transform: translate(-50%, -50%) scale(.82); }
+  22%, 74% { left: var(--to-x); top: var(--to-y); opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  88%, 100% { left: var(--to-x); top: var(--to-y); opacity: .34; transform: translate(-50%, -50%) scale(.92); }
+}
+@keyframes ad2d-mosaic-core {
+  0%, 100% { transform: translate(-50%, -50%) scale(.96); }
+  42%, 76% { transform: translate(-50%, -50%) scale(1.05); }
+}
+@keyframes ad2d-mosaic-ring {
+  0%, 20% { opacity: 0; transform: translate(-50%, -50%) scale(.6); }
+  52% { opacity: .75; }
+  92%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.12); }
+}
+@keyframes ad2d-mosaic-value {
+  0%, 38% { opacity: 0; transform: translateY(8px); }
+  50%, 78% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+.ad2d-aiops {
+  background:
+    radial-gradient(circle at 52% 50%, rgba(124,155,255,.2), transparent 40%),
+    radial-gradient(circle at 16% 18%, rgba(251,114,78,.12), transparent 30%),
+    rgba(5,13,31,.44);
+}
+.ad2d-aiops-grid {
+  position: absolute;
+  inset: 18px 22px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+}
+.ad2d-aiops-grid span {
+  border-radius: 8px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.07);
+  animation: ad2d-aiops-cell 5.8s ease-in-out infinite;
+  animation-delay: calc((var(--i) % 9) * .16s);
+}
+.ad2d-aiops-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 124px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3px;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  background: rgba(5,13,31,.82);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow:
+    0 0 40px rgba(124,155,255,.26),
+    inset 0 1px 0 rgba(255,255,255,.16);
+  z-index: 3;
+}
+.ad2d-aiops-core span,
+.ad2d-aiops-token {
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.48);
+  font-weight: 700;
+}
+.ad2d-aiops-core strong {
+  font-size: 16px;
+  color: #f9f7f4;
+  letter-spacing: .04em;
+}
+.ad2d-aiops-scan {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(249,247,244,.75), transparent);
+  box-shadow: 0 0 20px rgba(124,155,255,.55);
+  animation: ad2d-aiops-scan 4.8s var(--ease-cinema) infinite;
+  z-index: 2;
+}
+.ad2d-aiops-beam {
+  position: absolute;
+  height: 2px;
+  width: 36%;
+  background: linear-gradient(90deg, transparent, rgba(251,114,78,.82), transparent);
+  transform-origin: left center;
+  opacity: 0;
+  z-index: 2;
+  animation: ad2d-aiops-beam 5.8s ease-in-out infinite;
+}
+.ad2d-aiops-beam.b1 { left: 15%; top: 35%; transform: rotate(18deg); }
+.ad2d-aiops-beam.b2 { right: 15%; top: 66%; transform: rotate(198deg); animation-delay: 1.4s; }
+.ad2d-aiops-token {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(249,247,244,.72);
+  animation: ad2d-aiops-token 5.8s var(--ease-cinema) infinite;
+  z-index: 4;
+}
+.ad2d-aiops-token.t1 { left: 10%; top: 18%; }
+.ad2d-aiops-token.t2 { right: 12%; top: 18%; animation-delay: .8s; }
+.ad2d-aiops-token.t3 { left: 14%; bottom: 16%; animation-delay: 1.6s; }
+@keyframes ad2d-aiops-cell {
+  0%, 100% { opacity: .45; transform: scale(1); }
+  46% { opacity: .96; transform: scale(1.02); }
+}
+@keyframes ad2d-aiops-scan {
+  0% { top: 24px; opacity: 0; }
+  12%, 82% { opacity: 1; }
+  100% { top: calc(100% - 28px); opacity: 0; }
+}
+@keyframes ad2d-aiops-beam {
+  0%, 20% { opacity: 0; transform: scaleX(.2) rotate(var(--rot, 0deg)); }
+  34%, 62% { opacity: 1; transform: scaleX(1) rotate(var(--rot, 0deg)); }
+  82%, 100% { opacity: 0; transform: scaleX(.2) rotate(var(--rot, 0deg)); }
+}
+.ad2d-aiops-beam.b1 { --rot: 18deg; }
+.ad2d-aiops-beam.b2 { --rot: 198deg; }
+@keyframes ad2d-aiops-token {
+  0%, 14% { opacity: .42; transform: translateY(0); }
+  36%, 68% { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: .42; transform: translateY(0); }
+}
+
+.ad2d-margin {
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255,196,138,.16), transparent 35%),
+    radial-gradient(circle at 20% 80%, rgba(124,155,255,.16), transparent 38%),
+    rgba(5,13,31,.42);
+}
+.ad2d-margin-grid {
+  position: absolute;
+  inset: 24px 26px 32px;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 100% 32px, 56px 100%;
+  opacity: .52;
+}
+.ad2d-margin-bars {
+  position: absolute;
+  left: 9%;
+  right: 34%;
+  bottom: 34px;
+  top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: end;
+  gap: 10px;
+  z-index: 2;
+}
+.ad2d-margin-bar {
+  position: relative;
+  height: 100%;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+}
+.ad2d-margin-bar i {
+  width: 100%;
+  max-width: 34px;
+  height: var(--h);
+  min-height: 18px;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(180deg, #ffd9ad, #fb724e 58%, #8b3a1f);
+  box-shadow: 0 0 20px rgba(251,114,78,.26);
+  transform-origin: bottom;
+  animation: ad2d-margin-bar 6.2s var(--ease-cinema) infinite;
+  animation-delay: calc(var(--i) * .18s);
+}
+.ad2d-margin-bar b {
+  position: absolute;
+  bottom: -20px;
+  font-size: 8px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(249,247,244,.52);
+}
+.ad2d-margin-line {
+  position: absolute;
+  inset: 20px 20px 24px;
+  width: calc(100% - 40px);
+  height: calc(100% - 44px);
+  overflow: visible;
+  z-index: 3;
+}
+.ad2d-margin-line path {
+  fill: none;
+  stroke: rgba(124,155,255,.92);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  filter: drop-shadow(0 0 12px rgba(124,155,255,.48));
+  animation: ad2d-margin-line 6.2s var(--ease-cinema) infinite;
+}
+.ad2d-margin-result {
+  position: absolute;
+  right: 24px;
+  top: 30px;
+  width: 96px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+  animation: ad2d-margin-result 6.2s var(--ease-cinema) infinite;
+  z-index: 4;
+}
+.ad2d-margin-result em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: .2em;
+  color: rgba(249,247,244,.5);
+}
+.ad2d-margin-result strong {
+  font-size: 17px;
+  color: #f9f7f4;
+}
+@keyframes ad2d-margin-bar {
+  0%, 10% { transform: scaleY(.18); opacity: .48; }
+  42%, 78% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(.18); opacity: .48; }
+}
+@keyframes ad2d-margin-line {
+  0%, 22% { stroke-dashoffset: 440; opacity: .28; }
+  58%, 82% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 440; opacity: .28; }
+}
+@keyframes ad2d-margin-result {
+  0%, 34% { opacity: 0; transform: translateY(8px); }
+  50%, 82% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
 }
 
 /* ============================================================

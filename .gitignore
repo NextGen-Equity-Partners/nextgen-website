@@ -43,6 +43,8 @@ nextgen-react/test-results/
 nextgen-react/playwright-report/
 nextgen-react/.playwright-cli/
 nextgen-react/output/
+nextgen-react/.firecrawl/
 
 # Internal/hidden
 .claude/
+.codex/

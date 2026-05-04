@@ -7,6 +7,41 @@ import { CompoundCurve2D } from "./compound-curve";
 import { PlatformDock2D } from "./platform-dock";
 import { DachTriangle2D } from "./dach-triangle";
 import { DealFunnel2D } from "./deal-funnel";
+import { DecisionRail2D } from "./decision-rail";
+import { PortfolioMosaic2D } from "./portfolio-mosaic";
+import { AiOpsGrid2D } from "./ai-ops-grid";
+import { MarginLift2D } from "./margin-lift";
+
+export const TWO_D_PROPOSALS: TwoDAnimationDemo[] = [
+  {
+    id: "decision-rail",
+    kicker: "Investmentprozess",
+    title: "Signale werden zu Entscheidungen.",
+    body: "Ein Deal-Signal laeuft durch klare Gates. Schwache Signale fallen leise raus, der richtige Fit bewegt sich weiter bis zur Partnerschaft.",
+    Component: DecisionRail2D,
+  },
+  {
+    id: "portfolio-mosaic",
+    kicker: "Buy & Build",
+    title: "Aus Einzelteilen wird ein System.",
+    body: "Module docken in eine Plattform ein. Das fuehlt sich konkreter an als abstrakte Partikel und passt besser neben Strategietext.",
+    Component: PortfolioMosaic2D,
+  },
+  {
+    id: "ai-ops-grid",
+    kicker: "KI im Betrieb",
+    title: "Daten, Modelle und Aktionen im Takt.",
+    body: "Eine ruhige Operating-Layer-Animation fuer KI-Abschnitte: kein Sci-Fi-Netz, sondern ein steuerbares System.",
+    Component: AiOpsGrid2D,
+  },
+  {
+    id: "margin-lift",
+    kicker: "Werthebel",
+    title: "Kleine Hebel bauen Marge auf.",
+    body: "Preis, Auslastung, Mix und KI laufen als operative Hebel zusammen. Direkt lesbar, ohne 3D-Ballast.",
+    Component: MarginLift2D,
+  },
+];
 
 export const TWO_D_ANIMATIONS: TwoDAnimationDemo[] = [
   {
