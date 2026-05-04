@@ -30,6 +30,7 @@
 
 /* Effects */
 @import "./styles/reveal.css";
+@import "./styles/scroll-stack.css";
 @import "./styles/animations-lab.css";
 
 /* Deprecated: keep empty compatibility import last while responsive ownership moves into components. */

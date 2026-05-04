@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 type HeroProps = {
   eyebrow: string;
   title: ReactNode;
-  sub: ReactNode;
+  sub?: ReactNode;
   /** Render CTA buttons. */
   ctas?: ReactNode;
   /** Anchor target for the scroll arrow. Pass undefined to hide the arrow. */
@@ -22,7 +22,7 @@ export function Hero({ eyebrow, title, sub, ctas, scrollTo, variant = "home" }: 
     <section className={`hero${isHome ? "" : " subpage"}`}>
       <div className="hero-eyebrow">{eyebrow}</div>
       <h1 className="display hero-title">{title}</h1>
-      <p className="hero-sub">{sub}</p>
+      {sub && <p className="hero-sub">{sub}</p>}
       {ctas && <div className="hero-ctas">{ctas}</div>}
       {scrollTo && (
         <a href={`#${scrollTo}`} className="hero-scroll" aria-label="Scrollen">
