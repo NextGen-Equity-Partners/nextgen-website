@@ -233,9 +233,7 @@ export default function HomePage() {
         id="ansatz"
         title={
           <>
-            Wie wir unsere
-            <br />
-            <span className="bold">Gruppen aufbauen.</span>
+            Wie wir unsere <span className="bold">Gruppen aufbauen.</span>
           </>
         }
         intro="Unsere Buy & Build Plattformstrategie fokussiert den Aufbau integrierter Gruppen: vom Nukleus bis zum Mittelstandsführer innerhalb von 5 Jahren."
