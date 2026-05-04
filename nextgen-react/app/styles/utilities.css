@@ -538,14 +538,6 @@
 .tech-cards .glass-card {
   padding: 22px 24px 24px;
   min-height: 0;
-  background: rgba(20, 24, 36, .72);
-  backdrop-filter: blur(18px) saturate(1.35);
-  -webkit-backdrop-filter: blur(18px) saturate(1.35);
-  border-color: rgba(255, 255, 255, .22);
-}
-.tech-cards .glass-card:hover {
-  background: rgba(28, 32, 48, .8);
-  border-color: rgba(255, 255, 255, .32);
 }
 .tech-cards .glass-card h3 {
   font-size: 20px;
