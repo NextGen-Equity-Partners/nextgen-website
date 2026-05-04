@@ -17,6 +17,7 @@ export function HeroShader() {
   const rafRef = useRef(0);
   const targetRef = useRef(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 760px)");
@@ -26,16 +27,25 @@ export function HeroShader() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Cache duration once metadata loads.
+  // Cache duration once metadata loads, and flip videoReady once we have
+  // enough buffered to scrub without showing the native loading state.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const onMeta = () => {
       durationRef.current = video.duration || 0;
     };
+    const onCanPlay = () => setVideoReady(true);
     video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("canplaythrough", onCanPlay);
+    video.addEventListener("canplay", onCanPlay);
     if (video.readyState >= 1) onMeta();
-    return () => video.removeEventListener("loadedmetadata", onMeta);
+    if (video.readyState >= 3) setVideoReady(true);
+    return () => {
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("canplaythrough", onCanPlay);
+      video.removeEventListener("canplay", onCanPlay);
+    };
   }, []);
 
   // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
@@ -73,14 +83,23 @@ export function HeroShader() {
 
   return (
     <>
+      <img
+        className="hero-bg-poster"
+        src="/assets/hero-poster.jpg"
+        alt=""
+        aria-hidden="true"
+        data-faded={videoReady ? "true" : undefined}
+      />
       <video
         ref={videoRef}
         className="hero-bg-video"
         src="/assets/photos/New%20photos/hero-scrub.mp4"
+        poster="/assets/hero-poster.jpg"
         muted
         playsInline
         preload="auto"
         aria-hidden="true"
+        data-ready={videoReady ? "true" : undefined}
       />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>

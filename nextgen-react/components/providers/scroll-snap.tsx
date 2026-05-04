@@ -23,6 +23,12 @@ export function ScrollSnap() {
   useEffect(() => {
     if (!lenis) return;
 
+    // Disable section-snap on touch / narrow viewports — it interferes
+    // with natural touch-scroll momentum and feels like the page is
+    // "sticking" to each section.
+    const mq = window.matchMedia("(max-width: 760px), (hover: none), (pointer: coarse)");
+    if (mq.matches) return;
+
     const snap = new Snap(lenis, {
       type: "mandatory",
       duration: 1.2,

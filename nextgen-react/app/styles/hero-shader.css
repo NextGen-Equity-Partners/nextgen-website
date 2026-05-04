@@ -1,8 +1,31 @@
 /* Blue background + animated color glows + liquid-metal */
 
+/* Static poster image — shown immediately while the scrub video is
+   still buffering, so the hero never lands as a black box. Same mirror
+   transform as the video so it lines up. Fades out once the video can
+   play through. */
+.hero-bg-poster {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -5;
+  pointer-events: none;
+  user-select: none;
+  transform: scaleX(-1);
+  background: var(--bg-deep);
+  transition: opacity .8s var(--ease);
+}
+.hero-bg-poster[data-faded="true"] {
+  opacity: 0;
+}
+
 /* Background video — fills the viewport, sits behind everything.
    Horizontally mirrored so the sun rises from left to right as the
-   user scrolls down (combined with the reverse scroll-scrub). */
+   user scrolls down (combined with the reverse scroll-scrub). Fades
+   in once the browser reports it can play through. */
 .hero-bg-video {
   position: fixed;
   inset: 0;
@@ -14,6 +37,11 @@
   pointer-events: none;
   user-select: none;
   transform: scaleX(-1);
+  opacity: 0;
+  transition: opacity .8s var(--ease);
+}
+.hero-bg-video[data-ready="true"] {
+  opacity: 1;
 }
 
 /* Soft dark tint so foreground white text stays readable across all

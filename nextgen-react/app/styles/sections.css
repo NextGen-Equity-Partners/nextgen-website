@@ -94,9 +94,7 @@ h3.display {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
-  /* Sticky stays on mobile so the eyebrow/headline anchors the section
-     while body content scrolls past. Top offset clears the 80px nav. */
-  .twocol .sticky-col { top: 88px; }
+  .twocol .sticky-col { position: static; }
   .twocol > .sticky-col + div > .body-text:first-child,
   .twocol > .sticky-col + div > p:first-child,
   .twocol > .sticky-col + .body-text,
