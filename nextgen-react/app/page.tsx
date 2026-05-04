@@ -246,7 +246,9 @@ export default function HomePage() {
                 <circle className="pa1-ring pa1-r3" cx="100" cy="60" r="20" />
                 <circle className="pa1-ring pa1-r2" cx="100" cy="60" r="20" />
                 <circle className="pa1-ring pa1-r1" cx="100" cy="60" r="20" />
+                <circle className="pa1-orbit" cx="100" cy="60" r="34" />
                 <circle className="pa1-core" cx="100" cy="60" r="14" />
+                <circle className="pa1-orbiter" cx="134" cy="60" r="3.5" />
               </svg>
             </div>
             <div className="phase-index">01</div>
@@ -266,10 +268,10 @@ export default function HomePage() {
                 <line className="pa2-link pa2-l3" x1="100" y1="60" x2="50"  y2="90" />
                 <line className="pa2-link pa2-l4" x1="100" y1="60" x2="150" y2="90" />
                 <circle className="pa2-core" cx="100" cy="60" r="12" />
-                <circle className="pa2-sat pa2-s1" cx="50"  cy="30" r="6" />
-                <circle className="pa2-sat pa2-s2" cx="150" cy="30" r="6" />
-                <circle className="pa2-sat pa2-s3" cx="50"  cy="90" r="6" />
-                <circle className="pa2-sat pa2-s4" cx="150" cy="90" r="6" />
+                <circle className="pa2-sat pa2-s1" r="6" />
+                <circle className="pa2-sat pa2-s2" r="6" />
+                <circle className="pa2-sat pa2-s3" r="6" />
+                <circle className="pa2-sat pa2-s4" r="6" />
               </svg>
             </div>
             <div className="phase-index">02</div>
@@ -305,9 +307,11 @@ export default function HomePage() {
                 <circle className="pa3-sat" cx="160" cy="90" r="5" />
                 <circle className="pa3-sat" cx="100" cy="20" r="5" />
                 <circle className="pa3-sat" cx="100" cy="100" r="5" />
-                <circle className="pa3-pulse pa3-p1" r="2.6" />
-                <circle className="pa3-pulse pa3-p2" r="2.6" />
-                <circle className="pa3-pulse pa3-p3" r="2.6" />
+                <circle className="pa3-pulse pa3-p1" r="3" />
+                <circle className="pa3-pulse pa3-p2" r="3" />
+                <circle className="pa3-pulse pa3-p3" r="3" />
+                <circle className="pa3-pulse pa3-p4" r="3" />
+                <circle className="pa3-pulse pa3-p5" r="3" />
               </svg>
             </div>
             <div className="phase-index">03</div>
@@ -401,7 +405,7 @@ export default function HomePage() {
         <div className="tech-layout">
           <div className="tech-image rv">
             <img
-              src="/assets/photos/New%20photos/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg"
               alt=""
             />
           </div>
