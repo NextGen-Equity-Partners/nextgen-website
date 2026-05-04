@@ -239,53 +239,16 @@ export default function HomePage() {
         intro="Unsere Buy & Build Plattformstrategie fokussiert den Aufbau integrierter Gruppen: vom Nukleus bis zum Mittelstandsführer innerhalb von 5 Jahren."
         contentMaxWidth={1100}
       >
-        <div className="phase-block">
-          <div className="buy-build-anim" aria-hidden="true">
-            <svg viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
-              <g className="bba-zone bba-z1">
-                <circle cx="150" cy="100" r="22" />
-              </g>
-              <g className="bba-zone bba-z2">
-                <line x1="450" y1="100" x2="380" y2="60" />
-                <line x1="450" y1="100" x2="520" y2="60" />
-                <line x1="450" y1="100" x2="380" y2="140" />
-                <line x1="450" y1="100" x2="520" y2="140" />
-                <circle cx="450" cy="100" r="22" />
-                <circle className="bba-sat" cx="380" cy="60"  r="9" />
-                <circle className="bba-sat" cx="520" cy="60"  r="9" />
-                <circle className="bba-sat" cx="380" cy="140" r="9" />
-                <circle className="bba-sat" cx="520" cy="140" r="9" />
-              </g>
-              <g className="bba-zone bba-z3">
-                <line x1="750" y1="100" x2="680" y2="60" />
-                <line x1="750" y1="100" x2="820" y2="60" />
-                <line x1="750" y1="100" x2="680" y2="140" />
-                <line x1="750" y1="100" x2="820" y2="140" />
-                <line x1="750" y1="100" x2="640" y2="100" />
-                <line x1="750" y1="100" x2="860" y2="100" />
-                <line x1="750" y1="100" x2="700" y2="40" />
-                <line x1="750" y1="100" x2="800" y2="40" />
-                <line x1="680" y1="60" x2="820" y2="60" />
-                <line x1="680" y1="140" x2="820" y2="140" />
-                <line x1="680" y1="60" x2="700" y2="40" />
-                <line x1="820" y1="60" x2="800" y2="40" />
-                <circle cx="750" cy="100" r="22" />
-                <circle className="bba-sat" cx="680" cy="60"  r="9" />
-                <circle className="bba-sat" cx="820" cy="60"  r="9" />
-                <circle className="bba-sat" cx="680" cy="140" r="9" />
-                <circle className="bba-sat" cx="820" cy="140" r="9" />
-                <circle className="bba-sat" cx="640" cy="100" r="9" />
-                <circle className="bba-sat" cx="860" cy="100" r="9" />
-                <circle className="bba-sat" cx="700" cy="40"  r="9" />
-                <circle className="bba-sat" cx="800" cy="40"  r="9" />
-              </g>
-            </svg>
-            <div className="phase-connectors" aria-hidden="true">
-              <span /><span /><span />
-            </div>
-          </div>
-          <ol className="phase-list">
+        <ol className="phase-list">
           <li className="phase-item rv rv-d1">
+            <div className="phase-anim phase-anim-1" aria-hidden="true">
+              <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet">
+                <circle className="pa1-ring pa1-r3" cx="100" cy="60" r="20" />
+                <circle className="pa1-ring pa1-r2" cx="100" cy="60" r="20" />
+                <circle className="pa1-ring pa1-r1" cx="100" cy="60" r="20" />
+                <circle className="pa1-core" cx="100" cy="60" r="14" />
+              </svg>
+            </div>
             <div className="phase-index">01</div>
             <div className="phase-content">
               <div className="phase-when">Jahr 1</div>
@@ -296,6 +259,19 @@ export default function HomePage() {
             </div>
           </li>
           <li className="phase-item rv rv-d2">
+            <div className="phase-anim phase-anim-2" aria-hidden="true">
+              <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet">
+                <line className="pa2-link pa2-l1" x1="100" y1="60" x2="50"  y2="30" />
+                <line className="pa2-link pa2-l2" x1="100" y1="60" x2="150" y2="30" />
+                <line className="pa2-link pa2-l3" x1="100" y1="60" x2="50"  y2="90" />
+                <line className="pa2-link pa2-l4" x1="100" y1="60" x2="150" y2="90" />
+                <circle className="pa2-core" cx="100" cy="60" r="12" />
+                <circle className="pa2-sat pa2-s1" cx="50"  cy="30" r="6" />
+                <circle className="pa2-sat pa2-s2" cx="150" cy="30" r="6" />
+                <circle className="pa2-sat pa2-s3" cx="50"  cy="90" r="6" />
+                <circle className="pa2-sat pa2-s4" cx="150" cy="90" r="6" />
+              </svg>
+            </div>
             <div className="phase-index">02</div>
             <div className="phase-content">
               <div className="phase-when">Jahr 2–3</div>
@@ -306,6 +282,34 @@ export default function HomePage() {
             </div>
           </li>
           <li className="phase-item rv rv-d3">
+            <div className="phase-anim phase-anim-3" aria-hidden="true">
+              <svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet">
+                <g className="pa3-net">
+                  <line x1="100" y1="60" x2="40"  y2="30" />
+                  <line x1="100" y1="60" x2="160" y2="30" />
+                  <line x1="100" y1="60" x2="40"  y2="90" />
+                  <line x1="100" y1="60" x2="160" y2="90" />
+                  <line x1="100" y1="60" x2="100" y2="20" />
+                  <line x1="100" y1="60" x2="100" y2="100" />
+                  <line x1="40"  y1="30" x2="100" y2="20" />
+                  <line x1="160" y1="30" x2="100" y2="20" />
+                  <line x1="40"  y1="90" x2="100" y2="100" />
+                  <line x1="160" y1="90" x2="100" y2="100" />
+                  <line x1="40"  y1="30" x2="40"  y2="90" />
+                  <line x1="160" y1="30" x2="160" y2="90" />
+                </g>
+                <circle className="pa3-core" cx="100" cy="60" r="10" />
+                <circle className="pa3-sat" cx="40"  cy="30" r="5" />
+                <circle className="pa3-sat" cx="160" cy="30" r="5" />
+                <circle className="pa3-sat" cx="40"  cy="90" r="5" />
+                <circle className="pa3-sat" cx="160" cy="90" r="5" />
+                <circle className="pa3-sat" cx="100" cy="20" r="5" />
+                <circle className="pa3-sat" cx="100" cy="100" r="5" />
+                <circle className="pa3-pulse pa3-p1" r="2.6" />
+                <circle className="pa3-pulse pa3-p2" r="2.6" />
+                <circle className="pa3-pulse pa3-p3" r="2.6" />
+              </svg>
+            </div>
             <div className="phase-index">03</div>
             <div className="phase-content">
               <div className="phase-when">Jahr 3–5</div>
@@ -315,8 +319,7 @@ export default function HomePage() {
               </p>
             </div>
           </li>
-          </ol>
-        </div>
+        </ol>
       </Section>
 
       <div className="sec-divider" />

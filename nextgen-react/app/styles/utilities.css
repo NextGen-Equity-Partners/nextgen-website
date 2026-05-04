@@ -145,94 +145,184 @@
   .mehrwerte-cards { grid-template-columns: 1fr; }
 }
 
-/* Buy & Build animation — sits above the 3-column phase grid, so the
-   visual stages (platform → add-ons → connections) read directly into
-   the three phase cards beneath. Three-phase loop:
-   Phase 1 (0–25%):  big platform dot appears in the middle column.
-   Phase 2 (25–55%): smaller add-on dots fade in across the columns.
-   Phase 3 (55–95%): connecting lines draw out across all three.
-   Phase 4 (95–100%): everything fades; loop restarts. */
-.phase-block {
-  margin-top: 32px;
-}
-.buy-build-anim {
-  position: relative;
+/* Per-card phase animations — each phase-item carries its own dynamic
+   mini-graphic above the index number. Phase 1: pulsing core with
+   expanding rings (single platform). Phase 2: platform + 4 satellites
+   that snap in with their links one after another. Phase 3: full mesh
+   with 3 traveling pulses moving along edges to suggest live flow. */
+.phase-anim {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin: 0 0 8px;
+  height: clamp(72px, 8vw, 96px);
+  margin-bottom: 14px;
 }
-.buy-build-anim svg {
+.phase-anim svg {
   width: 100%;
-  height: clamp(120px, 12vw, 160px);
-  display: block;
-}
-
-/* Subtle dashed connectors that drop from the SVG down into each of the
-   three phase columns, visually tying the graphic to the cards below. */
-.phase-connectors {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 3vw, 48px);
-  height: 16px;
-  margin-top: -2px;
-}
-.phase-connectors span {
-  display: block;
-  width: 1px;
   height: 100%;
-  margin: 0 auto;
-  background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0));
+  display: block;
+  overflow: visible;
 }
 
-/* Three zones — one per phase card, lighting up in sequence so the
-   animation reads left → right across the card row:
-     0–33%  zone 1 (Plattform)         visible above card 1
-     33–66% zone 2 (Add-ons)           visible above card 2
-     66–95% zone 3 (Integrierte Gruppe) visible above card 3
-     95–100% all fade for the loop. */
-.bba-zone {
+/* Phase 1 — single core with three expanding rings. */
+.pa1-core {
+  fill: rgba(255, 255, 255, .95);
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, .55));
+  animation: pa1-core-pulse 2.4s ease-in-out infinite;
+}
+.pa1-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, .5);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pa1-ring 2.4s ease-out infinite;
+}
+.pa1-r2 { animation-delay: .8s; }
+.pa1-r3 { animation-delay: 1.6s; }
+
+@keyframes pa1-core-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%      { transform: scale(1.12); opacity: .85; }
+}
+.pa1-core { transform-box: fill-box; transform-origin: center; }
+
+@keyframes pa1-ring {
+  0%   { transform: scale(.4);  opacity: .9; }
+  70%  { opacity: .15; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Phase 2 — core + 4 satellites that connect in sequence, looping. */
+.pa2-core {
+  fill: rgba(255, 255, 255, .95);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, .5));
+}
+.pa2-sat {
+  fill: rgba(255, 255, 255, .9);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .4));
+  transform-box: fill-box;
+  transform-origin: center;
   opacity: 0;
-  animation: bba-zone 12s ease-in-out infinite;
+  transform: scale(0);
+  animation: pa2-pop 4s ease-in-out infinite;
 }
-.bba-zone circle {
-  fill: rgba(255, 255, 255, .92);
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, .45));
-}
-.bba-zone .bba-sat {
-  fill: rgba(255, 255, 255, .82);
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .3));
-}
-.bba-zone line {
-  stroke: rgba(255, 255, 255, .42);
+.pa2-link {
+  stroke: rgba(255, 255, 255, .55);
   stroke-width: 1.4;
   stroke-linecap: round;
   fill: none;
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  opacity: 0;
+  animation: pa2-link-draw 4s ease-out infinite;
+}
+.pa2-l1, .pa2-s1 { animation-delay: 0s; }
+.pa2-l2, .pa2-s2 { animation-delay: .5s; }
+.pa2-l3, .pa2-s3 { animation-delay: 1.0s; }
+.pa2-l4, .pa2-s4 { animation-delay: 1.5s; }
+
+@keyframes pa2-link-draw {
+  0%        { stroke-dashoffset: 80; opacity: 0; }
+  10%       { opacity: 1; }
+  35%, 85%  { stroke-dashoffset: 0;  opacity: 1; }
+  100%      { stroke-dashoffset: 0;  opacity: 0; }
+}
+@keyframes pa2-pop {
+  0%        { transform: scale(0); opacity: 0; }
+  18%       { transform: scale(1.25); opacity: 1; }
+  28%, 85%  { transform: scale(1);    opacity: 1; }
+  100%      { transform: scale(1);    opacity: 0; }
 }
 
-.bba-z1 { animation-delay: 0s; }
-.bba-z2 { animation-delay: 3.6s; }
-.bba-z3 { animation-delay: 7.2s; }
-
-@keyframes bba-zone {
-  0%       { opacity: 0; transform: scale(.92); }
-  6%, 38%  { opacity: 1; transform: scale(1); }
-  55%, 95% { opacity: .35; transform: scale(1); }
-  100%     { opacity: 0;  transform: scale(.92); }
+/* Phase 3 — fully wired network with 3 pulses traveling along edges. */
+.pa3-net line {
+  stroke: rgba(255, 255, 255, .35);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  fill: none;
+  animation: pa3-edge-pulse 4s ease-in-out infinite;
 }
-.bba-zone { transform-box: fill-box; transform-origin: center; }
+.pa3-net line:nth-child(2n) { animation-delay: .7s; }
+.pa3-net line:nth-child(3n) { animation-delay: 1.4s; }
+
+@keyframes pa3-edge-pulse {
+  0%, 100% { stroke: rgba(255, 255, 255, .25); }
+  50%      { stroke: rgba(255, 255, 255, .65); }
+}
+
+.pa3-core {
+  fill: rgba(255, 255, 255, .95);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, .55));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pa3-core-pulse 3s ease-in-out infinite;
+}
+.pa3-sat {
+  fill: rgba(255, 255, 255, .85);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, .35));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pa3-sat-pulse 3s ease-in-out infinite;
+}
+.pa3-sat:nth-of-type(2n) { animation-delay: .4s; }
+.pa3-sat:nth-of-type(3n) { animation-delay: .9s; }
+.pa3-sat:nth-of-type(5n) { animation-delay: 1.3s; }
+
+@keyframes pa3-core-pulse {
+  0%, 100% { transform: scale(1);    opacity: .95; }
+  50%      { transform: scale(1.18); opacity: 1; }
+}
+@keyframes pa3-sat-pulse {
+  0%, 100% { transform: scale(.92); opacity: .55; }
+  50%      { transform: scale(1.1); opacity: 1; }
+}
+
+/* Three pulses traveling continuously along different edges, looped
+   with staggered delays so something is always moving. */
+.pa3-pulse {
+  fill: #fff;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, .9));
+  opacity: 0;
+}
+.pa3-p1 { animation: pa3-travel-1 2.4s ease-in-out infinite; }
+.pa3-p2 { animation: pa3-travel-2 2.4s ease-in-out .8s infinite; }
+.pa3-p3 { animation: pa3-travel-3 2.4s ease-in-out 1.6s infinite; }
+
+@keyframes pa3-travel-1 {
+  0%   { cx: 100; cy: 60; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { cx: 160; cy: 30; opacity: 1; }
+  100% { cx: 160; cy: 30; opacity: 0; }
+}
+@keyframes pa3-travel-2 {
+  0%   { cx: 100; cy: 60; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { cx: 40;  cy: 90; opacity: 1; }
+  100% { cx: 40;  cy: 90; opacity: 0; }
+}
+@keyframes pa3-travel-3 {
+  0%   { cx: 100; cy: 60; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { cx: 100; cy: 20; opacity: 1; }
+  100% { cx: 100; cy: 20; opacity: 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .bba-zone { animation: none; opacity: .85; transform: none; }
+  .pa1-core, .pa1-ring,
+  .pa2-link, .pa2-sat,
+  .pa3-net line, .pa3-core, .pa3-sat, .pa3-pulse {
+    animation: none;
+  }
+  .pa1-ring { opacity: .25; transform: scale(1.6); }
+  .pa2-link { stroke-dashoffset: 0; opacity: 1; }
+  .pa2-sat  { opacity: 1; transform: scale(1); }
+  .pa3-pulse { opacity: 0; }
 }
 
 @media (max-width: 1024px) {
-  .buy-build-anim svg { height: 160px; }
-  .phase-connectors { display: none; }
+  .phase-anim { height: 80px; }
 }
 @media (max-width: 760px) {
-  .buy-build-anim svg { height: 140px; }
+  .phase-anim { height: 70px; margin-bottom: 10px; }
 }
 
 /* Phase list — 3-column compact layout so all phases fit a single
@@ -240,7 +330,7 @@
    Each phase: big light index number on top, year, title, body. */
 .phase-list {
   list-style: none;
-  margin: 0;
+  margin: 32px 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
