@@ -25,7 +25,6 @@ export function HeroShader() {
   const targetRef = useRef(0);
   const lastAppliedRef = useRef(-1);
   const [isMobile, setIsMobile] = useState(false);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 760px)");
@@ -52,11 +51,7 @@ export function HeroShader() {
         range > 0 ? Math.max(0, Math.min(1, window.scrollY / range)) : 0;
       const usable = Math.max(0, durationRef.current - 2.5);
       targetRef.current = (1 - progress) * usable;
-      // Page-load is past the critical rendering window — let the
-      // browser fetch the rest of the clip eagerly so scrubbing is
-      // smooth as the user starts scrolling.
-      video.preload = "auto";
-      // Seek to the target — this also nudges the browser to start
+      // Seek to the target — also nudges the browser to start
       // buffering around that timestamp instead of from currentTime=0.
       try {
         video.currentTime = targetRef.current;
@@ -116,10 +111,6 @@ export function HeroShader() {
     if (!isBuffered(video, t)) return;
     lastAppliedRef.current = t;
     video.currentTime = t;
-    // First time the buffer covers the requested frame — reveal the
-    // video. Until now the element was kept opacity:0 so the user
-    // never saw the wrong frame (currentTime=0 = pre-dawn).
-    setReady(true);
   }
 
   // Drive video.currentTime from Lenis's scroll position. RAF coalesces
@@ -161,9 +152,8 @@ export function HeroShader() {
         src="/assets/photos/New%20photos/hero-scrub.mp4"
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
-        data-ready={ready ? "true" : undefined}
       />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>
