@@ -7,16 +7,15 @@ import { useLenis } from "lenis/react";
  * Hero-scrub video as the page background. Driven directly by Lenis's
  * scroll progress so it scrubs frame-perfect with the smooth scroll.
  *
- * On touch / narrow viewports (≤760px) Lenis-driven scrubbing is unreliable
- * (touch scroll, momentum), so we fall back to a normal autoplay loop.
+ * The mp4 ships in already-reversed order (the natural forward
+ * playback shows the sunrise as we want it to read). Frame 0 of the
+ * file is therefore exactly the frame the user should see at scroll
+ * position 0 — no seek hack needed at load time, the browser
+ * downloads from the start and the start is what we want visible.
  *
- * Stall protection: a fresh page load streams the video in progressively,
- * so any scroll-scrub during that window can land on an unbuffered frame
- * and the browser pauses to fetch data — that's what "hanging" looks
- * like. We skip seeks while the video is already seeking, while it
- * doesn't have enough data, or when the target falls outside the
- * currently-buffered ranges. The video then catches up the moment its
- * buffer reaches the desired position, with no main-thread stall.
+ * On touch / narrow viewports (≤760px) Lenis-driven scrubbing is
+ * unreliable (touch scroll, momentum), so we fall back to a normal
+ * autoplay loop.
  */
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -34,37 +33,17 @@ export function HeroShader() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Cache duration once metadata loads, and immediately compute the
-  // scroll-mapped target so the video lands on the correct frame
-  // (e.g. sun-already-up at scroll = 0) before the first scroll event
-  // fires. Without this the video would show its natural first frame
-  // (pre-dawn) until the user scrolled.
+  // Cache duration once metadata loads.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const onMeta = () => {
       durationRef.current = video.duration || 0;
-      if (isMobile || !durationRef.current) return;
-      const range =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress =
-        range > 0 ? Math.max(0, Math.min(1, window.scrollY / range)) : 0;
-      const usable = Math.max(0, durationRef.current - 2.5);
-      targetRef.current = (1 - progress) * usable;
-      // Seek to the target — also nudges the browser to start
-      // buffering around that timestamp instead of from currentTime=0.
-      try {
-        video.currentTime = targetRef.current;
-        lastAppliedRef.current = targetRef.current;
-      } catch {
-        /* ignore — applyPendingSeek will retry once buffer arrives */
-      }
-      applyPendingSeek(video);
     };
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
     return () => video.removeEventListener("loadedmetadata", onMeta);
-  }, [isMobile]);
+  }, []);
 
   // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
   useEffect(() => {
@@ -78,9 +57,10 @@ export function HeroShader() {
     }
   }, [isMobile]);
 
-  // Whenever buffer extends, try to apply any pending target that just
-  // came into range. Without this, after we skip a seek for being out
-  // of buffer the video stays frozen until the next scroll event.
+  // Buffer-aware seek: only set currentTime when the target falls
+  // within an already-buffered range, so we never stall on a seek
+  // request the browser can't fulfil yet. Re-applies on `progress` so
+  // the video catches up automatically as more data arrives.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -115,26 +95,17 @@ export function HeroShader() {
 
   // Drive video.currentTime from Lenis's scroll position. RAF coalesces
   // bursts of scroll events into a single seek per frame.
+  // Forward mapping: progress 0 → currentTime 0 (sunrise start),
+  // progress 1 → currentTime duration (sun high). The mp4 file is
+  // already reversed at build time so this is the desired direction.
   useLenis(({ scroll }) => {
     if (isMobile) return;
     const video = videoRef.current;
     if (!video || !durationRef.current) return;
-    // Reversed mapping across the entire page scroll: top = video end
-    // (post-sunset), bottom = video start. Scrolling runs the timeline
-    // backwards so the sun rises as the user moves down the page.
-    //
-    // TAIL_TRIM_SECONDS chops N seconds off the end of the video so
-    // scroll=0 lands on a brighter frame (the dark post-sunset tail
-    // felt like dead air at the top of the page).
-    const TAIL_TRIM_SECONDS = 2.5;
     const range =
       document.documentElement.scrollHeight - window.innerHeight;
     const progress = range > 0 ? Math.max(0, Math.min(1, scroll / range)) : 0;
-    const usableDuration = Math.max(
-      0,
-      durationRef.current - TAIL_TRIM_SECONDS,
-    );
-    targetRef.current = (1 - progress) * usableDuration;
+    targetRef.current = progress * durationRef.current;
     if (!rafRef.current) {
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = 0;
