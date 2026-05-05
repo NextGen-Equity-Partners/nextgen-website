@@ -3,19 +3,22 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
+import { useLocale } from "@/components/providers/locale-provider";
+import { tr } from "@/lib/content/i18n";
 
-const LINKS = [
-  { href: "/#team", label: "Team" },
-  { href: "/#zielunternehmen", label: "Zielunternehmen" },
-  { href: "/#ansatz", label: "Ansatz" },
-  { href: "/#technologie", label: "Technologie" },
-  { href: "/#esg", label: "ESG" },
-];
+const LINK_HREFS = [
+  { href: "/#team",            key: "team" },
+  { href: "/#zielunternehmen", key: "zielunternehmen" },
+  { href: "/#ansatz",          key: "ansatz" },
+  { href: "/#technologie",     key: "technologie" },
+  { href: "/#esg",             key: "esg" },
+] as const;
 
 export function Nav() {
   const pathname = usePathname() || "/";
   const router = useRouter();
   const lenis = useLenis();
+  const { locale, setLocale } = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -41,9 +44,6 @@ export function Nav() {
   const scrollToAnchor = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    // Land with the section's top flush with the viewport top — same
-    // position the snap controller picks. The section's 124px top
-    // padding then leaves the box content cleanly below the nav.
     const targetY = target.getBoundingClientRect().top + window.scrollY;
     if (lenis) {
       lenis.scrollTo(targetY, { duration: 1.0 });
@@ -53,7 +53,6 @@ export function Nav() {
   };
 
   const handleAnchor = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // href is "/#team" — extract the anchor.
     const match = href.match(/#(.+)$/);
     if (!match) return;
     const id = match[1];
@@ -62,10 +61,8 @@ export function Nav() {
       e.preventDefault();
       scrollToAnchor(id);
     } else {
-      // Cross-page navigation: let Next.js handle it, then scroll on mount.
       e.preventDefault();
       router.push(`/#${id}`);
-      // Wait a tick for the new page to render, then scroll.
       setTimeout(() => scrollToAnchor(id), 100);
     }
   };
@@ -77,19 +74,43 @@ export function Nav() {
           <img src="/assets/logo-white.svg" alt="NextGen Equity" height={24} />
         </a>
         <div className="nav-links">
-          {LINKS.map((l) => (
+          {LINK_HREFS.map((l) => (
             <a key={l.href} href={l.href} onClick={(e) => handleAnchor(e, l.href)}>
-              {l.label}
+              {tr.nav[l.key as keyof typeof tr.nav][locale]}
             </a>
           ))}
           <a href="/kontakt" className={`nav-cta${isActive("/kontakt") ? " active" : ""}`}>
-            Kontakt
+            {tr.nav.kontakt[locale]}
           </a>
+          <div
+            className="nav-locale"
+            role="group"
+            aria-label="Sprache / Language"
+            data-locale={locale}
+          >
+            <span className="nav-locale-thumb" aria-hidden="true" />
+            <button
+              type="button"
+              onClick={() => setLocale("de")}
+              aria-pressed={locale === "de"}
+              className={locale === "de" ? "is-active" : ""}
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              aria-pressed={locale === "en"}
+              className={locale === "en" ? "is-active" : ""}
+            >
+              EN
+            </button>
+          </div>
         </div>
         <button
           className={`nav-burger${mobileOpen ? " open" : ""}`}
           id="nav-burger"
-          aria-label="Menü öffnen"
+          aria-label={tr.nav.burgerOpen[locale]}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((open) => !open)}
         >
@@ -97,7 +118,7 @@ export function Nav() {
         </button>
       </nav>
       <div className={`nav-mobile${mobileOpen ? " open" : ""}`} id="nav-mobile">
-        {LINKS.map((l) => (
+        {LINK_HREFS.map((l) => (
           <a
             key={l.href}
             href={l.href}
@@ -106,10 +127,17 @@ export function Nav() {
               handleAnchor(e, l.href);
             }}
           >
-            {l.label}
+            {tr.nav[l.key as keyof typeof tr.nav][locale]}
           </a>
         ))}
-        <a href="/kontakt" className="cta" onClick={() => setMobileOpen(false)}>Kontakt</a>
+        <a href="/kontakt" className="cta" onClick={() => setMobileOpen(false)}>
+          {tr.nav.kontakt[locale]}
+        </a>
+        <div className="nav-locale nav-locale-mobile" data-locale={locale}>
+          <span className="nav-locale-thumb" aria-hidden="true" />
+          <button type="button" onClick={() => setLocale("de")} aria-pressed={locale === "de"} className={locale === "de" ? "is-active" : ""}>DE</button>
+          <button type="button" onClick={() => setLocale("en")} aria-pressed={locale === "en"} className={locale === "en" ? "is-active" : ""}>EN</button>
+        </div>
       </div>
     </>
   );

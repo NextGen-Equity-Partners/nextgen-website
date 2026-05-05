@@ -44,22 +44,26 @@ export function HeroShader() {
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
 
-    // Pin playback rate to 0 immediately so the video doesn't drift
-    // forward between scroll-driven currentTime writes. The decoder
-    // still treats the element as "playing" (frames render on each
-    // currentTime change), but the timeline never advances on its own.
-    video.playbackRate = 0;
+    // Pin playback rate to 0 — both `defaultPlaybackRate` (used after
+    // canplay/loadeddata) and `playbackRate` (used live). Without
+    // pinning both, some browsers reset to 1 on first play().
+    const pin = () => {
+      if (video.defaultPlaybackRate !== 0) video.defaultPlaybackRate = 0;
+      if (video.playbackRate !== 0) video.playbackRate = 0;
+    };
+    pin();
 
     // Some mobile browsers reject the very first autoplay attempt if
     // the page is still painting. A single retry covers that case.
     const tryPlay = () => {
+      pin();
       const p = video.play();
       if (p && typeof p.catch === "function") {
-        p.catch(() => {
+        p.then(pin).catch(() => {
           // Wait for any user interaction, then try again. The first
           // tap/scroll counts as a user gesture and unblocks playback.
           const onInteract = () => {
-            video.play().catch(() => {});
+            video.play().then(pin).catch(() => {});
             window.removeEventListener("touchstart", onInteract);
             window.removeEventListener("scroll", onInteract);
             window.removeEventListener("click", onInteract);
@@ -68,19 +72,15 @@ export function HeroShader() {
           window.addEventListener("scroll", onInteract, { once: true, passive: true });
           window.addEventListener("click", onInteract, { once: true });
         });
-      } else {
-        // play() resolved synchronously (older browsers) — make sure
-        // playbackRate stays at 0 in case play() reset it.
-        video.playbackRate = 0;
       }
     };
-    // Re-pin playbackRate after each play() resolution. Some browsers
-    // reset it to 1 when play() succeeds.
-    const repin = () => { video.playbackRate = 0; };
-    video.addEventListener("play", repin);
-    video.addEventListener("ratechange", () => {
-      if (video.playbackRate !== 0) video.playbackRate = 0;
-    });
+    // Re-pin on every relevant lifecycle event: play, loadeddata,
+    // canplay, ratechange. Whichever browser quirk resets the rate,
+    // one of these will catch it within the same frame.
+    video.addEventListener("play", pin);
+    video.addEventListener("loadeddata", pin);
+    video.addEventListener("canplay", pin);
+    video.addEventListener("ratechange", pin);
 
     if (video.readyState >= 2) tryPlay();
     else video.addEventListener("canplay", tryPlay, { once: true });
@@ -116,7 +116,10 @@ export function HeroShader() {
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
       video.removeEventListener("canplay", tryPlay);
-      video.removeEventListener("play", repin);
+      video.removeEventListener("play", pin);
+      video.removeEventListener("loadeddata", pin);
+      video.removeEventListener("canplay", pin);
+      video.removeEventListener("ratechange", pin);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -127,8 +130,6 @@ export function HeroShader() {
         ref={videoRef}
         className="hero-bg-video"
         src="/assets/photos/New%20photos/hero-scrub.mp4"
-        autoPlay
-        loop
         muted
         playsInline
         preload="auto"

@@ -5,10 +5,12 @@ import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { LegalModal } from "@/components/layout/legal-modal";
 import { Watermark } from "@/components/layout/watermark";
+import { SideArrows } from "@/components/layout/side-arrows";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { ScrollSnap } from "@/components/providers/scroll-snap";
 import { ScrollProgress } from "@/components/providers/scroll-progress";
 import { ScrollCue } from "@/components/providers/scroll-cue";
+import { LocaleProvider } from "@/components/providers/locale-provider";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { PageEffects } from "@/components/runtime/page-effects";
@@ -54,22 +56,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="color-scheme" content="dark" />
       </head>
       <body className={`bg-image ${outfit.variable} ${outfit.className}`}>
-        <HeroShader />
-        <div className="grain"></div>
+        <LocaleProvider>
+          <HeroShader />
+          <div className="grain"></div>
 
-        <SmoothScrollProvider>
-          <Nav />
-          <Watermark />
-          {children}
-          <Footer />
-          <PageAnimations />
-          <PageEffects />
-          <ScrollSnap />
-          <ScrollProgress />
-          <ScrollCue />
-        </SmoothScrollProvider>
+          <SmoothScrollProvider>
+            <Nav />
+            <Watermark />
+            {children}
+            <Footer />
+            <PageAnimations />
+            <PageEffects />
+            <ScrollSnap />
+            <ScrollProgress />
+            <ScrollCue />
+            <SideArrows />
+          </SmoothScrollProvider>
 
-        <LegalModal />
+          <LegalModal />
+        </LocaleProvider>
       </body>
     </html>
   );

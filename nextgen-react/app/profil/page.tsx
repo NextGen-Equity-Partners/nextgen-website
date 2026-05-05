@@ -1,8 +1,13 @@
+"use client";
+
 import { Hero } from "@/components/ui/hero";
 import { GlassCard } from "@/components/ui/glass-card";
-import { profil as c } from "@/lib/content/profil";
+import { profil as content } from "@/lib/content/profil";
+import { useLocale } from "@/components/providers/locale-provider";
 
 export default function Page() {
+  const { locale } = useLocale();
+  const c = content[locale];
   return (
     <>
       <Hero

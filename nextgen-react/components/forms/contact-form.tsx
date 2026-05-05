@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "@/components/providers/locale-provider";
+import { tr } from "@/lib/content/i18n";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -8,6 +10,7 @@ const RECIPIENT = "contact@nextgen-equity.com";
 const ENDPOINT = `https://formsubmit.co/ajax/${RECIPIENT}`;
 
 export function ContactForm() {
+  const { locale } = useLocale();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -21,10 +24,8 @@ export function ContactForm() {
             <path d="M5 12.5l4.5 4.5L19 7" />
           </svg>
         </div>
-        <h3 className="cf-sent-title">Vielen Dank für Ihre Nachricht.</h3>
-        <p className="cf-sent-body">
-          Ihre Anfrage ist bei uns angekommen. Wir melden uns persönlich zurück — diskret und ohne Verpflichtung.
-        </p>
+        <h3 className="cf-sent-title">{tr.kontakt.sentTitle[locale]}</h3>
+        <p className="cf-sent-body">{tr.kontakt.sentBody[locale]}</p>
       </div>
     );
   }
@@ -43,9 +44,9 @@ export function ContactForm() {
         const topic = String(data.get("topic") || "").trim();
         const message = String(data.get("message") || "").trim();
 
-        const subject = topic && topic !== "Bitte wählen"
-          ? `NextGen Equity – Anfrage von ${name} (${topic})`
-          : `NextGen Equity – Anfrage von ${name}`;
+        const subject = topic && topic !== tr.kontakt.topicChoose[locale]
+          ? `NextGen Equity — ${name} (${topic})`
+          : `NextGen Equity — ${name}`;
 
         const payload = {
           name,
@@ -79,17 +80,11 @@ export function ContactForm() {
             (data.success !== true &&
               String(data.success).toLowerCase() !== "true")
           ) {
-            throw new Error(
-              data.message ||
-                "Es gab ein Problem beim Versand. Bitte später erneut versuchen.",
-            );
+            throw new Error(data.message || tr.kontakt.errorFallback[locale]);
           }
           setStatus("sent");
         } catch (err) {
-          const msg =
-            err instanceof Error
-              ? err.message
-              : "Es gab ein Problem beim Versand.";
+          const msg = err instanceof Error ? err.message : tr.kontakt.errorFallback[locale];
           setErrorMsg(msg);
           setStatus("error");
         }
@@ -97,35 +92,35 @@ export function ContactForm() {
     >
       <div className="cf-row">
         <div>
-          <label htmlFor="cf-name">Name *</label>
-          <input id="cf-name" name="name" type="text" placeholder="Maximilian Mustermann" required disabled={isLocked} />
+          <label htmlFor="cf-name">{tr.kontakt.formLabelName[locale]}</label>
+          <input id="cf-name" name="name" type="text" placeholder={tr.kontakt.formPlaceholderName[locale]} required disabled={isLocked} />
         </div>
         <div>
-          <label htmlFor="cf-company">Unternehmen</label>
-          <input id="cf-company" name="company" type="text" placeholder="Mustermann GmbH" disabled={isLocked} />
+          <label htmlFor="cf-company">{tr.kontakt.formLabelCompany[locale]}</label>
+          <input id="cf-company" name="company" type="text" placeholder={tr.kontakt.formPlaceholderCompany[locale]} disabled={isLocked} />
         </div>
       </div>
       <div className="cf-row">
         <div>
-          <label htmlFor="cf-email">E-Mail *</label>
-          <input id="cf-email" name="email" type="email" placeholder="max@mustermann.de" required disabled={isLocked} />
+          <label htmlFor="cf-email">{tr.kontakt.formLabelEmail[locale]}</label>
+          <input id="cf-email" name="email" type="email" placeholder={tr.kontakt.formPlaceholderEmail[locale]} required disabled={isLocked} />
         </div>
         <div>
-          <label htmlFor="cf-topic">Anliegen</label>
-          <select id="cf-topic" name="topic" disabled={isLocked} defaultValue="Bitte wählen">
-            <option>Bitte wählen</option>
-            <option>Unternehmensverkauf / Nachfolge</option>
-            <option>Add-on-Empfehlung (M&amp;A-Berater)</option>
-            <option>Operative Mitarbeit / Management-Rolle</option>
-            <option>Co-Investment</option>
-            <option>Sonstiges</option>
+          <label htmlFor="cf-topic">{tr.kontakt.formLabelTopic[locale]}</label>
+          <select id="cf-topic" name="topic" disabled={isLocked} defaultValue={tr.kontakt.topicChoose[locale]}>
+            <option>{tr.kontakt.topicChoose[locale]}</option>
+            <option>{tr.kontakt.topicSale[locale]}</option>
+            <option>{tr.kontakt.topicAddon[locale]}</option>
+            <option>{tr.kontakt.topicOperator[locale]}</option>
+            <option>{tr.kontakt.topicCoinvest[locale]}</option>
+            <option>{tr.kontakt.topicOther[locale]}</option>
           </select>
         </div>
       </div>
       <div className="cf-row full">
         <div>
-          <label htmlFor="cf-msg">Kurze Nachricht</label>
-          <textarea id="cf-msg" name="message" placeholder="Womit können wir helfen?" disabled={isLocked}></textarea>
+          <label htmlFor="cf-msg">{tr.kontakt.formLabelMessage[locale]}</label>
+          <textarea id="cf-msg" name="message" placeholder={tr.kontakt.formPlaceholderMessage[locale]} disabled={isLocked}></textarea>
         </div>
       </div>
       <button
@@ -133,7 +128,7 @@ export function ContactForm() {
         className="cf-submit"
         disabled={isLocked}
       >
-        {status === "sending" ? "Wird gesendet …" : "Unverbindliches Gespräch vereinbaren →"}
+        {status === "sending" ? tr.kontakt.submitSending[locale] : tr.kontakt.submitDefault[locale]}
       </button>
       {status === "error" && errorMsg && (
         <p className="cf-error" role="alert">

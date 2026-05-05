@@ -1,49 +1,48 @@
+"use client";
+
 import { ContactForm } from "@/components/forms/contact-form";
+import { useLocale } from "@/components/providers/locale-provider";
+import { tr } from "@/lib/content/i18n";
 
 export default function Page() {
+  const { locale } = useLocale();
   return (
     <>
-      {/* NAV */}
-      {/* HERO */}
       <section className="hero subpage">
-        <div className="hero-eyebrow">Kontakt aufnehmen</div>
+        <div className="hero-eyebrow">{tr.kontakt.heroEyebrow[locale]}</div>
         <h1 className="display hero-title">
-          <span className="hero-line">Schreiben Sie uns –</span>
-          <span className="hero-line"><span className="bold">vertraulich.</span></span>
+          <span className="hero-line">{tr.kontakt.heroTitleA[locale]}</span>
+          <span className="hero-line"><span className="bold">{tr.kontakt.heroTitleBold[locale]}</span></span>
         </h1>
-        <p className="hero-sub">Ob Unternehmer, Geschäftsführer, Manager oder M&amp;A-Berater – wir freuen uns über ein erstes Gespräch. Diskretion und Verlässlichkeit sind selbstverständlich.</p>
+        <p className="hero-sub">{tr.kontakt.heroSub[locale]}</p>
       </section>
-      
-      {/* KONTAKT-FORMULAR */}
+
       <section className="kontakt-section">
         <div className="kontakt-inner">
           <div className="cf-wrap" style={{ marginTop: "0" }}>
             <div className="cf-side cf-side-bare rv rv-d1">
               <div className="cf-block cf-greeting">
                 <img className="cf-portrait" src="/assets/team/max.jpeg" alt="" />
-                <div className="cf-eyebrow">Wir freuen uns</div>
-                <p>Schreiben Sie uns kurz, was Sie beschäftigt – wir melden uns persönlich zurück. Diskret und ohne Verpflichtung.</p>
+                <div className="cf-eyebrow">{tr.kontakt.sideEyebrow[locale]}</div>
+                <p>{tr.kontakt.sideBody[locale]}</p>
               </div>
             </div>
 
             <ContactForm />
           </div>
 
-          {/* Kontakt-Info: zwei Bereiche unter Form + Max — bare */}
           <div className="cf-bottom">
             <div className="cf-bottom-block cf-bottom-block-bare rv rv-d2">
-              <div className="cf-eyebrow">Direkter Kontakt</div>
+              <div className="cf-eyebrow">{tr.kontakt.bottomEmailEyebrow[locale]}</div>
               <p>E-Mail: <a href="mailto:contact@nextgen-equity.com">contact@nextgen-equity.com</a></p>
             </div>
             <div className="cf-bottom-block cf-bottom-block-bare rv rv-d3">
-              <div className="cf-eyebrow">Standort</div>
-              <p>München, Deutschland<br />Für den gesamten DACH-Raum: Deutschland · Österreich · Schweiz</p>
+              <div className="cf-eyebrow">{tr.kontakt.bottomLocationEyebrow[locale]}</div>
+              <p style={{ whiteSpace: "pre-line" }}>{tr.kontakt.bottomLocation[locale]}</p>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* FOOTER */}
     </>
   );
 }

@@ -1,5 +1,8 @@
 "use client";
 
+import { useLocale } from "@/components/providers/locale-provider";
+import { tr } from "@/lib/content/i18n";
+
 function openLegal(kind: "impressum" | "datenschutz") {
   document.dispatchEvent(
     new CustomEvent("legal-modal-open", { detail: kind }),
@@ -7,15 +10,16 @@ function openLegal(kind: "impressum" | "datenschutz") {
 }
 
 export function Footer() {
+  const { locale } = useLocale();
   return (
     <footer>
       <div className="fl">
-        <span className="footer-meta">NextGen Equity Partners · München · © 2026</span>
+        <span className="footer-meta">{tr.footer.company[locale]}</span>
         <button type="button" onClick={() => openLegal("impressum")}>
-          Impressum
+          {tr.footer.impressum[locale]}
         </button>
         <button type="button" onClick={() => openLegal("datenschutz")}>
-          Datenschutz
+          {tr.footer.datenschutz[locale]}
         </button>
       </div>
     </footer>

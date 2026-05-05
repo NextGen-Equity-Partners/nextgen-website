@@ -1,6 +1,9 @@
+"use client";
+
 import { Hero } from "@/components/ui/hero";
 import { GlassCard } from "@/components/ui/glass-card";
-import { ansatz as c } from "@/lib/content/ansatz";
+import { ansatz as content } from "@/lib/content/ansatz";
+import { useLocale } from "@/components/providers/locale-provider";
 
 function JList({ items }: { items: ReadonlyArray<{ n: string; title: string; body: string }> }) {
   return (
@@ -19,6 +22,8 @@ function JList({ items }: { items: ReadonlyArray<{ n: string; title: string; bod
 }
 
 export default function Page() {
+  const { locale } = useLocale();
+  const c = content[locale];
   return (
     <>
       <Hero variant="subpage" eyebrow={c.hero.eyebrow} title={c.hero.title} sub={c.hero.sub} />
