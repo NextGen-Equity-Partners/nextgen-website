@@ -21,8 +21,7 @@ export function HeroShader() {
   const targetRef = useRef(0);
   const lastAppliedRef = useRef(-1);
 
-  // Cache duration once metadata loads, and ensure the element stays
-  // paused — currentTime is driven entirely by scroll position.
+  // Cache duration once metadata loads.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -32,8 +31,56 @@ export function HeroShader() {
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
     video.loop = false;
-    video.pause();
     return () => video.removeEventListener("loadedmetadata", onMeta);
+  }, []);
+
+  // Kick-start: iOS Safari and many Android browsers won't decode any
+  // video frames until play() is called at least once. Without that
+  // call, setting video.currentTime renders nothing — the user sees the
+  // hero-bg-video's `background: var(--bg-deep)` fallback (a flat blue)
+  // instead of the sunrise scrub. Briefly play() the muted, playsInline
+  // video to force decode, then pause() and let scroll drive
+  // currentTime as before. The play burst is one frame long so it's
+  // not visible.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    let cancelled = false;
+
+    const kick = async () => {
+      if (cancelled) return;
+      try {
+        const p = video.play();
+        if (p) await p;
+      } catch {
+        // Autoplay can still be rejected on some browsers without a
+        // user gesture; harmless — desktop scrubbing keeps working
+        // and the first user-driven scroll will retry.
+        return;
+      }
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+        video.pause();
+        // Force the next applyPendingSeek to actually re-write
+        // currentTime so we land back on the scroll-relative frame
+        // (instead of the random frame we briefly played to).
+        lastAppliedRef.current = -1;
+        applyPendingSeek(video);
+      });
+    };
+
+    if (video.readyState >= 2) {
+      kick();
+      return () => {
+        cancelled = true;
+      };
+    }
+    const onReady = () => kick();
+    video.addEventListener("canplay", onReady, { once: true });
+    return () => {
+      cancelled = true;
+      video.removeEventListener("canplay", onReady);
+    };
   }, []);
 
   // Buffer-aware seek: only set currentTime when the target falls

@@ -778,6 +778,13 @@
 @media (max-width: 1024px) {
   .tech-layout { grid-template-columns: 1fr; gap: 18px; }
   .tech-image { aspect-ratio: 16 / 10; min-height: 0; max-height: none; }
+  /* ESG uses tech-layout-reverse (cards-first DOM order so the image
+     sits on the right at desktop). On mobile with 1 column, that order
+     puts the cards above the photo — which reads worse than image-then-
+     cards, the pattern used by the Technologie section. Restore that
+     pattern with explicit order. */
+  .tech-layout.tech-layout-reverse .tech-image { order: -1; }
+  .tech-layout.tech-layout-reverse .tech-cards { order: 0; }
 }
 
 /* Beteiligungen: card with min-height to match neighbour. */
