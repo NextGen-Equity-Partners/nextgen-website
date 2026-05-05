@@ -6,16 +6,24 @@ import { useLenis } from "lenis/react";
 /**
  * Hero-scrub video as the page background. Driven directly by Lenis's
  * scroll progress so it scrubs frame-perfect with the smooth scroll.
- * Past ~2 viewport heights of scroll, the video locks at its last frame.
  *
  * On touch / narrow viewports (≤760px) Lenis-driven scrubbing is unreliable
  * (touch scroll, momentum), so we fall back to a normal autoplay loop.
+ *
+ * Stall protection: a fresh page load streams the video in progressively,
+ * so any scroll-scrub during that window can land on an unbuffered frame
+ * and the browser pauses to fetch data — that's what "hanging" looks
+ * like. We skip seeks while the video is already seeking, while it
+ * doesn't have enough data, or when the target falls outside the
+ * currently-buffered ranges. The video then catches up the moment its
+ * buffer reaches the desired position, with no main-thread stall.
  */
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const rafRef = useRef(0);
   const targetRef = useRef(0);
+  const lastAppliedRef = useRef(-1);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -50,6 +58,41 @@ export function HeroShader() {
     }
   }, [isMobile]);
 
+  // Whenever buffer extends, try to apply any pending target that just
+  // came into range. Without this, after we skip a seek for being out
+  // of buffer the video stays frozen until the next scroll event.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onProgress = () => applyPendingSeek(video);
+    video.addEventListener("progress", onProgress);
+    video.addEventListener("canplay", onProgress);
+    return () => {
+      video.removeEventListener("progress", onProgress);
+      video.removeEventListener("canplay", onProgress);
+    };
+  }, []);
+
+  function isBuffered(video: HTMLVideoElement, t: number): boolean {
+    const ranges = video.buffered;
+    for (let i = 0; i < ranges.length; i++) {
+      if (t >= ranges.start(i) - 0.05 && t <= ranges.end(i) + 0.05) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function applyPendingSeek(video: HTMLVideoElement) {
+    if (video.readyState < 2) return;
+    if (video.seeking) return;
+    const t = targetRef.current;
+    if (Math.abs(t - lastAppliedRef.current) < 0.02) return;
+    if (!isBuffered(video, t)) return;
+    lastAppliedRef.current = t;
+    video.currentTime = t;
+  }
+
   // Drive video.currentTime from Lenis's scroll position. RAF coalesces
   // bursts of scroll events into a single seek per frame.
   useLenis(({ scroll }) => {
@@ -62,8 +105,7 @@ export function HeroShader() {
     //
     // TAIL_TRIM_SECONDS chops N seconds off the end of the video so
     // scroll=0 lands on a brighter frame (the dark post-sunset tail
-    // felt like dead air at the top of the page). Raise/lower in
-    // seconds to tune; 0 keeps the full clip.
+    // felt like dead air at the top of the page).
     const TAIL_TRIM_SECONDS = 2.5;
     const range =
       document.documentElement.scrollHeight - window.innerHeight;
@@ -76,7 +118,8 @@ export function HeroShader() {
     if (!rafRef.current) {
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = 0;
-        if (videoRef.current) videoRef.current.currentTime = targetRef.current;
+        const v = videoRef.current;
+        if (v) applyPendingSeek(v);
       });
     }
   });
