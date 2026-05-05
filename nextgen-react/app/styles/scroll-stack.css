@@ -21,9 +21,10 @@ section.testimonial-section,
      regardless of inner box height. */
   align-items: flex-start;
   justify-content: center;
-  /* Top padding = nav height (92px) + breathing room. Same on every
-     section so each snap lands the box at the same y-position. */
-  padding-top: 124px !important;
+  /* Top padding = nav height (92px) + 16px breathing room. Same on
+     every section so each snap (and every menu-link click) lands the
+     box at the same y-position right under the nav pill. */
+  padding-top: 108px !important;
   padding-bottom: clamp(48px, 7vh, 96px) !important;
   /* Box edges flush with the visible nav pill (50px from each viewport
      edge — 28px nav padding + 22px pill inset). */

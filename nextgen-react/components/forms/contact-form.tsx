@@ -11,7 +11,23 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const isLocked = status === "sending" || status === "sent";
+  const isLocked = status === "sending";
+
+  if (status === "sent") {
+    return (
+      <div className="cf cf-sent rv" role="status" aria-live="polite">
+        <div className="cf-sent-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12.5l4.5 4.5L19 7" />
+          </svg>
+        </div>
+        <h3 className="cf-sent-title">Vielen Dank für Ihre Nachricht.</h3>
+        <p className="cf-sent-body">
+          Ihre Anfrage ist bei uns angekommen. Wir melden uns persönlich zurück — diskret und ohne Verpflichtung.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -114,14 +130,10 @@ export function ContactForm() {
       </div>
       <button
         type="submit"
-        className={`cf-submit${status === "sent" ? " sent" : ""}`}
+        className="cf-submit"
         disabled={isLocked}
       >
-        {status === "sent"
-          ? "Vielen Dank – wir melden uns bald ✓"
-          : status === "sending"
-            ? "Wird gesendet …"
-            : "Unverbindliches Gespräch vereinbaren →"}
+        {status === "sending" ? "Wird gesendet …" : "Unverbindliches Gespräch vereinbaren →"}
       </button>
       {status === "error" && errorMsg && (
         <p className="cf-error" role="alert">
