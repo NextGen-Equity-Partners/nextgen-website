@@ -25,6 +25,7 @@ export function HeroShader() {
   const targetRef = useRef(0);
   const lastAppliedRef = useRef(-1);
   const [isMobile, setIsMobile] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 760px)");
@@ -34,17 +35,41 @@ export function HeroShader() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Cache duration once metadata loads.
+  // Cache duration once metadata loads, and immediately compute the
+  // scroll-mapped target so the video lands on the correct frame
+  // (e.g. sun-already-up at scroll = 0) before the first scroll event
+  // fires. Without this the video would show its natural first frame
+  // (pre-dawn) until the user scrolled.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const onMeta = () => {
       durationRef.current = video.duration || 0;
+      if (isMobile || !durationRef.current) return;
+      const range =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress =
+        range > 0 ? Math.max(0, Math.min(1, window.scrollY / range)) : 0;
+      const usable = Math.max(0, durationRef.current - 2.5);
+      targetRef.current = (1 - progress) * usable;
+      // Page-load is past the critical rendering window — let the
+      // browser fetch the rest of the clip eagerly so scrubbing is
+      // smooth as the user starts scrolling.
+      video.preload = "auto";
+      // Seek to the target — this also nudges the browser to start
+      // buffering around that timestamp instead of from currentTime=0.
+      try {
+        video.currentTime = targetRef.current;
+        lastAppliedRef.current = targetRef.current;
+      } catch {
+        /* ignore — applyPendingSeek will retry once buffer arrives */
+      }
+      applyPendingSeek(video);
     };
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
     return () => video.removeEventListener("loadedmetadata", onMeta);
-  }, []);
+  }, [isMobile]);
 
   // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
   useEffect(() => {
@@ -91,6 +116,10 @@ export function HeroShader() {
     if (!isBuffered(video, t)) return;
     lastAppliedRef.current = t;
     video.currentTime = t;
+    // First time the buffer covers the requested frame — reveal the
+    // video. Until now the element was kept opacity:0 so the user
+    // never saw the wrong frame (currentTime=0 = pre-dawn).
+    setReady(true);
   }
 
   // Drive video.currentTime from Lenis's scroll position. RAF coalesces
@@ -130,11 +159,11 @@ export function HeroShader() {
         ref={videoRef}
         className="hero-bg-video"
         src="/assets/photos/New%20photos/hero-scrub.mp4"
-        poster="/assets/hero-poster.jpg"
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-hidden="true"
+        data-ready={ready ? "true" : undefined}
       />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>

@@ -2,9 +2,12 @@
 
 /* Background video — fills the viewport, sits behind everything.
    Horizontally mirrored so the sun rises from left to right as the
-   user scrolls down (combined with the reverse scroll-scrub). The
-   video's own `poster` attribute paints first while the file buffers,
-   then the browser swaps in the video — single layer, no cross-fade. */
+   user scrolls down (combined with the reverse scroll-scrub).
+   Hidden (opacity:0) until the buffer covers the scroll-mapped target
+   frame — otherwise the element flashes its native first frame
+   (currentTime=0 = pre-dawn) before the seek lands. The page
+   background sits behind the video and is dark, so during the brief
+   hidden window the user just sees the page bg. */
 .hero-bg-video {
   position: fixed;
   inset: 0;
@@ -17,6 +20,11 @@
   user-select: none;
   transform: scaleX(-1);
   background: var(--bg-deep);
+  opacity: 0;
+  transition: opacity .35s ease-out;
+}
+.hero-bg-video[data-ready="true"] {
+  opacity: 1;
 }
 
 /* Soft dark tint so foreground white text stays readable across all
