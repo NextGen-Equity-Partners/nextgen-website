@@ -13,7 +13,6 @@ export default function HomePage() {
             <span className="hero-line">im <span className="bold">Mittelstand.</span></span>
           </>
         }
-        scrollTo="mission"
         ctas={
           <>
             <a href="/kontakt" className="btn btn-light">Lassen Sie uns sprechen →</a>
@@ -64,7 +63,7 @@ export default function HomePage() {
           <article className="glass-card image-card rv rv-d2">
             <div
               className="image-card-img"
-              style={{ backgroundImage: "url('/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg')" }}
+              style={{ backgroundImage: "url('/assets/photos/New%20photos/wertsteigerung-hands.jpg')" }}
             />
             <div className="image-card-body">
               <div>
@@ -160,6 +159,7 @@ export default function HomePage() {
       <div className="sec-divider" />
 
       <Section
+        id="zielunternehmen"
         title={
           <>
             Wir suchen Unternehmen mit
@@ -267,6 +267,8 @@ export default function HomePage() {
                 <line className="pa2-link pa2-l2" x1="100" y1="60" x2="150" y2="30" />
                 <line className="pa2-link pa2-l3" x1="100" y1="60" x2="50"  y2="90" />
                 <line className="pa2-link pa2-l4" x1="100" y1="60" x2="150" y2="90" />
+                <circle className="pa-shock pa2-shock" cx="100" cy="60" r="12" />
+                <circle className="pa-shock pa-shock-late pa2-shock" cx="100" cy="60" r="12" />
                 <circle className="pa2-core" cx="100" cy="60" r="12" />
                 <circle className="pa2-sat pa2-s1" r="6" />
                 <circle className="pa2-sat pa2-s2" r="6" />
@@ -300,6 +302,8 @@ export default function HomePage() {
                   <line x1="40"  y1="30" x2="40"  y2="90" />
                   <line x1="160" y1="30" x2="160" y2="90" />
                 </g>
+                <circle className="pa-shock pa3-shock" cx="100" cy="60" r="10" />
+                <circle className="pa-shock pa-shock-late pa3-shock" cx="100" cy="60" r="10" />
                 <circle className="pa3-core" cx="100" cy="60" r="10" />
                 <circle className="pa3-sat" cx="40"  cy="30" r="5" />
                 <circle className="pa3-sat" cx="160" cy="30" r="5" />
@@ -339,8 +343,10 @@ export default function HomePage() {
         <div className="mehrwerte-layout">
           <div className="mehrwerte-img rv">
             <img
-              src="/assets/photos/New%20photos/Was%20eine%20starke%20Gruppe%20m%C3%B6glich%20macht..jpg"
+              src="/assets/photos/New%20photos/gruppe-bauwerk.jpg"
               alt="Starke Unternehmensgruppe"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <div className="mehrwerte-cards">
@@ -407,6 +413,8 @@ export default function HomePage() {
             <img
               src="/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg"
               alt=""
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <div className="tech-cards">
@@ -432,6 +440,7 @@ export default function HomePage() {
       <div className="sec-divider" />
 
       <Section
+        id="esg"
         title={
           <>
             Umsetzung von <span className="bold">Nachhaltigkeit &amp; ESG.</span>
@@ -442,26 +451,23 @@ export default function HomePage() {
         <div className="tech-layout tech-layout-reverse">
           <div className="tech-cards">
             <GlassCard
-              num="Environment"
               title="Operative Effizienz"
               body="Energiesparmaßnahmen und Dekarbonisierungs-Roadmaps werden in den Unternehmenszielen verankert."
               delay={1}
             />
             <GlassCard
-              num="Social"
               title="Mitarbeiterorientierte Unternehmenskultur"
               body="Fachliche Weiterbildungen, Führungskräftetrainings und Programme für Mental Health und Arbeitssicherheit dienen einer mitarbeiterorientierten Unternehmenskultur."
               delay={2}
             />
             <GlassCard
-              num="Governance"
               title="Verantwortung im Management"
               body="Die Vergütung des Managements wird unmittelbar an die ESG-Ziele gekoppelt, wodurch diese in der Unternehmensgovernance institutionalisiert werden."
               delay={3}
             />
           </div>
           <div className="tech-image rv">
-            <img src="/assets/photos/New%20photos/esg-forest.jpg" alt="" />
+            <img src="/assets/photos/New%20photos/esg-fields.jpg" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
       </Section>

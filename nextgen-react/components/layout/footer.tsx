@@ -9,8 +9,8 @@ function openLegal(kind: "impressum" | "datenschutz") {
 export function Footer() {
   return (
     <footer>
-      <div className="fl">NextGen Equity Partners · München · © 2026</div>
-      <div className="fr">
+      <div className="fl">
+        <span className="footer-meta">NextGen Equity Partners · München · © 2026</span>
         <button type="button" onClick={() => openLegal("impressum")}>
           Impressum
         </button>

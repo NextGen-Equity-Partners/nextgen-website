@@ -31,6 +31,16 @@ section.testimonial-section,
   padding-right: 50px !important;
 }
 
+/* Last snap target leaves room at the bottom of the viewport for the
+   footer (Impressum + Datenschutz) — otherwise mandatory snap pins
+   kontakt-teaser to viewport top and the footer ends up below the fold,
+   permanently invisible. Trim the section by ~60px so the footer fits
+   in the same screen. */
+body.bg-image section.kontakt-teaser-section,
+section.kontakt-teaser-section {
+  min-height: calc(100vh - 60px);
+}
+
 /* Reset pane margin from bg-image.css so 50px section padding fully
    determines box position. */
 body.bg-image section.pane,
@@ -99,51 +109,6 @@ section.story-break > .story-break-inner,
   display: none;
 }
 
-/* Side navigation arrows — vertically centered glass buttons pinned to
-   the left and right edges. Jump Lenis to the previous / next snap
-   section. Hidden on touch / coarse pointers (handled in JS). */
-.side-arrow {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .22);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-          backdrop-filter: blur(18px) saturate(1.4);
-  color: rgba(249, 247, 244, .9);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, .3),
-    inset 0 1px 0 rgba(255, 255, 255, .22);
-  transition:
-    opacity .35s var(--ease),
-    transform .35s var(--ease),
-    background .25s ease,
-    border-color .25s ease;
-}
-.side-arrow-prev { left: 22px; }
-.side-arrow-next { right: 22px; }
-.side-arrow:hover {
-  background: rgba(255, 255, 255, .18);
-  border-color: rgba(255, 255, 255, .35);
-  color: var(--w);
-}
-.side-arrow-prev:hover { transform: translateY(-50%) translateX(-2px); }
-.side-arrow-next:hover { transform: translateY(-50%) translateX(2px); }
-.side-arrow.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.side-arrow-prev.is-hidden { transform: translateY(-50%) translateX(-12px); }
-.side-arrow-next.is-hidden { transform: translateY(-50%) translateX(12px); }
 
 @media (max-width: 760px) {
   body.bg-image section.pane,

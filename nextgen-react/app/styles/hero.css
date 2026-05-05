@@ -58,20 +58,28 @@
   margin-top: 0;
   display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
 }
-.hero-scroll {
-  position: absolute; bottom: 28px; left: 50%;
-  transform: translateX(-50%); z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  opacity: .55; transition: opacity .3s;
+/* Global scroll cue — fixed at the bottom of every viewport, not just
+   the hero. Same mouse/wheel design; click jumps to the next snap
+   section. Hides on the last section so it doesn't cover the footer. */
+.scroll-cue {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%); z-index: 6;
+  display: flex; flex-direction: column; align-items: center;
+  opacity: .55; transition: opacity .3s, transform .3s;
 }
-.hero-scroll:hover { opacity: 1; }
-.hero-scroll .mouse {
+.scroll-cue:hover { opacity: 1; }
+.scroll-cue.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(12px);
+}
+.scroll-cue .mouse {
   width: 22px; height: 34px;
   border: 1.5px solid rgba(249,247,244,.6);
   border-radius: 11px;
   display: flex; justify-content: center; padding-top: 5px;
 }
-.hero-scroll .wheel {
+.scroll-cue .wheel {
   width: 3px; height: 6px;
   background: var(--w); border-radius: 2px;
   animation: scroll-wheel 2s ease-in-out infinite;
@@ -80,6 +88,10 @@
   0% { transform: translateY(0); opacity: .9; }
   60% { transform: translateY(10px); opacity: .1; }
   100% { transform: translateY(0); opacity: .9; }
+}
+
+@media (max-width: 760px), (hover: none), (pointer: coarse) {
+  .scroll-cue { display: none; }
 }
 
 @media (max-width: 760px) {
@@ -115,7 +127,6 @@
     letter-spacing: .22em;
     margin-bottom: 18px;
   }
-  .hero-scroll { display: none; }
 }
 
 /* Stack CTAs on most phones (covers iPhone 14 Pro Max @ 430px). */

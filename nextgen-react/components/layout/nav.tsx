@@ -6,15 +6,11 @@ import { useLenis } from "lenis/react";
 
 const LINKS = [
   { href: "/#team", label: "Team" },
+  { href: "/#zielunternehmen", label: "Zielunternehmen" },
   { href: "/#ansatz", label: "Ansatz" },
   { href: "/#technologie", label: "Technologie" },
+  { href: "/#esg", label: "ESG" },
 ];
-
-// No extra offset — sections already include 124px top padding so the
-// box content lands cleanly below the nav when their top is aligned to
-// the viewport top. Offset 0 matches the position the snap effect lands
-// at when the user scrolls naturally.
-const NAV_OFFSET = 0;
 
 export function Nav() {
   const pathname = usePathname() || "/";
@@ -45,9 +41,10 @@ export function Nav() {
   const scrollToAnchor = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    // Section has 124px top padding; nav is 92px tall. Skip 32px so the
-    // box content lands flush with the bottom of the nav, no extra gap.
-    const targetY = target.getBoundingClientRect().top + window.scrollY + 32;
+    // Land with the section's top flush with the viewport top — same
+    // position the snap controller picks. The section's 124px top
+    // padding then leaves the box content cleanly below the nav.
+    const targetY = target.getBoundingClientRect().top + window.scrollY;
     if (lenis) {
       lenis.scrollTo(targetY, { duration: 1.0 });
     } else {

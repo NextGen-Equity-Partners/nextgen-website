@@ -17,7 +17,6 @@ export function HeroShader() {
   const rafRef = useRef(0);
   const targetRef = useRef(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 760px)");
@@ -27,25 +26,16 @@ export function HeroShader() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Cache duration once metadata loads, and flip videoReady once we have
-  // enough buffered to scrub without showing the native loading state.
+  // Cache duration once metadata loads.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const onMeta = () => {
       durationRef.current = video.duration || 0;
     };
-    const onCanPlay = () => setVideoReady(true);
     video.addEventListener("loadedmetadata", onMeta);
-    video.addEventListener("canplaythrough", onCanPlay);
-    video.addEventListener("canplay", onCanPlay);
     if (video.readyState >= 1) onMeta();
-    if (video.readyState >= 3) setVideoReady(true);
-    return () => {
-      video.removeEventListener("loadedmetadata", onMeta);
-      video.removeEventListener("canplaythrough", onCanPlay);
-      video.removeEventListener("canplay", onCanPlay);
-    };
+    return () => video.removeEventListener("loadedmetadata", onMeta);
   }, []);
 
   // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
@@ -69,10 +59,20 @@ export function HeroShader() {
     // Reversed mapping across the entire page scroll: top = video end
     // (post-sunset), bottom = video start. Scrolling runs the timeline
     // backwards so the sun rises as the user moves down the page.
+    //
+    // TAIL_TRIM_SECONDS chops N seconds off the end of the video so
+    // scroll=0 lands on a brighter frame (the dark post-sunset tail
+    // felt like dead air at the top of the page). Raise/lower in
+    // seconds to tune; 0 keeps the full clip.
+    const TAIL_TRIM_SECONDS = 2.5;
     const range =
       document.documentElement.scrollHeight - window.innerHeight;
     const progress = range > 0 ? Math.max(0, Math.min(1, scroll / range)) : 0;
-    targetRef.current = (1 - progress) * durationRef.current;
+    const usableDuration = Math.max(
+      0,
+      durationRef.current - TAIL_TRIM_SECONDS,
+    );
+    targetRef.current = (1 - progress) * usableDuration;
     if (!rafRef.current) {
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = 0;
@@ -83,13 +83,6 @@ export function HeroShader() {
 
   return (
     <>
-      <img
-        className="hero-bg-poster"
-        src="/assets/hero-poster.jpg"
-        alt=""
-        aria-hidden="true"
-        data-faded={videoReady ? "true" : undefined}
-      />
       <video
         ref={videoRef}
         className="hero-bg-video"
@@ -99,7 +92,6 @@ export function HeroShader() {
         playsInline
         preload="auto"
         aria-hidden="true"
-        data-ready={videoReady ? "true" : undefined}
       />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>
