@@ -5,11 +5,22 @@
 .kontakt-section {
   position: relative;
   z-index: 1;
-  padding: 32px 48px clamp(120px, 12vw, 180px);
+  /* Centred vertically inside the viewport. Padding biased toward the
+     top (heavier than the bottom) so the form sits visually in the
+     lower-middle of the screen, well clear of the nav. Min-height
+     leaves a 60px strip at the bottom of the viewport for the footer
+     (Impressum / Datenschutz) to stay visible — same trick as the
+     home page's last snap target. */
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(180px, 18vh, 260px) 48px clamp(80px, 8vh, 120px);
 }
 .kontakt-inner {
   max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* Sidebar without glass shell — only the photo + text on the page bg. */
@@ -36,6 +47,7 @@
 }
 
 @media (max-width: 760px) {
+  /* Mobile has no snap, so no need for nav-clearance padding. */
   .kontakt-section { padding: 24px 18px 96px; }
 }
 
@@ -45,23 +57,26 @@
 ============================================================ */
 .cf-wrap {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  /* Photo / greeting on the left (1fr), form on the right (1.7fr). */
+  grid-template-columns: 1fr 1.7fr;
   gap: clamp(28px, 3.5vw, 56px);
   align-items: stretch;
-  margin-top: 64px;
+  margin-top: 0;
 }
 .cf {
   --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
   position: relative;
-  /* Darker glass so the form stays readable over the bright sunrise
-     video background. */
-  background: rgba(8, 14, 30, .72);
-  backdrop-filter: blur(28px) saturate(1.5);
-  -webkit-backdrop-filter: blur(28px) saturate(1.5);
-  border: 1px solid rgba(255,255,255,.18);
+  /* Transparent glass to match the rest of the site's card style —
+     same recipe as .glass-card. */
+  background: rgba(255, 255, 255, .06);
+  backdrop-filter: blur(18px) saturate(1.35) brightness(1.06);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 24px;
   padding: 44px 48px 48px;
-  box-shadow: 0 18px 60px rgba(0,0,0,.40), inset 0 1px 0 rgba(255,255,255,.18);
+  box-shadow:
+    0 12px 42px rgba(0, 0, 0, .26),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
   transform: perspective(1000px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
   transform-style: preserve-3d;
   transition: background .35s var(--ease), border-color .35s var(--ease);

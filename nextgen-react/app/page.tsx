@@ -212,6 +212,54 @@ export default function HomePage() {
 
       <div className="sec-divider" />
 
+      <Section
+        id="nachfolge"
+        title={
+          <>
+            Motivierte Nachfolgeunternehmer
+            <br />
+            und <span className="bold">Operator.</span>
+          </>
+        }
+        intro="Für unsere Gruppen-Strategien suchen wir neben passenden Unternehmen auch die richtigen Unternehmer für die nächste Generation. Dabei sind wir grundsätzlich offen, was man an Erfahrungen mitbringt — für uns zählt vor allem der unternehmerische Geist, gemeinsam etwas Großes und Nachhaltiges aufzubauen. Dafür bieten wir spannende Eigenkapitalbeteiligungen & Incentives."
+        contentMaxWidth={1100}
+      >
+        <div className="nachfolge-photo rv">
+          <img
+            src="/assets/photos/New%20photos/nachfolge-operator.jpg"
+            alt="Nachfolgeunternehmer am Laptop"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div className="nachfolge-block">
+          <div className="glass-grid cols-2 nachfolge-cards">
+            <GlassCard
+              title="Attraktive Eigenkapitalbeteiligung"
+              body="Wir strukturieren echte Mitunternehmerschaft — der Nachfolger oder Operator beteiligt sich am Aufbau der Gruppe und profitiert direkt vom gemeinsam geschaffenen Wert."
+              delay={1}
+            />
+            <GlassCard
+              title="Bewährtes Playbook"
+              body="Über 20 aufgebaute Unternehmensgruppen und mehr als 100 Manager — wir wissen, was funktioniert und was nicht, und bringen erprobte Prozesse vom ersten Tag an mit."
+              delay={2}
+            />
+            <GlassCard
+              title="KI-gestützte Technologieplattform"
+              body="Proprietäre Tools für Sourcing, Integration und operative Steuerung — für einen zügigen Marktzugang und Operational Excellence."
+              delay={3}
+            />
+            <GlassCard
+              title="Netzwerk & Operator-Community"
+              body="Zugang zu einem Netzwerk erfahrener Unternehmer und Manager, die denselben Weg gegangen sind — für Sparring, Führungskräfte und Zukäufe."
+              delay={4}
+            />
+          </div>
+        </div>
+      </Section>
+
+      <div className="sec-divider" />
+
       <section className="testimonial-section">
         <div className="testimonial-inner">
           <div className="testimonial-portrait rv">

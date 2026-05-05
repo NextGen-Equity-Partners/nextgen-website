@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const RECIPIENT = "contact@nextgen-equity.com";
+
 export function ContactForm() {
   const [sent, setSent] = useState(false);
 
@@ -11,6 +13,37 @@ export function ContactForm() {
       id="contact-form"
       onSubmit={(e) => {
         e.preventDefault();
+        const form = e.currentTarget;
+        const data = new FormData(form);
+        const name = String(data.get("name") || "").trim();
+        const company = String(data.get("company") || "").trim();
+        const email = String(data.get("email") || "").trim();
+        const topic = String(data.get("topic") || "").trim();
+        const message = String(data.get("message") || "").trim();
+
+        const subjectParts = ["NextGen Equity – Anfrage"];
+        if (name) subjectParts.push(`von ${name}`);
+        if (topic && topic !== "Bitte wählen") subjectParts.push(`(${topic})`);
+
+        const lines = [
+          name && `Name: ${name}`,
+          company && `Unternehmen: ${company}`,
+          email && `E-Mail: ${email}`,
+          topic && topic !== "Bitte wählen" && `Anliegen: ${topic}`,
+          "",
+          message,
+        ].filter(Boolean) as string[];
+
+        const subject = subjectParts.join(" ");
+        const body = lines.join("\n");
+        const href =
+          `mailto:${RECIPIENT}` +
+          `?subject=${encodeURIComponent(subject)}` +
+          `&body=${encodeURIComponent(body)}`;
+
+        // Open the user's mail client with everything pre-filled and
+        // addressed to contact@nextgen-equity.com.
+        window.location.href = href;
         setSent(true);
       }}
     >
@@ -33,9 +66,10 @@ export function ContactForm() {
           <label htmlFor="cf-topic">Anliegen</label>
           <select id="cf-topic" name="topic" disabled={sent}>
             <option>Bitte wählen</option>
-            <option>Unternehmensverkauf</option>
+            <option>Unternehmensverkauf / Nachfolge</option>
+            <option>Add-on-Empfehlung (M&amp;A-Berater)</option>
+            <option>Operative Mitarbeit / Management-Rolle</option>
             <option>Co-Investment</option>
-            <option>Beratung / Netzwerk</option>
             <option>Sonstiges</option>
           </select>
         </div>

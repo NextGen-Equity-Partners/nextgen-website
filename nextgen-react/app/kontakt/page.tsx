@@ -18,17 +18,15 @@ export default function Page() {
       <section className="kontakt-section">
         <div className="kontakt-inner">
           <div className="cf-wrap" style={{ marginTop: "0" }}>
-            <ContactForm />
-
             <div className="cf-side cf-side-bare rv rv-d1">
               <div className="cf-block cf-greeting">
-                <img className="cf-portrait" src="/assets/team/max.jpeg" alt="Maximilian Göppert" />
+                <img className="cf-portrait" src="/assets/team/max.jpeg" alt="" />
                 <div className="cf-eyebrow">Wir freuen uns</div>
-                <h4>Auf Ihre Nachricht.</h4>
                 <p>Schreiben Sie uns kurz, was Sie beschäftigt – wir melden uns persönlich zurück. Diskret und ohne Verpflichtung.</p>
-                <p className="cf-signature">– Maximilian Göppert<br /><span>Partner, NextGen Equity</span></p>
               </div>
             </div>
+
+            <ContactForm />
           </div>
 
           {/* Kontakt-Info: zwei Bereiche unter Form + Max — bare */}
