@@ -16,12 +16,14 @@ import { useLenis } from "lenis/react";
  * flat blue rectangle) instead of the sunrise scrub.
  *
  * The cure is to keep the video "playing" (muted + playsInline +
- * autoPlay + loop, so iOS allows it without a user gesture) and use
- * an rAF loop to overwrite currentTime to the scroll-relative target
- * every frame. The video tries to advance ~16ms forward each frame
- * but our rAF correction snaps it back to the scroll-driven position
- * — net effect: the user sees a frame-perfect scroll-scrub, while the
- * decoder stays warm so frames keep rendering on every device.
+ * autoPlay + loop, so iOS allows it without a user gesture) but pin
+ * playbackRate to 0 so the timeline doesn't actually advance between
+ * scroll events. Without that pin the video drifts forward ~16ms per
+ * real frame; the rAF correction then snaps it back to the scroll
+ * target every few frames, which the eye reads as flickering when the
+ * page is stationary. With rate 0 the decoder still owns a current
+ * frame and renders new frames on every currentTime write — but it
+ * stays exactly where we put it.
  */
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -42,6 +44,12 @@ export function HeroShader() {
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
 
+    // Pin playback rate to 0 immediately so the video doesn't drift
+    // forward between scroll-driven currentTime writes. The decoder
+    // still treats the element as "playing" (frames render on each
+    // currentTime change), but the timeline never advances on its own.
+    video.playbackRate = 0;
+
     // Some mobile browsers reject the very first autoplay attempt if
     // the page is still painting. A single retry covers that case.
     const tryPlay = () => {
@@ -60,8 +68,20 @@ export function HeroShader() {
           window.addEventListener("scroll", onInteract, { once: true, passive: true });
           window.addEventListener("click", onInteract, { once: true });
         });
+      } else {
+        // play() resolved synchronously (older browsers) — make sure
+        // playbackRate stays at 0 in case play() reset it.
+        video.playbackRate = 0;
       }
     };
+    // Re-pin playbackRate after each play() resolution. Some browsers
+    // reset it to 1 when play() succeeds.
+    const repin = () => { video.playbackRate = 0; };
+    video.addEventListener("play", repin);
+    video.addEventListener("ratechange", () => {
+      if (video.playbackRate !== 0) video.playbackRate = 0;
+    });
+
     if (video.readyState >= 2) tryPlay();
     else video.addEventListener("canplay", tryPlay, { once: true });
 
@@ -96,6 +116,7 @@ export function HeroShader() {
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
       video.removeEventListener("canplay", tryPlay);
+      video.removeEventListener("play", repin);
       cancelAnimationFrame(raf);
     };
   }, []);
