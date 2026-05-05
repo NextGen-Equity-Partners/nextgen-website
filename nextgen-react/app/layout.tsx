@@ -35,14 +35,14 @@ export const metadata: Metadata = {
     siteName: "NextGen Equity Partners",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [{ url: "/assets/og-image-v4.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/assets/og-image-v5.jpg", width: 1200, height: 630 }],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/assets/og-image-v4.jpg"],
+    images: ["/assets/og-image-v5.jpg"],
   },
   icons: { icon: "/assets/favicon.svg" },
 };
