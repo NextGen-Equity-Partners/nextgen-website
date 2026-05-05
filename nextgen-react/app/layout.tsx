@@ -34,14 +34,14 @@ export const metadata: Metadata = {
     siteName: "NextGen Equity Partners",
     title: "NextGen Equity Partners – Wachstumspartner für den Mittelstand.",
     description: SITE_DESCRIPTION,
-    images: [{ url: "/assets/og-image-v2.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/assets/og-image-v3.jpg", width: 1200, height: 630 }],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
     title: "NextGen Equity Partners – Wachstumspartner für den Mittelstand.",
     description: SITE_DESCRIPTION,
-    images: ["/assets/og-image-v2.jpg"],
+    images: ["/assets/og-image-v3.jpg"],
   },
   icons: { icon: "/assets/favicon.svg" },
 };
