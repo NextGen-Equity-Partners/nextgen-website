@@ -110,21 +110,31 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 .image-card-img {
   width: 100%;
-  height: clamp(140px, 16vw, 200px);
+  height: clamp(120px, 13vw, 170px);
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
   border-bottom: 1px solid rgba(255, 255, 255, .10);
 }
 .image-card-body {
-  padding: 14px 24px 22px;
+  padding: 12px 22px 18px;
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 0;
+}
+.glass-card.image-card h3 {
+  font-size: 19.5px;
+  line-height: 1.25;
+}
+.glass-card.image-card p {
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-top: 10px;
 }
 .glass-card.image-card .num {
   margin-top: 0;
