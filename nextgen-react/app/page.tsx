@@ -104,6 +104,17 @@ export default function HomePage() {
                   <div className="role">Partner</div>
                   <h4>Maximilian Göppert</h4>
                   <p>15 Jahre Erfahrung in Beteiligungsmanagement und Buy &amp; Build.</p>
+                  <a
+                    className="tm-linkedin"
+                    href="https://www.linkedin.com/in/maximilian-g%C3%B6ppert/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Maximilian Göppert auf LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div className="tm rv rv-d2">
@@ -114,6 +125,17 @@ export default function HomePage() {
                   <div className="role">Partner</div>
                   <h4>Leander Heyken</h4>
                   <p>20 Jahre Berufserfahrung, davon 12 Jahre in Beteiligungsmanagement.</p>
+                  <a
+                    className="tm-linkedin"
+                    href="https://www.linkedin.com/in/heyken/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Leander Heyken auf LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div className="tm rv rv-d3">
@@ -127,6 +149,17 @@ export default function HomePage() {
                   <div className="role">Partner</div>
                   <h4>Dr. Amon Göppert</h4>
                   <p>10 Jahre Erfahrung in der KI-Implementierung, davon 2 Jahre in Private Equity.</p>
+                  <a
+                    className="tm-linkedin"
+                    href="https://www.linkedin.com/in/amon-goeppert/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Dr. Amon Göppert auf LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
@@ -139,6 +172,17 @@ export default function HomePage() {
                   <div className="role">Value Creation &amp; KI</div>
                   <h4>Alexander Rien</h4>
                   <p>8 Jahre Berufserfahrung in Consulting und Strategie.</p>
+                  <a
+                    className="tm-linkedin"
+                    href="https://www.linkedin.com/in/alexander-rien/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Alexander Rien auf LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div className="tm rv rv-d2">
@@ -149,12 +193,64 @@ export default function HomePage() {
                   <div className="role">Origination &amp; BD</div>
                   <h4>Gerald Weitbrecht</h4>
                   <p>8 Jahre Erfahrung in Start-ups &amp; Software.</p>
+                  <a
+                    className="tm-linkedin"
+                    href="https://www.linkedin.com/in/gkfweitbrecht/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Gerald Weitbrecht auf LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <div className="sec-divider" />
+
+      <Section
+        id="werte"
+        title={
+          <>
+            Unsere <span className="bold">Werte.</span>
+          </>
+        }
+        contentMaxWidth={1100}
+      >
+        <p className="werte-quote rv rv-d1">
+          „Wir investieren nicht in Unternehmen — wir investieren in Menschen, die Unternehmen groß machen."
+        </p>
+        <div className="werte-image rv rv-d2">
+          <img
+            src="/assets/photos/New%20photos/werte-mountain.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div className="glass-grid cols-3 werte-grid">
+          <GlassCard
+            title="Partnerschaft"
+            body="Wir bauen keine Portfolios — wir bauen Unternehmen, gemeinsam mit Menschen, die dasselbe wollen. Das bedeutet Augenhöhe, klare Absprachen und echtes Commitment auf beiden Seiten."
+            delay={1}
+          />
+          <GlassCard
+            title="Vertrauen"
+            body="Vertrauen entsteht durch Verlässlichkeit, nicht durch Versprechen. Wir sagen, was wir tun — und tun, was wir sagen."
+            delay={2}
+          />
+          <GlassCard
+            title="Langfristigkeit"
+            body="Gute Unternehmen brauchen Zeit. Wir denken in Generationen, nicht in Quartalszahlen — und treffen Entscheidungen entsprechend."
+            delay={3}
+          />
+        </div>
+      </Section>
 
       <div className="sec-divider" />
 
@@ -329,7 +425,7 @@ export default function HomePage() {
               <div className="phase-when">Jahr 2–3</div>
               <h3 className="phase-title">Add-ons</h3>
               <p className="phase-body">
-                Zukauf und Integration von 5 bis 10 Unternehmen, die strategisch zur Plattform passen — Wertschöpfungskette, Geographie, Ergänzung der Endmärkte. Zusätzliches Wachstum durch Gewinnung von Fachkräften, incentiviert über Unternehmensbeteiligungen.
+                Zukauf und Integration von 5 bis 10 Unternehmen, die strategisch zur Plattform passen (bspw. Wertschöpfungskette, Geographie, Ergänzung der Endmärkte). Zusätzliches Wachstum durch Gewinnung von Fachkräften aus dem Wettbewerbsumfeld, incentiviert über Unternehmensbeteiligungen.
               </p>
             </div>
           </li>
@@ -371,7 +467,7 @@ export default function HomePage() {
               <div className="phase-when">Jahr 3–5</div>
               <h3 className="phase-title">Integrierter Marktführer</h3>
               <p className="phase-body">
-                Eine vollständig integrierte Gruppe mit rund 1.000 Mitarbeitenden. Add-ons sind operativ und kulturell eingegliedert, AI Use Cases umgesetzt und wertschöpfend im Einsatz.
+                Eine vollständig integrierte Gruppe mit rund 1.000 Mitarbeitenden. Add-ons sind operativ und kulturell eingegliedert, KI-Use-Cases umgesetzt und wertschöpfend im Einsatz.
               </p>
             </div>
           </li>
@@ -400,22 +496,22 @@ export default function HomePage() {
           <div className="mehrwerte-cards">
             <GlassCard
               title="Attraktiver Arbeitgeber"
-              body="Stärkere Arbeitgebermarke, neue Leitungsrollen und Zugang zu modernen Technologien — ein Umfeld, in dem Talente bleiben und sich entwickeln."
+              body="Durch eine attraktive Arbeitgebermarke, moderne Technologien und Entwicklungsperspektiven über Standortgrenzen hinweg."
               delay={1}
             />
             <GlassCard
               title="Resiliente Strukturen"
-              body="Mehr Marktdiversifikation, Balance zwischen Endmärkten und Kapazitäten. Eine zweite Führungsebene gibt der Gruppe organisatorische Tiefe."
+              body="Höhere Marktdiversifikation und ausgewogene Balance zwischen Endmärkten und Kapazitäten, ergänzt durch den Aufbau organisatorischer Führungsebenen."
               delay={2}
             />
             <GlassCard
               title="Neue Technologien"
-              body="Zentrale Teams und gezielte Investitionen in Innovation und Digitalisierung — als gemeinsame Plattform für alle Standorte der Gruppe."
+              body="Gezielte Investitionen in Tools, KI-Innovation und Digitalisierung sowie zentrale Teams, die neue Technologien gruppenweit verfügbar machen."
               delay={3}
             />
             <GlassCard
               title="Marktzugänge"
-              body="Zugang zu Großprojekten und Ausschreibungen, die bestimmte Kapazitäten und Referenzen voraussetzen — als Gruppe erreichbar, einzeln oft nicht."
+              body="Zugang zu Großprojekten und Ausschreibungen, die spezifische Kapazitäten, Zertifizierungen und Referenzen voraussetzen."
               delay={4}
             />
           </div>

@@ -73,6 +73,24 @@
   opacity: .65; margin-top: 10px; font-weight: 300; max-width: 32ch;
 }
 
+/* LinkedIn icon at the bottom of each team card — just the glyph,
+   no chip / circle around it. Dim by default, fully white on hover. */
+.tm-linkedin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  color: rgba(249, 247, 244, .55);
+  transition:
+    color .25s var(--ease),
+    transform .25s var(--ease);
+}
+.tm-linkedin:hover {
+  color: var(--w);
+  transform: translateY(-1px);
+}
+.tm-linkedin svg { display: block; }
+
 @media (max-width: 1024px) {
   .team-row-3 {
     grid-template-columns: repeat(2, 1fr);
