@@ -22,24 +22,25 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
+const SITE_DESCRIPTION =
+  "Wir erwerben Mehrheitsbeteiligungen an gesunden Unternehmen in Business Services und entwickeln sie gemeinsam mit dem bestehenden Team weiter — mit eigenem Kapital, langfristigem Horizont und einem Team, das kauft, führt und umsetzt.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: "NextGen Equity Partners – Wachstumspartner für den Mittelstand.",
-  description:
-    "NextGen Equity – Partner für Unternehmer in Business Services. Wachstumskapital, operative Erfahrung und KI-Kompetenz.",
+  description: SITE_DESCRIPTION,
   openGraph: {
     type: "website",
     siteName: "NextGen Equity Partners",
     title: "NextGen Equity Partners – Wachstumspartner für den Mittelstand.",
-    description:
-      "Mehrheitsbeteiligungen an gesunden Unternehmen in Business Services. Mit eigenem Kapital und langfristigem Horizont.",
+    description: SITE_DESCRIPTION,
     images: [{ url: "/assets/og-image.jpg", width: 1200, height: 630 }],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NextGen Equity Partners",
-    description: "Mehrheitsbeteiligungen im Mittelstand.",
+    title: "NextGen Equity Partners – Wachstumspartner für den Mittelstand.",
+    description: SITE_DESCRIPTION,
     images: ["/assets/og-image.jpg"],
   },
   icons: { icon: "/assets/favicon.svg" },
