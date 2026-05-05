@@ -90,33 +90,48 @@
   100% { transform: translateY(0); opacity: .9; }
 }
 
-@media (max-width: 760px), (hover: none), (pointer: coarse) {
-  .scroll-cue { display: none; }
+/* Slightly smaller on touch / mobile so the cue sits nicely above the
+   home indicator on iOS phones. */
+@media (max-width: 760px) {
+  .scroll-cue { bottom: 18px; opacity: .65; }
+  .scroll-cue .mouse { width: 18px; height: 28px; border-width: 1.4px; padding-top: 4px; }
+  .scroll-cue .wheel { width: 2.5px; height: 5px; }
 }
 
 @media (max-width: 760px) {
+  .hero,
+  .hero.subpage {
+    /* Centre everything horizontally on phones — the editorial
+       left-anchored layout makes sense on wide viewports but reads as
+       off-balance on narrow ones. */
+    text-align: center;
+    align-items: center;
+  }
   .hero {
     min-height: 88vh;
-    padding: 0 18px 230px;
+    padding: 0 18px 270px;
   }
   .hero.subpage {
     min-height: 80vh;
     padding-top: 0;
-    padding-bottom: 230px;
+    padding-bottom: 260px;
   }
+  /* Drop the optical offset (margin-left: -0.045em from sections.css)
+     so the centred title is truly centred, not 1–2px to the left. */
+  .hero h1.display { margin-left: 0; }
   .hero-title { max-width: 100%; }
   .hero-sub {
     left: 18px;
     right: 18px;
-    bottom: 125px;
+    bottom: 150px;
     font-size: 14.5px;
     line-height: 1.6;
   }
   .hero-ctas {
     left: 18px;
     right: 18px;
-    bottom: 44px;
-    gap: 10px;
+    bottom: 60px;
+    gap: 12px;
   }
   .hero-ctas .btn {
     padding: 12px 18px;
@@ -142,13 +157,13 @@
 }
 
 @media (max-width: 420px) {
-  .hero { padding: 0 16px 250px; }
-  .hero.subpage { padding-bottom: 250px; }
+  .hero { padding: 0 16px 280px; }
+  .hero.subpage { padding-bottom: 270px; }
   .hero-sub {
-    bottom: 130px;
+    bottom: 155px;
     font-size: 13.5px;
   }
-  .hero-ctas { bottom: 16px; }
+  .hero-ctas { bottom: 28px; }
   .hero-ctas .btn { padding: 13px 16px; }
 }
 

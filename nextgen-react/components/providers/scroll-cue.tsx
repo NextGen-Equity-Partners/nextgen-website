@@ -4,46 +4,37 @@ import { useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
 
 const SNAP_SELECTOR =
-  "section.hero, #mission, section.pane, section.story-break, section.kontakt-teaser-section, section.bare-section, section.testimonial-section";
+  "section.hero, #mission, section.pane, section.story-break, section.kontakt-teaser-section, section.kontakt-section, section.bare-section, section.testimonial-section";
 
 /**
  * Fixed mouse-wheel scroll cue at the bottom-center of every viewport.
  * Same visual as the original hero-scroll icon, just lifted out of the
  * hero so it's available across the whole page. Click jumps Lenis to
- * the next snap section. Hides once the last section is in view (so the
- * footer isn't covered) and on touch / coarse pointers.
+ * the next snap section, or — if no further section exists — falls
+ * back to a one-viewport scroll-down so the cue still feels useful on
+ * pages with only one content stop.
  */
 export function ScrollCue() {
   const lenis = useLenis();
   const [hidden, setHidden] = useState(false);
-  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 760px), (hover: none), (pointer: coarse)");
-    const update = () => setEnabled(!mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!enabled) return;
     const onScroll = () => {
-      const targets = Array.from(
-        document.querySelectorAll<HTMLElement>(SNAP_SELECTOR),
-      );
-      if (!targets.length) return;
-      const last = targets[targets.length - 1];
-      const lastTop = last.getBoundingClientRect().top;
-      // Hide once the last section's top is above the upper 40% mark.
-      setHidden(lastTop <= window.innerHeight * 0.4);
+      // Hide once the user is within ~one viewport of the document end
+      // so the cue doesn't sit on top of the footer.
+      const remaining =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight);
+      setHidden(remaining <= window.innerHeight * 0.3);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [enabled]);
-
-  if (!enabled) return null;
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,9 +44,17 @@ export function ScrollCue() {
     const scrollY = window.scrollY;
     const tolerance = 24;
     const next = targets.find((el) => el.offsetTop > scrollY + tolerance);
-    if (!next) return;
-    if (lenis) lenis.scrollTo(next, { duration: 1.0 });
-    else next.scrollIntoView({ behavior: "smooth", block: "start" });
+    const targetY = next
+      ? undefined
+      : window.scrollY + window.innerHeight;
+    if (lenis) {
+      if (next) lenis.scrollTo(next, { duration: 1.0 });
+      else if (typeof targetY === "number") lenis.scrollTo(targetY, { duration: 1.0 });
+    } else if (next) {
+      next.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (typeof targetY === "number") {
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    }
   };
 
   return (

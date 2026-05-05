@@ -1,21 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLenis } from "lenis/react";
 
 /**
  * Hero-scrub video as the page background. Driven directly by Lenis's
- * scroll progress so it scrubs frame-perfect with the smooth scroll.
+ * scroll progress so it scrubs frame-perfect with the smooth scroll —
+ * on every viewport, including touch.
  *
  * The mp4 ships in already-reversed order (the natural forward
  * playback shows the sunrise as we want it to read). Frame 0 of the
  * file is therefore exactly the frame the user should see at scroll
  * position 0 — no seek hack needed at load time, the browser
  * downloads from the start and the start is what we want visible.
- *
- * On touch / narrow viewports (≤760px) Lenis-driven scrubbing is
- * unreliable (touch scroll, momentum), so we fall back to a normal
- * autoplay loop.
  */
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,17 +20,9 @@ export function HeroShader() {
   const rafRef = useRef(0);
   const targetRef = useRef(0);
   const lastAppliedRef = useRef(-1);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 760px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  // Cache duration once metadata loads.
+  // Cache duration once metadata loads, and ensure the element stays
+  // paused — currentTime is driven entirely by scroll position.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -42,20 +31,10 @@ export function HeroShader() {
     };
     video.addEventListener("loadedmetadata", onMeta);
     if (video.readyState >= 1) onMeta();
+    video.loop = false;
+    video.pause();
     return () => video.removeEventListener("loadedmetadata", onMeta);
   }, []);
-
-  // Mobile: loop autoplay. Desktop: paused, currentTime driven by Lenis.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.loop = isMobile;
-    if (isMobile) {
-      void video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
-  }, [isMobile]);
 
   // Buffer-aware seek: only set currentTime when the target falls
   // within an already-buffered range, so we never stall on a seek
@@ -99,7 +78,6 @@ export function HeroShader() {
   // progress 1 → currentTime duration (sun high). The mp4 file is
   // already reversed at build time so this is the desired direction.
   useLenis(({ scroll }) => {
-    if (isMobile) return;
     const video = videoRef.current;
     if (!video || !durationRef.current) return;
     const range =

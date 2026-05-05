@@ -184,24 +184,30 @@
   background: rgba(5,13,31,.92);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  flex-direction: column; align-items: center; justify-content: center;
-  gap: 14px;
+  /* flex-start (not center) + overflow-y: auto so the menu scrolls
+     internally on short viewports (small phones, landscape mode)
+     instead of links spilling out the bottom of the screen. */
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 18px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   opacity: 0; pointer-events: none;
   transition: opacity .35s ease;
 }
 .nav-mobile.open { opacity: 1; pointer-events: all; }
 .nav-mobile a {
-  font-size: 28px; font-weight: 200;
-  letter-spacing: -.02em; color: var(--w);
-  opacity: .8; padding: 8px 0;
+  font-size: 22px; font-weight: 300;
+  letter-spacing: -.015em; color: var(--w);
+  opacity: .82; padding: 6px 0;
   transition: opacity .2s;
+  white-space: nowrap;
 }
 .nav-mobile a.active { opacity: 1; font-weight: 600; }
 .nav-mobile a.cta {
-  margin-top: 24px;
-  padding: 14px 36px; border-radius: 999px;
+  margin-top: 18px;
+  padding: 13px 32px; border-radius: 999px;
   background: var(--w); color: var(--bg-deep);
-  font-size: 14px; font-weight: 600; letter-spacing: .14em;
+  font-size: 13px; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -222,7 +228,9 @@
   .nav-burger { display: flex; }
   .nav-mobile {
     display: flex;
-    padding: 80px 22px 40px;
+    /* Top padding clears the 80px nav; bottom padding gives breathing
+       room above the iOS home-indicator / browser chrome. */
+    padding: 96px 22px 48px;
   }
 }
 

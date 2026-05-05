@@ -748,6 +748,10 @@
   align-items: center;
 }
 .kontakt-teaser-title { max-width: 880px; margin: 0 auto; }
+/* Outranks `h2.display { margin-left: -0.045em }` (specificity 0,2,0 vs
+   0,1,1) so the centred kontakt-teaser title sits truly centred, not
+   1–2px to the left of the body text below it. */
+.kontakt-teaser-section .kontakt-teaser-title { margin-left: auto; }
 .kontakt-teaser-body {
   margin-top: 24px;
   max-width: 58ch;
