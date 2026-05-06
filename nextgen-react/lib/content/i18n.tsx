@@ -144,14 +144,14 @@ export const tr = {
       },
     },
     alex: {
-      role: { de: "KI & Tech",               en: "AI & Tech" },
+      role: { de: "KI & Value Creation",     en: "AI & Value Creation" },
       body: {
         de: "8 Jahre Berufserfahrung in Consulting und Strategie.",
         en: "8 years of professional experience in consulting and strategy.",
       },
     },
     gerald: {
-      role: { de: "Business Development",    en: "Business Development" },
+      role: { de: "M&A & Business Development", en: "M&A & Business Development" },
       body: {
         de: "8 Jahre Erfahrung in Finanzen & Projektmanagement.",
         en: "8 years of experience in finance and project management.",
