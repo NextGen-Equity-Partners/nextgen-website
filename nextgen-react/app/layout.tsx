@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/assets/og-image-v5.jpg"],
   },
-  icons: { icon: "/assets/favicon.svg" },
+  icons: { icon: "/assets/favicon.svg?v=2" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
