@@ -50,8 +50,12 @@
   --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
   position: relative;
   background: rgba(255,255,255,.06);
-  backdrop-filter: blur(14px) saturate(1.35) brightness(1.06);
-  -webkit-backdrop-filter: blur(14px) saturate(1.35) brightness(1.06);
+  /* No backdrop-filter — Safari intermittently renders the blurred
+     backdrop as a solid white box on individual tiles, depending on
+     whether the card has children with their own background-images,
+     hover state changes, or scroll-triggered repaints. The static
+     rgba tint over the dark page bg gives a near-identical
+     translucent panel look across all browsers. */
   border: 1px solid rgba(255,255,255,.14);
   border-radius: 22px;
   padding: 26px 26px;

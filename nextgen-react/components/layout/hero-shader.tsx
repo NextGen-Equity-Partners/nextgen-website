@@ -117,6 +117,13 @@ export function HeroShader() {
     const video = videoRef.current;
     if (!video) return;
 
+    // Override the SSR `loop` attribute on desktop too. The scroll-scrub
+    // drives currentTime manually; if `loop` is on and the user reaches
+    // the bottom of a short page (e.g. /kontakt) the video auto-jumps
+    // back to frame 0 and starts the sunrise over.
+    video.loop = false;
+    video.removeAttribute("loop");
+
     const onMeta = () => {
       durationRef.current = video.duration || 0;
     };
@@ -183,7 +190,13 @@ export function HeroShader() {
         document.documentElement.scrollHeight - window.innerHeight;
       const scroll = lenisScrollRef.current || window.scrollY;
       const progress = range > 0 ? Math.max(0, Math.min(1, scroll / range)) : 0;
-      const t = progress * durationRef.current;
+      // Clamp the target a couple of frames short of `duration` so we
+      // never set currentTime to the exact end. Hitting duration fires
+      // `ended` (which loops or pauses depending on browser) and on
+      // short pages like /kontakt the user reaching the bottom would
+      // see the sunrise restart from frame 0.
+      const maxT = Math.max(0, durationRef.current - 0.08);
+      const t = progress * maxT;
       // Compare against actual video.currentTime so we correct any
       // drift caused by autoplay advancing between scroll events.
       if (Math.abs(t - video.currentTime) < 0.04) return;

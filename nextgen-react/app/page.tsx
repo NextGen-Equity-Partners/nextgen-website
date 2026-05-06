@@ -339,14 +339,36 @@ export default function HomePage() {
             decoding="async"
           />
         </div>
-        <div className="nachfolge-block">
-          <div className="glass-grid cols-2 nachfolge-cards">
-            <GlassCard title={t(tr.nachfolge.cards.c1Title)} body={t(tr.nachfolge.cards.c1Body)} delay={1} />
-            <GlassCard title={t(tr.nachfolge.cards.c2Title)} body={t(tr.nachfolge.cards.c2Body)} delay={2} />
-            <GlassCard title={t(tr.nachfolge.cards.c3Title)} body={t(tr.nachfolge.cards.c3Body)} delay={3} />
-            <GlassCard title={t(tr.nachfolge.cards.c4Title)} body={t(tr.nachfolge.cards.c4Body)} delay={4} />
-          </div>
-        </div>
+        <ol className="phase-list phase-list-4">
+          <li className="phase-item rv rv-d1">
+            <div className="phase-index">01</div>
+            <div className="phase-content">
+              <h3 className="phase-title">{t(tr.nachfolge.cards.c1Title)}</h3>
+              <p className="phase-body">{t(tr.nachfolge.cards.c1Body)}</p>
+            </div>
+          </li>
+          <li className="phase-item rv rv-d2">
+            <div className="phase-index">02</div>
+            <div className="phase-content">
+              <h3 className="phase-title">{t(tr.nachfolge.cards.c2Title)}</h3>
+              <p className="phase-body">{t(tr.nachfolge.cards.c2Body)}</p>
+            </div>
+          </li>
+          <li className="phase-item rv rv-d3">
+            <div className="phase-index">03</div>
+            <div className="phase-content">
+              <h3 className="phase-title">{t(tr.nachfolge.cards.c3Title)}</h3>
+              <p className="phase-body">{t(tr.nachfolge.cards.c3Body)}</p>
+            </div>
+          </li>
+          <li className="phase-item rv rv-d4">
+            <div className="phase-index">04</div>
+            <div className="phase-content">
+              <h3 className="phase-title">{t(tr.nachfolge.cards.c4Title)}</h3>
+              <p className="phase-body">{t(tr.nachfolge.cards.c4Body)}</p>
+            </div>
+          </li>
+        </ol>
       </Section>
 
       <div className="sec-divider" />

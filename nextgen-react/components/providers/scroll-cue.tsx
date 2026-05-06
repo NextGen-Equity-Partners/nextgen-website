@@ -20,12 +20,20 @@ export function ScrollCue() {
 
   useEffect(() => {
     const onScroll = () => {
-      // Hide once the user is within ~one viewport of the document end
-      // so the cue doesn't sit on top of the footer.
-      const remaining =
-        document.documentElement.scrollHeight -
-        (window.scrollY + window.innerHeight);
-      setHidden(remaining <= window.innerHeight * 0.3);
+      // Only show the cue while the hero section is the active stop.
+      // Once the user has scrolled past it, the cue has done its job
+      // and would just clutter the rest of the page.
+      const hero = document.querySelector<HTMLElement>("section.hero");
+      if (!hero) {
+        // No hero on this route → hide.
+        setHidden(true);
+        return;
+      }
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      // Hide as soon as the user has scrolled past the bottom of the
+      // hero (with a small tolerance so the cue doesn't flicker right
+      // at the edge).
+      setHidden(window.scrollY > heroBottom - window.innerHeight * 0.5);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
