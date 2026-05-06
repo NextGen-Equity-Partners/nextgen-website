@@ -124,8 +124,16 @@
   }
 
   /* Drop the optical offset (margin-left: -0.045em from sections.css)
-     so the centred title is truly centred. */
-  .hero h1.display { margin-left: 0; }
+     so the centred title is truly centred. Disable hyphenation on the
+     hero h1 so long compounds like "Unternehmensgruppen" never split
+     mid-word — the title content is structured into hero-lines that
+     already break at the right places. */
+  .hero h1.display {
+    margin-left: 0;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    overflow-wrap: normal;
+  }
   .hero-title { max-width: 100%; margin: 0; }
 
   .hero-eyebrow {

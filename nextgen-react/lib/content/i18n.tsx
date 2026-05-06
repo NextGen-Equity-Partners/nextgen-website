@@ -24,24 +24,27 @@ export const tr = {
     linkedinOf:      { de: "auf LinkedIn",    en: "on LinkedIn" },
   } satisfies Record<string, T>,
 
-  // Hero — 3 hero-lines: A / B / C + bold. DE keeps "Digitalisierung"
-  // together on line 2 ("Digitalisierung für Unternehmensgruppen");
-  // EN uses parallel structure ("Digitalization for Mid-Market" on
-  // line 2, "Companies." on line 3 with the connector empty).
+  // Hero — DE renders as 4 hero-lines (A / B / C / D + bold), EN as
+  // 3 lines (A / B / C + bold). Empty `titleD` for EN drives a ternary
+  // in app/page.tsx so "Companies." stays bound to line 3.
   hero: {
     eyebrow: {
-      de: "DACH-Mittelstand · Business Services",
-      en: "DACH Mid-Market · Business Services",
+      de: "",
+      en: "",
     },
     titleA: {
       de: "Wachstumskapital und",
       en: "Growth Capital and",
     },
     titleB: {
-      de: "Digitalisierung für Unternehmensgruppen",
-      en: "Digitalization for Mid-Market",
+      de: "Digitalisierung für",
+      en: "Digitalization for",
     },
     titleC: {
+      de: "Unternehmensgruppen",
+      en: "Mid-Market",
+    },
+    titleD: {
       de: "im",
       en: "",
     },
@@ -161,8 +164,8 @@ export const tr = {
     titleA:    { de: "Unsere",  en: "Our" },
     titleBold: { de: "Werte.",  en: "Values." },
     quote: {
-      de: "„Wir investieren nicht in Unternehmen — wir investieren in Menschen, die Unternehmen groß machen.“",
-      en: "“We do not invest in companies — we invest in the people who make companies great.”",
+      de: "„Wir investieren nicht nur in Unternehmen … wir investieren in Menschen, die Unternehmen groß machen.“",
+      en: "“We don't just invest in companies … we invest in the people who make companies great.”",
     },
     cards: {
       c1Title: { de: "Partnerschaft", en: "Partnership" },
@@ -248,8 +251,8 @@ export const tr = {
   quotes: {
     leander: {
       text: {
-        de: "„Wir investieren nicht in Unternehmen – wir investieren in Menschen, die Unternehmen groß machen.“",
-        en: "“We do not invest in companies – we invest in the people who make companies great.”",
+        de: "„Wir investieren nicht nur in Unternehmen … wir investieren in Menschen, die Unternehmen groß machen.“",
+        en: "“We don't just invest in companies … we invest in the people who make companies great.”",
       },
       role: { de: "Partner", en: "Partner" },
     },
@@ -422,8 +425,8 @@ export const tr = {
     bottomEmailEyebrow: { de: "Direkter Kontakt", en: "Direct contact" },
     bottomLocationEyebrow: { de: "Standort", en: "Location" },
     bottomLocation: {
-      de: "München, Deutschland\nFür den gesamten DACH-Raum: Deutschland · Österreich · Schweiz",
-      en: "Munich, Germany\nFor the entire DACH region: Germany · Austria · Switzerland",
+      de: "Leopoldstraße 21\n80802 München\nFür den gesamten DACH-Raum: Deutschland · Österreich · Schweiz",
+      en: "Leopoldstraße 21\n80802 Munich, Germany\nFor the entire DACH region: Germany · Austria · Switzerland",
     },
     // Form
     formLabelName:    { de: "Name *",            en: "Name *" },

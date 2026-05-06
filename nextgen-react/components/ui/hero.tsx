@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 type HeroProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   sub?: ReactNode;
   /** Render CTA buttons. */
@@ -18,7 +18,7 @@ export function Hero({ eyebrow, title, sub, ctas, variant = "home" }: HeroProps)
   const isHome = variant === "home";
   return (
     <section className={`hero${isHome ? "" : " subpage"}`}>
-      <div className="hero-eyebrow">{eyebrow}</div>
+      {eyebrow && <div className="hero-eyebrow">{eyebrow}</div>}
       <h1 className="display hero-title">{title}</h1>
       {sub && <p className="hero-sub">{sub}</p>}
       {ctas && <div className="hero-ctas">{ctas}</div>}

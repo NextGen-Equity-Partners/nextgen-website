@@ -33,13 +33,26 @@ export function PageEffects() {
 // -- reveal -----------------------------------------------------------------
 
 function bindRevealOnScroll() {
+  // Trigger reveals as soon as any pixel of an element enters the
+  // viewport (with a small bottom inset so reveals start *just* before
+  // the element is on screen, instead of after it's already fully
+  // visible). Threshold 0 + a small negative bottom rootMargin avoids
+  // the "blank tile" gap caused by the previous threshold:0.12 setup,
+  // which forced 12% of each card to be visible before triggering.
+  //
+  // Once revealed, we unobserve so cards don't re-animate when the
+  // user scrolls back up — that re-toggle was the second cause of the
+  // "uneven" feel.
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        e.target.classList.toggle("on", e.isIntersecting);
+        if (e.isIntersecting) {
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
       }
     },
-    { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+    { threshold: 0, rootMargin: "0px 0px -8% 0px" },
   );
   document.querySelectorAll(".rv").forEach((el) => io.observe(el));
   return () => io.disconnect();
