@@ -22,9 +22,9 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
-const SITE_TITLE = "Wachstumskapital für Unternehmensgruppen im Mittelstand.";
+const SITE_TITLE = "Wachstumskapital und Digitalisierung für Unternehmensgruppen im Mittelstand.";
 const SITE_DESCRIPTION =
-  "Unsere Mission bei NextGen Equity Partners ist der Aufbau von kleinen und mittleren B2B-Dienstleistungsunternehmen im DACH-Raum zu skalierbaren Unternehmensgruppen als Marktführer. Wir setzen Wachstumskapital ein, um damit die Substanz des Mittelstands zu stärken und durch KI befähigte Wissensträger in den Mittelpunkt zu stellen.";
+  "Unsere Mission bei NextGen Equity Partners ist die Entwicklung kleiner und mittlerer Dienstleistungsunternehmen im DACH-Raum zu technologisch und marktführenden Unternehmensgruppen. Wir setzen Wachstumskapital ein, um die Substanz des Mittelstands zu stärken und KI-befähigte Wissensträger in den Mittelpunkt zu stellen.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -35,14 +35,14 @@ export const metadata: Metadata = {
     siteName: "NextGen Equity Partners",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [{ url: "/assets/og-image-v5.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/assets/og-image-v6.jpg", width: 1200, height: 630 }],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/assets/og-image-v5.jpg"],
+    images: ["/assets/og-image-v6.jpg"],
   },
   icons: { icon: "/assets/favicon.svg?v=2" },
 };
