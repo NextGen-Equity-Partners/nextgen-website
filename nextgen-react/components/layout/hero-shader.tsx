@@ -42,20 +42,45 @@ export function HeroShader() {
     );
   }, []);
 
-  // -- Touch: slow autoplay loop -------------------------------------
+  // -- Touch: slow autoplay, freeze on last frame --------------------
   useEffect(() => {
     if (!isTouch) return;
     const video = videoRef.current;
     if (!video) return;
 
+    // Override the SSR `loop` attribute on touch so the sunrise plays
+    // through once and then holds — much calmer than a hard jump back
+    // to the start every ~12s. (Loop has to live in the SSR markup so
+    // iOS honours autoplay; we remove it imperatively here.)
+    video.loop = false;
+    video.removeAttribute("loop");
+
+    // 0.25× turns the 5s clip into a ~20s gentle build-up. iOS Safari
+    // accepts sub-1 rates on muted videos, but quantises some values —
+    // 0.25 / 0.5 are the safest below-normal rates in practice.
+    const RATE = 0.25;
     const setRate = () => {
-      if (video.playbackRate !== 0.4) video.playbackRate = 0.4;
-      if (video.defaultPlaybackRate !== 0.4) video.defaultPlaybackRate = 0.4;
+      if (video.playbackRate !== RATE) video.playbackRate = RATE;
+      if (video.defaultPlaybackRate !== RATE) video.defaultPlaybackRate = RATE;
     };
     setRate();
     video.addEventListener("loadedmetadata", setRate);
     video.addEventListener("play", setRate);
     video.addEventListener("ratechange", setRate);
+
+    // When the slow play-through finishes, seek to the very last frame
+    // and pause. The sun is fully up at duration ≈ 5s, so the video
+    // settles into the same calm "sun-up" image the desktop scroll-
+    // scrub lands on.
+    const onEnded = () => {
+      try {
+        if (video.duration > 0) {
+          video.currentTime = Math.max(0, video.duration - 0.05);
+        }
+        video.pause();
+      } catch { /* non-fatal */ }
+    };
+    video.addEventListener("ended", onEnded);
 
     const tryPlay = () => {
       const p = video.play();
@@ -81,6 +106,7 @@ export function HeroShader() {
       video.removeEventListener("loadedmetadata", setRate);
       video.removeEventListener("play", setRate);
       video.removeEventListener("ratechange", setRate);
+      video.removeEventListener("ended", onEnded);
       video.removeEventListener("canplay", tryPlay);
     };
   }, [isTouch]);
