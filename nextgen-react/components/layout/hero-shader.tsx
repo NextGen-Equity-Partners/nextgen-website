@@ -4,23 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
 /**
- * Hero background.
+ * Hero background video.
  *
- * SSR: a static <img> of the first video frame. Hydration then swaps
- * to a <video> for both desktop and mobile, but with different
- * playback recipes:
- *
- * - Desktop / pointer:hover — scroll-scrub. The video stays "playing"
- *   but `playbackRate` is pinned to 0 so the timeline doesn't advance
- *   from playback. `currentTime` is driven by Lenis scroll inside
+ * - Desktop / pointer:hover — scroll-scrub. The video plays (so the
+ *   decoder stays warm and renders frames) but `playbackRate` is
+ *   pinned to 0 so the timeline never advances from playback. The
+ *   `onPlay` JSX handler sets the rate synchronously on the very
+ *   first play event so the user never sees a frame advance before
+ *   pin takes hold. `currentTime` is driven by Lenis scroll inside
  *   requestAnimationFrame.
  *
  * - Touch / coarse pointer (iOS, Android, tablets) — slow autoplay
  *   (0.25× → ~20s for the 5s clip), then freeze on the final frame.
  *   No loop, no jump back to start.
  *
- * The `<video poster>` is the same image the SSR <img> shows, so the
- * img → video swap on hydration is visually invisible.
+ * The `<video autoPlay>` is in the SSR markup so iOS Safari honours
+ * autoplay (Safari ignores autoplay when the element is added to the
+ * DOM after hydration). The `<video poster>` is the first frame so
+ * the decode window before the video shows its own first frame is
+ * filled with the same image — no visible flash on reload.
  */
 const VIDEO_SRC = "/assets/photos/New%20photos/hero-scrub.mp4";
 const FIRST_FRAME_SRC = "/assets/photos/New%20photos/hero-first.jpg";
@@ -29,11 +31,6 @@ export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const lenisScrollRef = useRef(0);
-  // SSR default: "img" mode — so nothing video-shaped exists in the
-  // first paint and there is nothing the browser could autoplay before
-  // we have a chance to set up our own playback rules. Hydration
-  // switches to "video" mode and decides desktop vs mobile via isTouch.
-  const [mode, setMode] = useState<"img" | "video">("img");
   const [isTouch, setIsTouch] = useState(false);
 
   useLenis(({ scroll }) => {
@@ -44,16 +41,15 @@ export function HeroShader() {
     setIsTouch(
       window.matchMedia("(hover: none), (pointer: coarse)").matches,
     );
-    setMode("video");
   }, []);
 
   // -- Touch: slow autoplay, freeze on last frame --------------------
   useEffect(() => {
-    if (mode !== "video" || !isTouch) return;
+    if (!isTouch) return;
     const video = videoRef.current;
     if (!video) return;
 
-    // No looping — play through once, freeze.
+    // No looping — play through once at slow rate, then freeze.
     video.loop = false;
     video.removeAttribute("loop");
 
@@ -107,18 +103,17 @@ export function HeroShader() {
       video.removeEventListener("ended", onEnded);
       video.removeEventListener("canplay", tryPlay);
     };
-  }, [mode, isTouch]);
+  }, [isTouch]);
 
   // -- Desktop: scroll-scrub -----------------------------------------
   useEffect(() => {
-    if (mode !== "video" || isTouch) return;
+    if (isTouch) return;
     const video = videoRef.current;
     if (!video) return;
 
-    // Override the SSR `loop` attribute on desktop. Scroll-scrub drives
-    // currentTime manually; if `loop` is on and the user reaches the
-    // bottom of a short page (e.g. /kontakt) the video auto-jumps back
-    // to frame 0 and starts the sunrise over.
+    // Scroll-scrub drives currentTime manually; if `loop` is on the
+    // video would auto-jump back to frame 0 when scroll reaches the
+    // bottom of a short page (e.g. /kontakt).
     video.loop = false;
     video.removeAttribute("loop");
 
@@ -197,41 +192,38 @@ export function HeroShader() {
       video.removeEventListener("ratechange", pin);
       cancelAnimationFrame(raf);
     };
-  }, [mode, isTouch]);
+  }, [isTouch]);
 
   return (
     <>
-      {mode === "video" ? (
-        <video
-          ref={videoRef}
-          className="hero-bg-video"
-          src={VIDEO_SRC}
-          poster={FIRST_FRAME_SRC}
-          muted
-          playsInline
-          preload="auto"
-          loop
-          aria-hidden="true"
-          onPlay={(e) => {
-            // Desktop only: pin rate=0 the moment play() resolves so
-            // the timeline never advances from playback. The mobile
-            // useEffect intentionally lets play continue at its own
-            // 0.25× rate, which it sets again right after via
-            // ratechange.
-            if (!isTouch) {
-              e.currentTarget.playbackRate = 0;
-              e.currentTarget.defaultPlaybackRate = 0;
-            }
-          }}
-        />
-      ) : (
-        <img
-          className="hero-bg-video"
-          src={FIRST_FRAME_SRC}
-          alt=""
-          aria-hidden="true"
-        />
-      )}
+      {/*
+        SSR markup includes autoPlay so iOS Safari honours autoplay
+        (Safari refuses to autoplay videos that React inserts into
+        the DOM after hydration). On desktop the onPlay handler
+        immediately pins playbackRate to 0; on mobile the touch
+        useEffect resets it to 0.25× via ratechange.
+      */}
+      <video
+        ref={videoRef}
+        className="hero-bg-video"
+        src={VIDEO_SRC}
+        poster={FIRST_FRAME_SRC}
+        muted
+        playsInline
+        preload="auto"
+        autoPlay
+        loop
+        aria-hidden="true"
+        onPlay={(e) => {
+          // Synchronous rate pin only on desktop. On touch devices we
+          // want the slow 0.25× playback the touch useEffect sets up,
+          // so we leave the rate alone here.
+          if (!isTouch) {
+            e.currentTarget.playbackRate = 0;
+            e.currentTarget.defaultPlaybackRate = 0;
+          }
+        }}
+      />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>
   );
