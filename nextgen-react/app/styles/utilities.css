@@ -76,6 +76,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .14);
   box-shadow: 0 20px 50px rgba(0, 0, 0, .42);
+  min-width: 0;
 }
 .werte-image img {
   width: 100%;
@@ -185,6 +186,7 @@
   min-height: 100%;
   max-height: 440px;
   align-self: stretch;
+  min-width: 0;
 }
 .mehrwerte-img img {
   width: 100%;
@@ -196,6 +198,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  min-width: 0;
 }
 /* Mehrwerte cards — only padding tweaks; typography matches the global
    .glass-card sizes so all tile copy across the page reads at the
@@ -236,6 +239,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .14);
   box-shadow: 0 20px 50px rgba(0, 0, 0, .42);
+  min-width: 0;
 }
 .nachfolge-photo img {
   width: 100%;
@@ -272,6 +276,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .14);
   box-shadow: 0 20px 50px rgba(0, 0, 0, .42);
+  min-width: 0;
 }
 .ansatz-photo img {
   width: 100%;
@@ -765,6 +770,7 @@
   max-height: 460px;
   align-self: stretch;
   z-index: 1;
+  min-width: 0;
 }
 .tech-image::after {
   content: "";
@@ -785,6 +791,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
 }
 .tech-cards .glass-card {
   padding: 18px 22px 20px;
