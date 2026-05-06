@@ -451,7 +451,7 @@ export const tr = {
     topicOperator:  { de: "Operative Mitarbeit / Management-Rolle",     en: "Operating role / Management position" },
     topicCoinvest:  { de: "Co-Investment",                                en: "Co-investment" },
     topicOther:     { de: "Sonstiges",                                    en: "Other" },
-    submitDefault:  { de: "Unverbindliches Gespräch vereinbaren →",     en: "Schedule a no-obligation conversation →" },
+    submitDefault:  { de: "Unverbindliches Gespräch vereinbaren →",     en: "Schedule a conversation →" },
     submitSending:  { de: "Wird gesendet …",                              en: "Sending …" },
     submitSent:     { de: "Vielen Dank – wir melden uns bald ✓",        en: "Thank you — we'll be in touch soon ✓" },
     sentTitle:      { de: "Vielen Dank für Ihre Nachricht.",              en: "Thank you for your message." },

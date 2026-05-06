@@ -109,13 +109,21 @@
   font-size: 21px; font-weight: 600;
   line-height: 1.22; margin-top: 28px;
   letter-spacing: -.02em; color: var(--w);
+  /* Long German compound words (Beteiligungsmanagement,
+     Technologieintegration, Mitarbeiterorientierte) should wrap
+     within their card, not push the column wider. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 .glass-card p {
   font-size: 16.5px; line-height: 1.7;
   color: var(--w); opacity: .82;
   margin-top: 14px; font-weight: 300;
+  overflow-wrap: anywhere;
 }
-.glass-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
+.glass-card > * { position: relative; z-index: 1; transform: translateZ(20px); min-width: 0; }
 
 @media (max-width: 1024px) {
   .glass-grid,
@@ -123,6 +131,7 @@
   .glass-grid.cols-2 {
     grid-template-columns: repeat(2, 1fr);
   }
+  .glass-grid > .glass-card { min-width: 0; }
 }
 
 @media (max-width: 760px) {
