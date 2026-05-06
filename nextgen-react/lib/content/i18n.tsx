@@ -214,11 +214,18 @@ export const tr = {
   },
 
   // Nachfolge & Mit-Unternehmer
+  // Nachfolge — title splits across two lines as
+  //   "Motivierte Nachfolgeunternehmer"
+  //   "und **Operator.**"
+  // The connector "und"/"and" lives on its own line together with the
+  // bold word so "Operator" never gets pushed onto a third line on
+  // narrow viewports where the long DE first line wraps.
   nachfolge: {
     // Mirror the DE line break — connector word stays on the first
     // line, only the noun is bolded on the second line.
-    titleA:    { de: "Motivierte Nachfolgeunternehmer und",       en: "Motivated Successors and" },
-    titleBold: { de: "Operator.",                                  en: "Operators." },
+    titleA:         { de: "Motivierte Nachfolgeunternehmer", en: "Motivated Successors" },
+    titleConnector: { de: "und",                              en: "and" },
+    titleBold:      { de: "Operator.",                         en: "Operators." },
     intro: {
       de: "Für unsere Gruppenstrategien suchen wir neben passenden Unternehmen auch die richtigen Unternehmer für die nächste Generation. Dabei sind wir grundsätzlich offen, was man an Erfahrungen mitbringt — für uns zählt vor allem der unternehmerische Geist, gemeinsam etwas Großes und Nachhaltiges aufzubauen. Dafür bieten wir spannende Eigenkapitalbeteiligungen & Incentives.",
       en: "For our group strategies, we look not only for the right companies but also for the right entrepreneurs for the next generation. We are open regarding background and experience — what matters most is the entrepreneurial drive to build something significant and lasting together. In return, we offer compelling equity participation and incentives.",

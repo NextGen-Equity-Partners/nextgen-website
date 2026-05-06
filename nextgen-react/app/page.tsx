@@ -324,7 +324,7 @@ export default function HomePage() {
           <>
             {t(tr.nachfolge.titleA)}
             <br />
-            <span className="bold">{t(tr.nachfolge.titleBold)}</span>
+            {t(tr.nachfolge.titleConnector)} <span className="bold">{t(tr.nachfolge.titleBold)}</span>
           </>
         }
         intro={t(tr.nachfolge.intro)}
@@ -510,15 +510,15 @@ export default function HomePage() {
         }
         contentMaxWidth={1100}
       >
-        <div className="tech-layout tech-layout-reverse">
+        <div className="tech-layout">
+          <div className="tech-image rv">
+            <img src="/assets/photos/New%20photos/esg-fields.jpg" alt="" loading="lazy" decoding="async" />
+          </div>
           <div className="tech-cards">
             <GlassCard title={t(tr.esg.cards.c1Title)} body={t(tr.esg.cards.c1Body)} delay={1} />
             <GlassCard title={t(tr.esg.cards.c2Title)} body={t(tr.esg.cards.c2Body)} delay={2} />
             <GlassCard title={t(tr.esg.cards.c3Title)} body={t(tr.esg.cards.c3Body)} delay={3} />
             <GlassCard title={t(tr.esg.cards.c4Title)} body={t(tr.esg.cards.c4Body)} delay={4} />
-          </div>
-          <div className="tech-image rv">
-            <img src="/assets/photos/New%20photos/esg-fields.jpg" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
       </Section>
