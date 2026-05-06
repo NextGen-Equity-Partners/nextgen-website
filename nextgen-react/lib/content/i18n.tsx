@@ -117,7 +117,7 @@ export const tr = {
   // Team — grid heading
   teamGrid: {
     titleA:    { de: "Das Team hinter",  en: "The team behind" },
-    titleBold: { de: "NextGen Equity.",  en: "NextGen Equity." },
+    titleBold: { de: "NextGen.",         en: "NextGen." },
   } satisfies Record<string, T>,
 
   // Team member roles & body — name stays the same, role/body translate
