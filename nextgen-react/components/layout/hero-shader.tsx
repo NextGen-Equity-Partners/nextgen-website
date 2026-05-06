@@ -4,28 +4,26 @@ import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
 /**
- * Hero background video.
+ * Hero-scrub video as the page background.
  *
- * - Desktop / pointer:hover — scroll-scrub. The video plays (so the
- *   decoder stays warm and renders frames) but `playbackRate` is
- *   pinned to 0 so the timeline never advances from playback. The
- *   `onPlay` JSX handler sets the rate synchronously on the very
- *   first play event so the user never sees a frame advance before
- *   pin takes hold. `currentTime` is driven by Lenis scroll inside
- *   requestAnimationFrame.
+ * Two modes, picked once after hydration:
  *
- * - Touch / coarse pointer (iOS, Android, tablets) — slow autoplay
- *   (0.25× → ~20s for the 5s clip), then freeze on the final frame.
- *   No loop, no jump back to start.
+ * - Desktop / pointer:hover — scroll-scrub. The video stays "playing"
+ *   (muted + playsInline + autoPlay so iOS allows it without a user
+ *   gesture) but `playbackRate` is pinned to 0 so the timeline doesn't
+ *   advance from playback. `currentTime` is driven by Lenis scroll
+ *   inside requestAnimationFrame; the rate-0 pin avoids the per-frame
+ *   drift that would otherwise need correcting and read as flicker.
  *
- * The `<video autoPlay>` is in the SSR markup so iOS Safari honours
- * autoplay (Safari ignores autoplay when the element is added to the
- * DOM after hydration). The `<video poster>` is the first frame so
- * the decode window before the video shows its own first frame is
- * filled with the same image — no visible flash on reload.
+ * - Touch / coarse pointer (iOS, Android, tablets) — natural slow
+ *   playback. The rate-0 + currentTime trick doesn't decode reliably
+ *   on mobile (iOS low-power, throttled decoders) — it ends up showing
+ *   the bg-deep blue instead of the sunrise. On touch we just let the
+ *   video autoplay at 0.4× and loop. A `poster` of the same sunrise
+ *   frame guarantees something visible even if the browser delays or
+ *   refuses autoplay (low-power / data-saver).
  */
 const VIDEO_SRC = "/assets/photos/New%20photos/hero-scrub.mp4";
-const FIRST_FRAME_SRC = "/assets/photos/New%20photos/hero-first.jpg";
 
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -49,12 +47,15 @@ export function HeroShader() {
     const video = videoRef.current;
     if (!video) return;
 
-    // No looping — play through once at slow rate, then freeze.
+    // Override the SSR `loop` attribute on touch so the sunrise plays
+    // through once and then holds — much calmer than a hard jump back
+    // to the start every ~12s. (Loop has to live in the SSR markup so
+    // iOS honours autoplay; we remove it imperatively here.)
     video.loop = false;
     video.removeAttribute("loop");
 
-    // 0.25× turns the 5s clip into ~20s gentle build-up. iOS Safari
-    // accepts sub-1 rates on muted videos but quantises some values;
+    // 0.25× turns the 5s clip into a ~20s gentle build-up. iOS Safari
+    // accepts sub-1 rates on muted videos, but quantises some values —
     // 0.25 / 0.5 are the safest below-normal rates in practice.
     const RATE = 0.25;
     const setRate = () => {
@@ -66,6 +67,10 @@ export function HeroShader() {
     video.addEventListener("play", setRate);
     video.addEventListener("ratechange", setRate);
 
+    // When the slow play-through finishes, seek to the very last frame
+    // and pause. The sun is fully up at duration ≈ 5s, so the video
+    // settles into the same calm "sun-up" image the desktop scroll-
+    // scrub lands on.
     const onEnded = () => {
       try {
         if (video.duration > 0) {
@@ -111,9 +116,10 @@ export function HeroShader() {
     const video = videoRef.current;
     if (!video) return;
 
-    // Scroll-scrub drives currentTime manually; if `loop` is on the
-    // video would auto-jump back to frame 0 when scroll reaches the
-    // bottom of a short page (e.g. /kontakt).
+    // Override the SSR `loop` attribute on desktop too. The scroll-scrub
+    // drives currentTime manually; if `loop` is on and the user reaches
+    // the bottom of a short page (e.g. /kontakt) the video auto-jumps
+    // back to frame 0 and starts the sunrise over.
     video.loop = false;
     video.removeAttribute("loop");
 
@@ -124,18 +130,23 @@ export function HeroShader() {
     if (video.readyState >= 1) onMeta();
 
     // Pin playback rate to 0 — both `defaultPlaybackRate` (used after
-    // canplay/loadeddata) and `playbackRate` (used live).
+    // canplay/loadeddata) and `playbackRate` (used live). Without
+    // pinning both, some browsers reset to 1 on first play().
     const pin = () => {
       if (video.defaultPlaybackRate !== 0) video.defaultPlaybackRate = 0;
       if (video.playbackRate !== 0) video.playbackRate = 0;
     };
     pin();
 
+    // Some mobile browsers reject the very first autoplay attempt if
+    // the page is still painting. A single retry covers that case.
     const tryPlay = () => {
       pin();
       const p = video.play();
       if (p && typeof p.catch === "function") {
         p.then(pin).catch(() => {
+          // Wait for any user interaction, then try again. The first
+          // tap/scroll counts as a user gesture and unblocks playback.
           const onInteract = () => {
             video.play().then(pin).catch(() => {});
             window.removeEventListener("touchstart", onInteract);
@@ -148,6 +159,9 @@ export function HeroShader() {
         });
       }
     };
+    // Re-pin on every relevant lifecycle event: play, loadeddata,
+    // canplay, ratechange. Whichever browser quirk resets the rate,
+    // one of these will catch it within the same frame.
     video.addEventListener("play", pin);
     video.addEventListener("loadeddata", pin);
     video.addEventListener("canplay", pin);
@@ -175,8 +189,15 @@ export function HeroShader() {
         document.documentElement.scrollHeight - window.innerHeight;
       const scroll = lenisScrollRef.current || window.scrollY;
       const progress = range > 0 ? Math.max(0, Math.min(1, scroll / range)) : 0;
+      // Clamp the target a couple of frames short of `duration` so we
+      // never set currentTime to the exact end. Hitting duration fires
+      // `ended` (which loops or pauses depending on browser) and on
+      // short pages like /kontakt the user reaching the bottom would
+      // see the sunrise restart from frame 0.
       const maxT = Math.max(0, durationRef.current - 0.08);
       const t = progress * maxT;
+      // Compare against actual video.currentTime so we correct any
+      // drift caused by autoplay advancing between scroll events.
       if (Math.abs(t - video.currentTime) < 0.04) return;
       if (!isBuffered(t)) return;
       video.currentTime = t;
@@ -197,32 +218,25 @@ export function HeroShader() {
   return (
     <>
       {/*
-        SSR markup includes autoPlay so iOS Safari honours autoplay
-        (Safari refuses to autoplay videos that React inserts into
-        the DOM after hydration). On desktop the onPlay handler
-        immediately pins playbackRate to 0; on mobile the touch
-        useEffect resets it to 0.25× via ratechange.
+        autoPlay + loop are always in the SSR markup. iOS Safari only
+        honours autoplay when those attributes are present in the
+        original HTML — adding them after hydration via React props
+        is silently ignored, which is why mobile users were seeing
+        only the poster image. On desktop these don't fight the
+        scroll-scrub: the desktop effect immediately pins playbackRate
+        to 0 (so the timeline doesn't advance from autoplay, and loop
+        is moot because currentTime is driven manually).
       */}
       <video
         ref={videoRef}
         className="hero-bg-video"
         src={VIDEO_SRC}
-        poster={FIRST_FRAME_SRC}
         muted
         playsInline
         preload="auto"
         autoPlay
         loop
         aria-hidden="true"
-        onPlay={(e) => {
-          // Synchronous rate pin only on desktop. On touch devices we
-          // want the slow 0.25× playback the touch useEffect sets up,
-          // so we leave the rate alone here.
-          if (!isTouch) {
-            e.currentTarget.playbackRate = 0;
-            e.currentTarget.defaultPlaybackRate = 0;
-          }
-        }}
       />
       <div className="hero-bg-tint" aria-hidden="true" />
     </>
