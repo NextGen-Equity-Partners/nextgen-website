@@ -170,17 +170,17 @@ export const tr = {
     cards: {
       c1Title: { de: "Partnerschaft", en: "Partnership" },
       c1Body:  {
-        de: "Wir bauen keine Portfolios — wir bauen Unternehmen, gemeinsam mit Menschen, die dasselbe wollen. Das bedeutet Augenhöhe, klare Absprachen und echtes Commitment auf beiden Seiten.",
+        de: "Wir bauen keine Portfolios – wir bauen Unternehmen, gemeinsam mit Menschen, die dasselbe wollen. Das bedeutet Augenhöhe, klare Absprachen und echtes Commitment auf beiden Seiten.",
         en: "We don't build portfolios — we build companies, together with people who want the same. That means equal footing, clear agreements, and genuine commitment from both sides.",
       },
       c2Title: { de: "Vertrauen", en: "Trust" },
       c2Body:  {
-        de: "Vertrauen entsteht durch Verlässlichkeit, nicht durch Versprechen. Wir sagen, was wir tun — und tun, was wir sagen.",
+        de: "Vertrauen entsteht durch Verlässlichkeit, nicht durch Versprechen. Wir sagen, was wir tun – und tun, was wir sagen.",
         en: "Trust is built through reliability, not through promises. We say what we do — and do what we say.",
       },
       c3Title: { de: "Langfristigkeit", en: "Long-Term Thinking" },
       c3Body:  {
-        de: "Gute Unternehmen brauchen Zeit. Wir denken in Generationen, nicht in Quartalszahlen — und treffen Entscheidungen entsprechend.",
+        de: "Gute Unternehmen brauchen Zeit. Wir denken in Generationen, nicht in Quartalszahlen – und treffen Entscheidungen entsprechend.",
         en: "Good companies need time. We think in generations, not in quarterly figures — and make decisions accordingly.",
       },
     },
@@ -227,28 +227,28 @@ export const tr = {
     titleConnector: { de: "und",                              en: "and" },
     titleBold:      { de: "Operator.",                         en: "Operators." },
     intro: {
-      de: "Für unsere Gruppenstrategien suchen wir neben passenden Unternehmen auch die richtigen Unternehmer für die nächste Generation. Dabei sind wir grundsätzlich offen, was man an Erfahrungen mitbringt — für uns zählt vor allem der unternehmerische Geist, gemeinsam etwas Großes und Nachhaltiges aufzubauen. Dafür bieten wir spannende Eigenkapitalbeteiligungen & Incentives.",
+      de: "Für unsere Gruppenstrategien suchen wir neben passenden Unternehmen auch die richtigen Unternehmer für die nächste Generation. Dabei sind wir grundsätzlich offen, was man an Erfahrungen mitbringt – für uns zählt vor allem der unternehmerische Geist, gemeinsam etwas Großes und Nachhaltiges aufzubauen. Dafür bieten wir spannende Eigenkapitalbeteiligungen & Incentives.",
       en: "For our group strategies, we look not only for the right companies but also for the right entrepreneurs for the next generation. We are open regarding background and experience — what matters most is the entrepreneurial drive to build something significant and lasting together. In return, we offer compelling equity participation and incentives.",
     },
     cards: {
       c1Title: { de: "Eigenkapitalbeteiligung",          en: "Equity Participation" },
       c1Body:  {
-        de: "Wir strukturieren echte Mitunternehmerschaft — der Nachfolger oder Mit-Unternehmer beteiligt sich am Aufbau der Gruppe und profitiert direkt vom gemeinsam geschaffenen Wert.",
+        de: "Wir strukturieren echte Mitunternehmerschaft – der Nachfolger oder Mit-Unternehmer beteiligt sich am Aufbau der Gruppe und profitiert direkt vom gemeinsam geschaffenen Wert.",
         en: "We structure genuine co-entrepreneurship — the successor or operator participates in building the group and benefits directly from the value created together.",
       },
       c2Title: { de: "Bewährtes Playbook",               en: "Proven Playbook" },
       c2Body:  {
-        de: "Über 20 aufgebaute Unternehmensgruppen und mehr als 100 Manager — wir wissen, was funktioniert und was nicht, und bringen erprobte Prozesse vom ersten Tag an mit.",
+        de: "Über 20 aufgebaute Unternehmensgruppen und mehr als 100 Manager – wir wissen, was funktioniert und was nicht, und bringen erprobte Prozesse vom ersten Tag an mit.",
         en: "20+ corporate groups built and more than 100 managers worked with — we know what works and what doesn't, and bring proven processes from day one.",
       },
       c3Title: { de: "KI-gestützte Technologieplattform", en: "AI-Powered Technology Platform" },
       c3Body:  {
-        de: "Proprietäre Tools für Sourcing, Integration und operative Steuerung — für einen zügigen Marktzugang und Operational Excellence.",
+        de: "Proprietäre Tools für Sourcing, Integration und operative Steuerung – für einen zügigen Marktzugang und Operational Excellence.",
         en: "Proprietary tools for sourcing, integration, and operational management — enabling rapid market access and operational excellence.",
       },
       c4Title: { de: "Netzwerk & Operator-Community",     en: "Network & Operator Community" },
       c4Body:  {
-        de: "Zugang zu einem Netzwerk erfahrener Unternehmer und Manager, die denselben Weg gegangen sind — für Sparring, Führungskräfte und Zukäufe.",
+        de: "Zugang zu einem Netzwerk erfahrener Unternehmer und Manager, die denselben Weg gegangen sind – für Sparring, Führungskräfte und Zukäufe.",
         en: "Access to a network of experienced entrepreneurs and managers who have walked the same path — for sparring, leadership talent, and add-on acquisitions.",
       },
     },
@@ -272,7 +272,7 @@ export const tr = {
     },
     amon: {
       text: {
-        de: "„Wir verankern KI und Digitalisierung dort, wo sie Wachstum, Geschwindigkeit und Kundennutzen messbar steigern — und schaffen so die Grundlage, aus mittelständischen Dienstleistern eine starke, digital vernetzte Unternehmensgruppe aufzubauen.“",
+        de: "„Wir verankern KI und Digitalisierung dort, wo sie Wachstum, Geschwindigkeit und Kundennutzen messbar steigern – und schaffen so die Grundlage, aus mittelständischen Dienstleistern eine starke, digital vernetzte Unternehmensgruppe aufzubauen.“",
         en: "“We embed AI and digitalization where they measurably increase growth, speed, and customer value — creating the foundation to build mid-market service providers into a strong, digitally connected corporate group.”",
       },
       role: { de: "Partner · KI & Technologie", en: "Partner · AI & Technology" },
@@ -303,7 +303,7 @@ export const tr = {
       p3Label: { de: "Phase 3",                       en: "Phase 3" },
       p3Title: { de: "Beteiligung & Integration",     en: "Investment & Integration" },
       p3Body:  {
-        de: "Onboarding in die Gruppe — entweder als Nukleus einer neuen Gruppe oder Einbringung in eine bestehende Plattform. Einführung unserer Technologieplattform und operativer Prozesse.",
+        de: "Onboarding in die Gruppe – entweder als Nukleus einer neuen Gruppe oder Einbringung in eine bestehende Plattform. Einführung unserer Technologieplattform und operativer Prozesse.",
         en: "Onboarding into the group — either as the nucleus of a new group or as part of an existing platform. Implementation of our technology platform and operational processes.",
       },
       p4Label: { de: "Phase 4",     en: "Phase 4" },
@@ -320,7 +320,7 @@ export const tr = {
     titleA:    { de: "Was eine starke Gruppe", en: "Strength" },
     titleBold: { de: "möglich macht.",          en: "Through Scale." },
     intro: {
-      de: "Als Teil einer führenden Unternehmensgruppe erschließen sich Märkte, Talente und Technologien, die für ein Einzelunternehmen schlicht nicht erreichbar wären — bei gleichzeitig geteilten Risiken, gemeinsamer Infrastruktur und der Schlagkraft einer Plattform.",
+      de: "Als Teil einer führenden Unternehmensgruppe erschließen sich Märkte, Talente und Technologien, die für ein Einzelunternehmen schlicht nicht erreichbar wären – bei gleichzeitig geteilten Risiken, gemeinsamer Infrastruktur und der Schlagkraft einer Plattform.",
       en: "As part of a leading group, markets, talents, and technologies become accessible that would simply be out of reach for a stand-alone company — combined with shared risks, common infrastructure, and the strength of a platform.",
     },
     cards: {
@@ -352,7 +352,7 @@ export const tr = {
     titleA:    { de: "Neue Technologien für",       en: "New Technologies for" },
     titleBold: { de: "Dienstleistungsunternehmen.", en: "Service Companies." },
     intro: {
-      de: "KI verändert wissensintensive Dienstleistungen aktuell grundlegend. Wir sehen darin eine Chance: Fachkräfte konzentrieren sich auf das, was echten Wert schafft — Kreativität, Analyse und Kundenverständnis. Die Anwendung findet dabei auf verschiedenen Ebenen der Wertschöpfung statt.",
+      de: "KI verändert wissensintensive Dienstleistungen aktuell grundlegend. Wir sehen darin eine Chance: Fachkräfte konzentrieren sich auf das, was echten Wert schafft – Kreativität, Analyse und Kundenverständnis. Die Anwendung findet dabei auf verschiedenen Ebenen der Wertschöpfung statt.",
       en: "AI is fundamentally transforming knowledge-intensive services. We see this as an opportunity: skilled professionals can focus on what truly creates value — creativity, analysis, and customer understanding. Application takes place across multiple levels of the value chain.",
     },
     cards: {
@@ -363,12 +363,12 @@ export const tr = {
       },
       c2Title: { de: "Operatives Kerngeschäft", en: "Operational Core Business" },
       c2Body:  {
-        de: "Branchenspezifisch zugeschnittene — agentische — Assistenzsysteme unterstützen Fachkräfte in Planung, Prüfung und Dokumentation — für höhere Output-Qualität und beschleunigte Umsetzungszyklen.",
+        de: "Branchenspezifisch zugeschnittene – agentische – Assistenzsysteme unterstützen Fachkräfte in Planung, Prüfung und Dokumentation – für höhere Output-Qualität und beschleunigte Umsetzungszyklen.",
         en: "Industry-specific — agentic — assistance systems support professionals in planning, review, and documentation — for higher output quality and accelerated execution cycles.",
       },
       c3Title: { de: "Supportfunktionen", en: "Support Functions" },
       c3Body:  {
-        de: "Wiederkehrende Tätigkeiten in Einkauf, Vertragsmanagement und Marketing werden systematisch automatisiert — für entlastete Prozesse und reduzierte operative Risiken.",
+        de: "Wiederkehrende Tätigkeiten in Einkauf, Vertragsmanagement und Marketing werden systematisch automatisiert – für entlastete Prozesse und reduzierte operative Risiken.",
         en: "Recurring tasks in procurement, contract management, and marketing are systematically automated — for streamlined processes and reduced operational risks.",
       },
     },
@@ -383,17 +383,17 @@ export const tr = {
     cards: {
       c1Title: { de: "Arbeitgeberqualität als Wettbewerbsfaktor", en: "Employer Quality as a Competitive Factor" },
       c1Body:  {
-        de: "Weiterbildung, Führungskultur und Entwicklungsperspektiven sind keine Zusatzleistungen — sie entscheiden darüber, wer die besten Mitarbeiter gewinnt und hält.",
+        de: "Weiterbildung, Führungskultur und Entwicklungsperspektiven sind keine Zusatzleistungen – sie entscheiden darüber, wer die besten Mitarbeiter gewinnt und hält.",
         en: "Training, leadership culture, and development perspectives are not optional benefits — they determine who wins and retains the best talent.",
       },
       c2Title: { de: "Ressourceneffizienz mit messbarem Ergebnis", en: "Resource Efficiency with Measurable Impact" },
       c2Body:  {
-        de: "Energieeffizienz und Dekarbonisierung werden in operative Unternehmensziele übersetzt — mit direkter Wirkung auf Kostenstruktur und Wettbewerbsfähigkeit.",
+        de: "Energieeffizienz und Dekarbonisierung werden in operative Unternehmensziele übersetzt – mit direkter Wirkung auf Kostenstruktur und Wettbewerbsfähigkeit.",
         en: "Energy efficiency and decarbonization are translated into operational company targets — with direct impact on cost structure and competitiveness.",
       },
       c3Title: { de: "Transparenz als Grundlage", en: "Transparency as the Foundation" },
       c3Body:  {
-        de: "Wer seine Wirkung nicht messen kann, kann sie nicht steuern — systematische ESG-Analysen schaffen die Basis für fundierte Entscheidungen auf allen Ebenen.",
+        de: "Wer seine Wirkung nicht messen kann, kann sie nicht steuern – systematische ESG-Analysen schaffen die Basis für fundierte Entscheidungen auf allen Ebenen.",
         en: "What cannot be measured cannot be managed — systematic ESG analysis provides the basis for informed decisions at every level.",
       },
       c4Title: { de: "Nachhaltigkeit als Chance", en: "Sustainability as Opportunity" },
@@ -456,7 +456,7 @@ export const tr = {
     submitSent:     { de: "Vielen Dank – wir melden uns bald ✓",        en: "Thank you — we'll be in touch soon ✓" },
     sentTitle:      { de: "Vielen Dank für Ihre Nachricht.",              en: "Thank you for your message." },
     sentBody: {
-      de: "Ihre Anfrage ist bei uns angekommen. Wir melden uns persönlich zurück — diskret und ohne Verpflichtung.",
+      de: "Ihre Anfrage ist bei uns angekommen. Wir melden uns persönlich zurück – diskret und ohne Verpflichtung.",
       en: "Your message has reached us. We'll get back to you personally — discreetly, no obligation.",
     },
     errorFallback: {
