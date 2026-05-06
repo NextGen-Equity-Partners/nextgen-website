@@ -840,16 +840,16 @@
 
 @media (max-width: 1024px) {
   .tech-layout { grid-template-columns: 1fr; gap: 18px; }
-  /* Cap the image height with a fixed aspect *and* a max-height. Without
-     the max-height, on tall-narrow phone widths the 16:10 height got
-     visually oversized relative to the rest of the section (especially
-     ESG with its 4 cards stacked below). The max-height keeps the
-     image in the same proportion on tablets where width is generous,
-     but stops it from dominating the screen on phones. */
+  /* Match the .werte-image pattern: fixed clamped height + plain
+     width:100%, no aspect-ratio. Keeps the image visually the same
+     size as the Werte section regardless of viewport, instead of
+     scaling up on wider phones / tablets. */
   .tech-image {
-    aspect-ratio: 16 / 10;
+    width: 100%;
+    height: clamp(160px, 18vw, 220px);
     min-height: 0;
-    max-height: 320px;
+    max-height: none;
+    aspect-ratio: auto;
   }
   .tech-image img { transform: none; }
   /* ESG uses tech-layout-reverse (cards-first DOM order so the image
@@ -859,9 +859,6 @@
      pattern with explicit order. */
   .tech-layout.tech-layout-reverse .tech-image { order: -1; }
   .tech-layout.tech-layout-reverse .tech-cards { order: 0; }
-}
-@media (max-width: 760px) {
-  .tech-image { max-height: 240px; }
 }
 
 /* Beteiligungen: card with min-height to match neighbour. */
