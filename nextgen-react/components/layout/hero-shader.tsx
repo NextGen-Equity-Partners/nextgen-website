@@ -1,40 +1,93 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
 /**
- * Hero-scrub video as the page background. Locked to Lenis scroll
- * position via `currentTime` updates inside requestAnimationFrame.
+ * Hero-scrub video as the page background.
  *
- * Why autoPlay + loop instead of pause()?
+ * Two modes, picked once after hydration:
  *
- * iOS Safari and many Android browsers will not decode any video
- * frames until play() has been called and is *currently active*. After
- * pause() the decoder state drops and subsequent currentTime writes
- * may not paint a new frame — the user sees the bg-deep fallback (a
- * flat blue rectangle) instead of the sunrise scrub.
+ * - Desktop / pointer:hover — scroll-scrub. The video stays "playing"
+ *   (muted + playsInline + autoPlay so iOS allows it without a user
+ *   gesture) but `playbackRate` is pinned to 0 so the timeline doesn't
+ *   advance from playback. `currentTime` is driven by Lenis scroll
+ *   inside requestAnimationFrame; the rate-0 pin avoids the per-frame
+ *   drift that would otherwise need correcting and read as flicker.
  *
- * The cure is to keep the video "playing" (muted + playsInline +
- * autoPlay + loop, so iOS allows it without a user gesture) but pin
- * playbackRate to 0 so the timeline doesn't actually advance between
- * scroll events. Without that pin the video drifts forward ~16ms per
- * real frame; the rAF correction then snaps it back to the scroll
- * target every few frames, which the eye reads as flickering when the
- * page is stationary. With rate 0 the decoder still owns a current
- * frame and renders new frames on every currentTime write — but it
- * stays exactly where we put it.
+ * - Touch / coarse pointer (iOS, Android, tablets) — natural slow
+ *   playback. The rate-0 + currentTime trick doesn't decode reliably
+ *   on mobile (iOS low-power, throttled decoders) — it ends up showing
+ *   the bg-deep blue instead of the sunrise. On touch we just let the
+ *   video autoplay at 0.4× and loop. A `poster` of the same sunrise
+ *   frame guarantees something visible even if the browser delays or
+ *   refuses autoplay (low-power / data-saver).
  */
+const POSTER_SRC = "/assets/photos/New%20photos/hero-still.jpg";
+const VIDEO_SRC = "/assets/photos/New%20photos/hero-scrub.mp4";
+
 export function HeroShader() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const lenisScrollRef = useRef(0);
+  const [isTouch, setIsTouch] = useState(false);
 
   useLenis(({ scroll }) => {
     lenisScrollRef.current = scroll;
   });
 
   useEffect(() => {
+    setIsTouch(
+      window.matchMedia("(hover: none), (pointer: coarse)").matches,
+    );
+  }, []);
+
+  // -- Touch: slow autoplay loop -------------------------------------
+  useEffect(() => {
+    if (!isTouch) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const setRate = () => {
+      if (video.playbackRate !== 0.4) video.playbackRate = 0.4;
+      if (video.defaultPlaybackRate !== 0.4) video.defaultPlaybackRate = 0.4;
+    };
+    setRate();
+    video.addEventListener("loadedmetadata", setRate);
+    video.addEventListener("play", setRate);
+    video.addEventListener("ratechange", setRate);
+
+    const tryPlay = () => {
+      const p = video.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          // Autoplay refused — retry on the first user gesture.
+          const onInteract = () => {
+            video.play().catch(() => {});
+            window.removeEventListener("touchstart", onInteract);
+            window.removeEventListener("scroll", onInteract);
+            window.removeEventListener("click", onInteract);
+          };
+          window.addEventListener("touchstart", onInteract, { once: true, passive: true });
+          window.addEventListener("scroll", onInteract, { once: true, passive: true });
+          window.addEventListener("click", onInteract, { once: true });
+        });
+      }
+    };
+    if (video.readyState >= 2) tryPlay();
+    else video.addEventListener("canplay", tryPlay, { once: true });
+
+    return () => {
+      video.removeEventListener("loadedmetadata", setRate);
+      video.removeEventListener("play", setRate);
+      video.removeEventListener("ratechange", setRate);
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, [isTouch]);
+
+  // -- Desktop: scroll-scrub -----------------------------------------
+  useEffect(() => {
+    if (isTouch) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -122,17 +175,20 @@ export function HeroShader() {
       video.removeEventListener("ratechange", pin);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isTouch]);
 
   return (
     <>
       <video
         ref={videoRef}
         className="hero-bg-video"
-        src="/assets/photos/New%20photos/hero-scrub.mp4"
+        src={VIDEO_SRC}
+        poster={POSTER_SRC}
         muted
         playsInline
         preload="auto"
+        autoPlay={isTouch}
+        loop={isTouch}
         aria-hidden="true"
       />
       <div className="hero-bg-tint" aria-hidden="true" />
