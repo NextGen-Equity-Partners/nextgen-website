@@ -94,6 +94,17 @@ h3.display {
     line-height: 1.1;
     letter-spacing: -.025em;
   }
+  /* "Motivierte Nachfolgeunternehmer" is the longest word-pair on the
+     site; at the standard h2.display size it wraps to two lines on
+     phones, then "und Operator." gets bumped to a third line. Tighten
+     the size + letter-spacing for this section's heading specifically
+     so the first line fits intact on every phone width and the title
+     stays exactly two lines (line 1 = "Motivierte Nachfolgeunternehmer",
+     line 2 = "und Operator."). */
+  #nachfolge h2.display {
+    font-size: clamp(19px, 4.6vw, 28px);
+    letter-spacing: -.03em;
+  }
   h3.display { font-size: clamp(20px, 4.6vw, 26px); }
   .body-text {
     font-size: 14px;
