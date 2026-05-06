@@ -23,7 +23,6 @@ import { useLenis } from "lenis/react";
  *   frame guarantees something visible even if the browser delays or
  *   refuses autoplay (low-power / data-saver).
  */
-const POSTER_SRC = "/assets/photos/New%20photos/hero-still.jpg";
 const VIDEO_SRC = "/assets/photos/New%20photos/hero-scrub.mp4";
 
 export function HeroShader() {
@@ -232,7 +231,6 @@ export function HeroShader() {
         ref={videoRef}
         className="hero-bg-video"
         src={VIDEO_SRC}
-        poster={POSTER_SRC}
         muted
         playsInline
         preload="auto"

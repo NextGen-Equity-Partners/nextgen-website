@@ -406,8 +406,8 @@ export const tr = {
 
   // Kontakt teaser (home page bottom)
   kontaktTeaser: {
-    titleA:    { de: "Lassen Sie uns über Ihr",  en: "Let's talk about your" },
-    titleBold: { de: "Unternehmen sprechen.",     en: "company." },
+    titleA:    { de: "Lassen Sie uns",  en: "Let's" },
+    titleBold: { de: "sprechen.",         en: "talk." },
     body: {
       de: "Ob Unternehmer, Manager oder M&A-Berater: wir freuen uns über ein erstes Gespräch mit Ihnen.",
       en: "Whether you are an entrepreneur, manager, or M&A advisor — we look forward to a first conversation with you.",
