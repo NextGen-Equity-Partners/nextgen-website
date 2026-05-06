@@ -179,6 +179,16 @@ export function HeroShader() {
 
   return (
     <>
+      {/*
+        autoPlay + loop are always in the SSR markup. iOS Safari only
+        honours autoplay when those attributes are present in the
+        original HTML — adding them after hydration via React props
+        is silently ignored, which is why mobile users were seeing
+        only the poster image. On desktop these don't fight the
+        scroll-scrub: the desktop effect immediately pins playbackRate
+        to 0 (so the timeline doesn't advance from autoplay, and loop
+        is moot because currentTime is driven manually).
+      */}
       <video
         ref={videoRef}
         className="hero-bg-video"
@@ -187,8 +197,8 @@ export function HeroShader() {
         muted
         playsInline
         preload="auto"
-        autoPlay={isTouch}
-        loop={isTouch}
+        autoPlay
+        loop
         aria-hidden="true"
       />
       <div className="hero-bg-tint" aria-hidden="true" />
