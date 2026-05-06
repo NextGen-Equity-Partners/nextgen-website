@@ -92,13 +92,7 @@
   padding: 22px 24px 24px;
 }
 .werte-grid .glass-card h3 {
-  font-size: 19.5px;
   margin-top: 0;
-}
-.werte-grid .glass-card p {
-  font-size: 15.5px;
-  line-height: 1.6;
-  margin-top: 10px;
 }
 
 /* Image-card variant — same glass-card shape, but the top portion is a
@@ -128,23 +122,14 @@
   gap: 0;
 }
 .glass-card.image-card h3 {
-  font-size: 19.5px;
-  line-height: 1.25;
+  margin-top: 0;
 }
 .glass-card.image-card p {
-  font-size: 15.5px;
-  line-height: 1.6;
   margin-top: 10px;
 }
 .glass-card.image-card .num {
   margin-top: 0;
   margin-bottom: 8px;
-}
-.glass-card.image-card h3 {
-  margin-top: 0;
-}
-.glass-card.image-card p {
-  margin-top: 10px;
 }
 
 @media (max-width: 760px) {
@@ -825,12 +810,9 @@
   min-height: 0;
 }
 .tech-cards .glass-card h3 {
-  font-size: 18.5px;
   margin-top: 0;
 }
 .tech-cards .glass-card p {
-  font-size: 14.5px;
-  line-height: 1.55;
   margin-top: 8px;
 }
 .tech-cards { gap: 10px; }
