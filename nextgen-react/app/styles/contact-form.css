@@ -153,6 +153,33 @@
   background: rgba(255,255,255,.12);
 }
 .cf input::placeholder, .cf textarea::placeholder { color: rgba(249,247,244,.55); }
+
+/* Override the chrome / safari autofill blue (or yellow) wash that
+   covers the input as soon as the browser fills or matches the field.
+   The `box-shadow inset` is the only way to recolour the autofill
+   background; the long transition delay keeps that override sticky
+   (otherwise the blue flashes back in for a frame on focus changes). */
+.cf input:-webkit-autofill,
+.cf input:-webkit-autofill:hover,
+.cf input:-webkit-autofill:focus,
+.cf input:-webkit-autofill:active,
+.cf textarea:-webkit-autofill,
+.cf textarea:-webkit-autofill:hover,
+.cf textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--w);
+  -webkit-box-shadow: 0 0 0 100px rgba(255,255,255,.08) inset;
+          box-shadow: 0 0 0 100px rgba(255,255,255,.08) inset;
+  caret-color: var(--w);
+  border-color: rgba(255,255,255,.22);
+  transition: background-color 9999s ease-out 0s;
+}
+/* iOS Safari paints a blue tap highlight on focused inputs / selects;
+   neutralise it so the field stays consistent with the design. */
+.cf input,
+.cf select,
+.cf textarea {
+  -webkit-tap-highlight-color: transparent;
+}
 .cf select {
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(249,247,244,.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -192,6 +219,11 @@
   text-align: center;
   padding: 56px 40px 60px;
   min-height: 360px;
+  animation: cf-sent-in .7s var(--ease-cinema) both;
+}
+@keyframes cf-sent-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .cf-sent-mark {
   display: inline-flex;

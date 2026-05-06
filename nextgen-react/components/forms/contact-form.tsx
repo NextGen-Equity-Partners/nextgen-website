@@ -18,7 +18,7 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="cf cf-sent rv" role="status" aria-live="polite">
+      <div className="cf cf-sent" role="status" aria-live="polite">
         <div className="cf-sent-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12.5l4.5 4.5L19 7" />
