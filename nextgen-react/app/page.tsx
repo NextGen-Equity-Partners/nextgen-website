@@ -322,9 +322,10 @@ export default function HomePage() {
         id="nachfolge"
         title={
           <>
-            {t(tr.nachfolge.titleA)}
-            <br />
-            {t(tr.nachfolge.titleConnector)} <span className="bold">{t(tr.nachfolge.titleBold)}</span>
+            {t(tr.nachfolge.titleA)}{" "}
+            {t(tr.nachfolge.titleConnector)}
+            {" "}
+            <span className="bold">{t(tr.nachfolge.titleBold)}</span>
           </>
         }
         intro={t(tr.nachfolge.intro)}
