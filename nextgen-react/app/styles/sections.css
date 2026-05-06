@@ -95,15 +95,22 @@ h3.display {
     letter-spacing: -.025em;
   }
   /* "Motivierte Nachfolgeunternehmer" is the longest word-pair on the
-     site; at the standard h2.display size it wraps to two lines on
-     phones, then "und Operator." gets bumped to a third line. Tighten
-     the size + letter-spacing for this section's heading specifically
-     so the first line fits intact on every phone width and the title
-     stays exactly two lines (line 1 = "Motivierte Nachfolgeunternehmer",
-     line 2 = "und Operator."). */
+     site (31 chars). At the default mobile h2.display size it wraps
+     to two lines, pushing "und Operator." to a third. We need it to
+     fit intact on the narrowest viewport we support (iPhone SE,
+     320 px), so the size has to come down further than other titles.
+     Letter-spacing is also tightened to claw back a few more pixels.
+     Title is then exactly two lines on every phone:
+       line 1 = "Motivierte Nachfolgeunternehmer"
+       line 2 = "und Operator." */
   #nachfolge h2.display {
-    font-size: clamp(19px, 4.6vw, 28px);
-    letter-spacing: -.03em;
+    font-size: clamp(16px, 4.2vw, 26px);
+    letter-spacing: -.035em;
+    /* Don't allow the compound to hyphen-break — we've sized the font
+       for the whole phrase to fit on a single line, and an unwanted
+       hyphen split would put us back at 3 lines. */
+    hyphens: manual;
+    -webkit-hyphens: manual;
   }
   h3.display { font-size: clamp(20px, 4.6vw, 26px); }
   .body-text {
