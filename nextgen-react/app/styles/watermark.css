@@ -25,35 +25,12 @@
 }
 
 @media (max-width: 760px) {
+  /* Mobile: watermark off entirely. The previous "fade out past hero"
+     behaviour caused the logo to fade back in when the user scrolled
+     up, which read as a strange band appearing at the bottom of the
+     viewport. Desktop keeps the bottom-right watermark across all
+     sections (rule above). */
   .site-watermark {
-    right: 18px;
-    bottom: 42px;
-    width: 160px;
-    height: 40px;
-  }
-
-  .site-watermark img {
-    width: 160px;
-    height: 40px;
-  }
-
-  /* On mobile only: hide the watermark once the user scrolls past
-     the hero. Desktop continues to show it across all sections. */
-  .site-watermark.is-past-hero {
-    opacity: 0;
-  }
-}
-
-@media (max-width: 420px) {
-  .site-watermark {
-    right: 14px;
-    bottom: 14px;
-    width: 132px;
-    height: 33px;
-  }
-
-  .site-watermark img {
-    width: 132px;
-    height: 33px;
+    display: none;
   }
 }
