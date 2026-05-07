@@ -34,7 +34,7 @@ export const tr = {
     },
     titleA: {
       de: "Wachstumskapital und",
-      en: "Growth Capital and",
+      en: "Capital and",
     },
     titleB: {
       de: "Digitalisierung für",
