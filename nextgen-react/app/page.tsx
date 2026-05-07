@@ -12,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
+        eyebrow={t(tr.hero.eyebrow)}
         title={
           <>
             <span className="hero-line">{t(tr.hero.titleA)}</span>

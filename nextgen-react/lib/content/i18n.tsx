@@ -29,11 +29,11 @@ export const tr = {
   // in app/page.tsx so "Companies." stays bound to line 3.
   hero: {
     eyebrow: {
-      de: "",
-      en: "",
+      de: "Ihr Wachstumspartner",
+      en: "Your growth partner",
     },
     titleA: {
-      de: "Wachstumskapital und",
+      de: "Unternehmerkapital und",
       en: "Capital and",
     },
     titleB: {
