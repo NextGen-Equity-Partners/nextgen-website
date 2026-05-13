@@ -33,19 +33,19 @@ export const tr = {
       en: "Your growth partner",
     },
     titleA: {
-      de: "Unternehmerkapital und",
+      de: "Unternehmerkapital",
       en: "Capital and",
     },
     titleB: {
-      de: "Digitalisierung für",
+      de: "und Digitalisierung",
       en: "Digitalization for",
     },
     titleC: {
-      de: "Unternehmensgruppen",
+      de: "im",
       en: "Mid-Market",
     },
     titleD: {
-      de: "im",
+      de: "",
       en: "",
     },
     titleBold: {
