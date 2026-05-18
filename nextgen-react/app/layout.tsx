@@ -30,11 +30,26 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "NextGen Equity Partners",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    url: SITE,
     images: [{ url: "/assets/og-image-v6.jpg", width: 1200, height: 630 }],
     locale: "de_DE",
   },
@@ -47,11 +62,25 @@ export const metadata: Metadata = {
   icons: { icon: "/assets/favicon.svg?v=2" },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "NextGen Equity Partners",
+  url: SITE,
+  logo: `${SITE}/assets/logo-blue.svg`,
+  description: SITE_DESCRIPTION,
+  sameAs: [] as string[],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
       <head>
         <meta name="color-scheme" content="dark" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
       </head>
       <body className={`bg-image ${outfit.variable} ${outfit.className}`}>
         <LocaleProvider>
