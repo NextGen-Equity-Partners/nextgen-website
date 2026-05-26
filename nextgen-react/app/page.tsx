@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -96,6 +97,9 @@ export default function HomePage() {
             </div>
           </article>
         </div>
+        <div className="section-more">
+          <a href="/profil">{t(tr.sectionLinks.profil)}</a>
+        </div>
       </Section>
 
       <div className="sec-divider" />
@@ -109,11 +113,11 @@ export default function HomePage() {
             <div className="team-row-3">
               <div className="tm rv rv-d1">
                 <div className="portrait">
-                  <img src="/assets/team/max.jpeg" alt="Maximilian Göppert" />
+                  <Image src="/assets/team/max.jpeg" alt="Maximilian Göppert" fill sizes="120px" />
                 </div>
                 <div className="tm-body">
                   <div className="role">{t(tr.teamMembers.max.role)}</div>
-                  <h4>Maximilian Göppert</h4>
+                  <h3>Maximilian Göppert</h3>
                   <p>{t(tr.teamMembers.max.body)}</p>
                   <a
                     className="tm-linkedin"
@@ -130,11 +134,11 @@ export default function HomePage() {
               </div>
               <div className="tm rv rv-d2">
                 <div className="portrait">
-                  <img src="/assets/team/leander.png" alt="Leander Heyken" />
+                  <Image src="/assets/team/leander.png" alt="Leander Heyken" fill sizes="120px" />
                 </div>
                 <div className="tm-body">
                   <div className="role">{t(tr.teamMembers.leander.role)}</div>
-                  <h4>Leander Heyken</h4>
+                  <h3>Leander Heyken</h3>
                   <p>{t(tr.teamMembers.leander.body)}</p>
                   <a
                     className="tm-linkedin"
@@ -151,14 +155,16 @@ export default function HomePage() {
               </div>
               <div className="tm rv rv-d3">
                 <div className="portrait">
-                  <img
+                  <Image
                     src="/assets/team/ChatGPT%20Image%204.%20Mai%202026%2C%2014_25_22.png"
                     alt="Dr. Amon Göppert"
+                    fill
+                    sizes="120px"
                   />
                 </div>
                 <div className="tm-body">
                   <div className="role">{t(tr.teamMembers.amon.role)}</div>
-                  <h4>Dr. Amon Göppert</h4>
+                  <h3>Dr. Amon Göppert</h3>
                   <p>{t(tr.teamMembers.amon.body)}</p>
                   <a
                     className="tm-linkedin"
@@ -177,11 +183,11 @@ export default function HomePage() {
             <div className="team-row-2">
               <div className="tm rv rv-d1">
                 <div className="portrait">
-                  <img src="/assets/team/alex.jpeg" alt="Alexander Rien" />
+                  <Image src="/assets/team/alex.jpeg" alt="Alexander Rien" fill sizes="120px" />
                 </div>
                 <div className="tm-body">
                   <div className="role">{t(tr.teamMembers.alex.role)}</div>
-                  <h4>Alexander Rien</h4>
+                  <h3>Alexander Rien</h3>
                   <p>{t(tr.teamMembers.alex.body)}</p>
                   <a
                     className="tm-linkedin"
@@ -198,11 +204,11 @@ export default function HomePage() {
               </div>
               <div className="tm rv rv-d2">
                 <div className="portrait">
-                  <img src="/assets/team/gerald.jpeg" alt="Gerald Weitbrecht" />
+                  <Image src="/assets/team/gerald.jpeg" alt="Gerald Weitbrecht" fill sizes="120px" />
                 </div>
                 <div className="tm-body">
                   <div className="role">{t(tr.teamMembers.gerald.role)}</div>
-                  <h4>Gerald Weitbrecht</h4>
+                  <h3>Gerald Weitbrecht</h3>
                   <p>{t(tr.teamMembers.gerald.body)}</p>
                   <a
                     className="tm-linkedin"
@@ -219,6 +225,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+          <div className="section-more">
+            <a href="/team">{t(tr.sectionLinks.team)}</a>
+          </div>
         </div>
       </section>
 
@@ -234,11 +243,11 @@ export default function HomePage() {
         contentMaxWidth={1100}
       >
         <div className="werte-image rv rv-d1">
-          <img
+          <Image
             src="/assets/photos/New%20photos/werte-mountain.jpg"
             alt=""
-            loading="lazy"
-            decoding="async"
+            fill
+            sizes="(max-width: 1100px) 100vw, 1100px"
           />
         </div>
         <div className="glass-grid cols-3 werte-grid">
@@ -253,7 +262,7 @@ export default function HomePage() {
       <section className="testimonial-section">
         <div className="testimonial-inner">
           <div className="testimonial-portrait rv">
-            <img src="/assets/team/leander.png" alt="Leander Heyken" />
+            <Image src="/assets/team/leander.png" alt="Leander Heyken" fill sizes="180px" />
           </div>
           <p className="testimonial-quote rv rv-d1">{t(tr.quotes.leander.text)}</p>
           <div className="testimonial-attribution rv rv-d2">
@@ -315,6 +324,9 @@ export default function HomePage() {
             </div>
           </article>
         </div>
+        <div className="section-more">
+          <a href="/beteiligungen">{t(tr.sectionLinks.beteiligungen)}</a>
+        </div>
       </Section>
 
       <div className="sec-divider" />
@@ -333,11 +345,11 @@ export default function HomePage() {
         contentMaxWidth={1100}
       >
         <div className="nachfolge-photo rv">
-          <img
+          <Image
             src="/assets/photos/New%20photos/nachfolge-operator.jpg"
             alt="Nachfolgeunternehmer am Laptop"
-            loading="lazy"
-            decoding="async"
+            fill
+            sizes="(max-width: 1100px) 100vw, 1100px"
           />
         </div>
         <ol className="phase-list phase-list-4">
@@ -377,7 +389,7 @@ export default function HomePage() {
       <section className="testimonial-section">
         <div className="testimonial-inner">
           <div className="testimonial-portrait rv">
-            <img src="/assets/team/max.jpeg" alt="Maximilian Göppert" />
+            <Image src="/assets/team/max.jpeg" alt="Maximilian Göppert" fill sizes="180px" />
           </div>
           <p className="testimonial-quote rv rv-d1">{t(tr.quotes.max.text)}</p>
           <div className="testimonial-attribution rv rv-d2">
@@ -402,11 +414,11 @@ export default function HomePage() {
         contentMaxWidth={1100}
       >
         <div className="ansatz-photo rv" aria-hidden="true">
-          <img
+          <Image
             src="/assets/photos/New%20photos/ansatz-summit.jpg"
             alt=""
-            loading="lazy"
-            decoding="async"
+            fill
+            sizes="(max-width: 1100px) 100vw, 1100px"
           />
         </div>
         <ol className="phase-list phase-list-4">
@@ -443,6 +455,9 @@ export default function HomePage() {
             </div>
           </li>
         </ol>
+        <div className="section-more">
+          <a href="/ansatz">{t(tr.sectionLinks.ansatz)}</a>
+        </div>
       </Section>
 
       <div className="sec-divider" />
@@ -458,11 +473,11 @@ export default function HomePage() {
       >
         <div className="mehrwerte-layout">
           <div className="mehrwerte-img rv">
-            <img
+            <Image
               src="/assets/photos/New%20photos/gruppe-bauwerk.jpg"
               alt=""
-              loading="lazy"
-              decoding="async"
+              fill
+              sizes="(max-width: 760px) 100vw, 560px"
             />
           </div>
           <div className="mehrwerte-cards">
@@ -479,9 +494,11 @@ export default function HomePage() {
       <section className="testimonial-section">
         <div className="testimonial-inner">
           <div className="testimonial-portrait rv">
-            <img
+            <Image
               src="/assets/team/ChatGPT%20Image%204.%20Mai%202026%2C%2014_25_22.png"
               alt="Dr. Amon Göppert"
+              fill
+              sizes="180px"
             />
           </div>
           <p className="testimonial-quote rv rv-d1">{t(tr.quotes.amon.text)}</p>
@@ -508,11 +525,11 @@ export default function HomePage() {
       >
         <div className="tech-layout">
           <div className="tech-image rv">
-            <img
+            <Image
               src="/assets/photos/New%20photos/Wertsteigerung%20durch%20KI%20%26%20Digitalisierung.jpg"
               alt=""
-              loading="lazy"
-              decoding="async"
+              fill
+              sizes="(max-width: 760px) 100vw, 560px"
             />
           </div>
           <div className="tech-cards">
@@ -520,6 +537,9 @@ export default function HomePage() {
             <GlassCard title={t(tr.tech.cards.c2Title)} body={t(tr.tech.cards.c2Body)} delay={2} />
             <GlassCard title={t(tr.tech.cards.c3Title)} body={t(tr.tech.cards.c3Body)} delay={3} />
           </div>
+        </div>
+        <div className="section-more">
+          <a href="/ki-wertsteigerung">{t(tr.sectionLinks.ki)}</a>
         </div>
       </Section>
 
@@ -536,7 +556,7 @@ export default function HomePage() {
       >
         <div className="tech-layout">
           <div className="tech-image rv">
-            <img src="/assets/photos/New%20photos/esg-fields.jpg" alt="" loading="lazy" decoding="async" />
+            <Image src="/assets/photos/New%20photos/esg-fields.jpg" alt="" fill sizes="(max-width: 760px) 100vw, 560px" />
           </div>
           <div className="tech-cards">
             <GlassCard title={t(tr.esg.cards.c1Title)} body={t(tr.esg.cards.c1Body)} delay={1} />

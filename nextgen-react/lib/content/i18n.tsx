@@ -471,4 +471,24 @@ export const tr = {
     datenschutz:{ de: "Datenschutz",   en: "Privacy" },
     company:    { de: "NextGen Equity Partners · München · © 2026", en: "NextGen Equity Partners · Munich · © 2026" },
   } satisfies Record<string, T>,
+
+  // Footer navigation — descriptive links to every main page
+  footerNav: {
+    label:            { de: "Seiten",            en: "Pages" },
+    profil:           { de: "Profil",            en: "Profile" },
+    ansatz:           { de: "Ansatz",            en: "Approach" },
+    kiWertsteigerung: { de: "KI-Wertsteigerung", en: "AI Value Creation" },
+    team:             { de: "Team",              en: "Team" },
+    beteiligungen:    { de: "Beteiligungen",     en: "Investments" },
+    kontakt:          { de: "Kontakt",           en: "Contact" },
+  } satisfies Record<string, T>,
+
+  // Home → deep-page contextual links (descriptive anchor text, not "click here")
+  sectionLinks: {
+    profil:        { de: "Mehr über NextGen →",                 en: "More about NextGen →" },
+    team:          { de: "Das ganze Team ansehen →",            en: "Meet the full team →" },
+    beteiligungen: { de: "Investitionskriterien ansehen →",     en: "View our investment criteria →" },
+    ansatz:        { de: "Wie wir mit Unternehmern arbeiten →", en: "How we work with entrepreneurs →" },
+    ki:            { de: "KI-Wertsteigerung im Detail →",       en: "AI value creation in detail →" },
+  } satisfies Record<string, T>,
 } as const;

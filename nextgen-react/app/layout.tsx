@@ -12,8 +12,9 @@ import { LocaleProvider } from "@/components/providers/locale-provider";
 import { HeroShader } from "@/components/layout/hero-shader";
 import { PageAnimations } from "@/components/animations/page-animations";
 import { PageEffects } from "@/components/runtime/page-effects";
-
-const SITE = "https://nextgen-equity.com";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationLd, websiteLd } from "@/lib/structured-data";
+import { SITE, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE } from "@/lib/seo";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -22,13 +23,16 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
-const SITE_TITLE = "Wachstumskapital und Digitalisierung für Unternehmensgruppen im Mittelstand.";
-const SITE_DESCRIPTION =
-  "Unsere Mission bei NextGen Equity Partners ist die Entwicklung kleiner und mittlerer Dienstleistungsunternehmen im DACH-Raum zu technologisch und marktführenden Unternehmensgruppen. Wir setzen Wachstumskapital ein, um die Substanz des Mittelstands zu stärken und KI-befähigte Wissensträger in den Mittelpunkt zu stellen.";
+// Home (default) title is kept under ~60 chars and leads with the brand.
+// Every sub-page sets its own short title; the template appends the brand.
+const HOME_TITLE = "NextGen Equity Partners – Wachstumskapital im Mittelstand";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
-  title: SITE_TITLE,
+  title: {
+    default: HOME_TITLE,
+    template: `%s — ${SITE_NAME}`,
+  },
   description: SITE_DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -46,61 +50,20 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "NextGen Equity Partners",
-    title: SITE_TITLE,
+    siteName: SITE_NAME,
+    title: HOME_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE,
-    images: [{ url: "/assets/og-image-v6.jpg", width: 1200, height: 630 }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     locale: "de_DE",
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
+    title: HOME_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/assets/og-image-v6.jpg"],
+    images: [OG_IMAGE],
   },
   icons: { icon: "/assets/favicon.svg?v=2" },
-};
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": ["Organization", "FinancialService"],
-  name: "NextGen Equity Partners",
-  alternateName: "NextGen Equity",
-  url: SITE,
-  logo: `${SITE}/assets/logo-blue.svg`,
-  image: `${SITE}/assets/og-image-v6.jpg`,
-  description: SITE_DESCRIPTION,
-  email: "contact@nextgen-equity.com",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Leopoldstraße 21",
-    postalCode: "80802",
-    addressLocality: "München",
-    addressCountry: "DE",
-  },
-  areaServed: [
-    { "@type": "Country", name: "Germany" },
-    { "@type": "Country", name: "Austria" },
-    { "@type": "Country", name: "Switzerland" },
-  ],
-  knowsAbout: [
-    "Private Equity",
-    "Wachstumskapital",
-    "Mittelstand",
-    "Unternehmensgruppen",
-    "Digitalisierung",
-    "Künstliche Intelligenz",
-    "ESG",
-    "Buy-and-Build",
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer support",
-    email: "contact@nextgen-equity.com",
-    availableLanguage: ["de", "en"],
-  },
-  sameAs: [] as string[],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -108,10 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de">
       <head>
         <meta name="color-scheme" content="dark" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <JsonLd data={[organizationLd, websiteLd]} />
       </head>
       <body className={`bg-image ${outfit.variable} ${outfit.className}`}>
         <LocaleProvider>
