@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Hero } from "@/components/ui/hero";
 import { team as content, type TeamMember } from "@/lib/content/team";
 import { useLocale } from "@/components/providers/locale-provider";
@@ -7,11 +8,11 @@ import { tr } from "@/lib/content/i18n";
 
 function TeamCard({ member, delay, linkedinSuffix }: { member: TeamMember; delay: 1 | 2 | 3; linkedinSuffix: string }) {
   return (
-    <div className={`tm rv rv-d${delay}`}>
-      <div className="portrait"><img src={member.image} alt={member.name} /></div>
+    <article className={`tm rv rv-d${delay}`}>
+      <div className="portrait"><Image src={member.image} alt={member.name} fill sizes="120px" /></div>
       <div className="tm-body">
         <div className="role">{member.role}</div>
-        <h4>{member.name}</h4>
+        <h3>{member.name}</h3>
         <p>{member.body}</p>
         {member.linkedin && (
           <a
@@ -27,7 +28,7 @@ function TeamCard({ member, delay, linkedinSuffix }: { member: TeamMember; delay
           </a>
         )}
       </div>
-    </div>
+    </article>
   );
 }
 

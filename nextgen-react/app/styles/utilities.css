@@ -26,6 +26,24 @@
 .body-text + .body-text { margin-top: 18px; }
 .cta-row { margin-top: 48px; }
 .cta-row.center { text-align: center; }
+
+/* Subtle "learn more" link from a home section to its dedicated deep page.
+   Lighter than a .btn so it reads as inline navigation, not a primary CTA. */
+.section-more { margin-top: 32px; }
+.section-more a {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: rgba(249, 247, 244, .72);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .22);
+  padding-bottom: 2px;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.section-more a:hover {
+  color: var(--w);
+  border-color: rgba(255, 255, 255, .5);
+}
 .intro-narrow { max-width: 700px; margin-top: 24px; }
 .twocol.center { align-items: center; }
 .list-bullets {
@@ -34,6 +52,16 @@
   line-height: 2;
   color: rgba(249,247,244,.78);
   font-weight: 300;
+}
+.list-bullets li {
+  position: relative;
+  padding-left: 1.1em;
+}
+.list-bullets li::before {
+  content: "·";
+  position: absolute;
+  left: .1em;
+  color: rgba(249, 247, 244, .55);
 }
 
 /* Ki-wertsteigerung: stacked single-column comparison grid in the twocol right column. */
@@ -69,6 +97,7 @@
   .werte-quote { white-space: normal; font-size: 14.5px; }
 }
 .werte-image {
+  position: relative;
   margin-top: clamp(18px, 2.4vw, 28px);
   width: 100%;
   height: clamp(160px, 18vw, 220px);
@@ -232,6 +261,7 @@
    caused the heading text to disappear behind the image at zoomed-in
    browser widths, so the photo is in normal flow now.) */
 .nachfolge-photo {
+  position: relative;
   margin-top: clamp(18px, 2.4vw, 28px);
   width: 100%;
   height: clamp(160px, 18vw, 220px);
@@ -269,6 +299,7 @@
 /* Ansatz — inline banner photo, same recipe as .nachfolge-photo /
    .werte-image. Sits between the intro and the phase-list. */
 .ansatz-photo {
+  position: relative;
   margin-top: clamp(18px, 2.4vw, 28px);
   width: 100%;
   height: clamp(160px, 18vw, 220px);
