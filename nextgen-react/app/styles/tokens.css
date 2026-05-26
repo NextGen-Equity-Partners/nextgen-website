@@ -47,7 +47,16 @@ body {
 
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
-img { display: block; max-width: 100%; }
+img {
+  display: block;
+  max-width: 100%;
+  /* `height: auto` keeps the natural aspect ratio when only width is
+     constrained — without this, an explicit `height` on a parent
+     container can stretch the image. Image containers that DO want
+     to control height (.image-card-img, .tech-image img etc.)
+     override this with their own `height: 100%` + object-fit. */
+  height: auto;
+}
 
 @media (max-width: 760px) {
   :root {

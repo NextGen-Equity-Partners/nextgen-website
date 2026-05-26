@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* Reserve fixed space at bottom for sub + ctas – title always lands at the same height */
-  padding: 0 48px 250px;
+  /* Title sits just above the CTA at the bottom of the viewport */
+  padding: 0 48px 150px;
   overflow: hidden;
 }
 /* Subpage hero matches index hero – title sits at bottom of viewport */
@@ -58,20 +58,28 @@
   margin-top: 0;
   display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
 }
-.hero-scroll {
-  position: absolute; bottom: 28px; left: 50%;
-  transform: translateX(-50%); z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  opacity: .55; transition: opacity .3s;
+/* Global scroll cue — fixed at the bottom of every viewport, not just
+   the hero. Same mouse/wheel design; click jumps to the next snap
+   section. Hides on the last section so it doesn't cover the footer. */
+.scroll-cue {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%); z-index: 6;
+  display: flex; flex-direction: column; align-items: center;
+  opacity: .55; transition: opacity .3s, transform .3s;
 }
-.hero-scroll:hover { opacity: 1; }
-.hero-scroll .mouse {
+.scroll-cue:hover { opacity: 1; }
+.scroll-cue.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(12px);
+}
+.scroll-cue .mouse {
   width: 22px; height: 34px;
   border: 1.5px solid rgba(249,247,244,.6);
   border-radius: 11px;
   display: flex; justify-content: center; padding-top: 5px;
 }
-.hero-scroll .wheel {
+.scroll-cue .wheel {
   width: 3px; height: 6px;
   background: var(--w); border-radius: 2px;
   animation: scroll-wheel 2s ease-in-out infinite;
@@ -82,67 +90,114 @@
   100% { transform: translateY(0); opacity: .9; }
 }
 
+/* Slightly smaller on touch / mobile so the cue sits nicely above the
+   home indicator on iOS phones. */
 @media (max-width: 760px) {
-  .hero {
-    min-height: 88vh;
-    padding: 0 18px 230px;
-  }
+  .scroll-cue { bottom: 18px; opacity: .65; }
+  .scroll-cue .mouse { width: 18px; height: 28px; border-width: 1.4px; padding-top: 4px; }
+  .scroll-cue .wheel { width: 2.5px; height: 5px; }
+}
+
+/* Mobile hero rebuild — abandon the absolute-positioned sub/ctas
+   pattern (which sat eyebrow+title at flex-end and then layered the
+   sub and ctas as absolute elements with hard-coded `bottom`
+   distances). On phones that approach was fragile: dynamic browser
+   chrome, short landscape viewports and tall titles all caused the
+   title to slide *behind* the absolute CTA layer.
+
+   Mobile now uses natural flex flow:
+     eyebrow → title → sub → ctas
+   stacked centred and vertically centred in the viewport. No element
+   is positioned absolutely, so nothing can overlap. */
+@media (max-width: 760px) {
+  .hero,
   .hero.subpage {
-    min-height: 80vh;
-    padding-top: 0;
-    padding-bottom: 230px;
+    min-height: 100svh;
+    padding: 110px 18px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 22px;
+    overflow: visible;
   }
-  .hero-title { max-width: 100%; }
+
+  /* Drop the optical offset (margin-left: -0.045em from sections.css)
+     so the centred title is truly centred. Disable hyphenation on the
+     hero h1 so long compounds like "Unternehmensgruppen" never split
+     mid-word — the title content is structured into hero-lines that
+     already break at the right places. */
+  .hero h1.display {
+    margin-left: 0;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    overflow-wrap: normal;
+  }
+  .hero-title { max-width: 100%; margin: 0; }
+
+  .hero-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: .22em;
+    margin-bottom: 0;
+  }
+
+  /* Override the desktop absolute positioning so sub + ctas land
+     after the title in normal flow. */
   .hero-sub {
-    left: 18px;
-    right: 18px;
-    bottom: 125px;
+    position: static;
+    left: auto; right: auto; bottom: auto;
+    max-width: 480px;
+    margin: 0 auto;
     font-size: 14.5px;
     line-height: 1.6;
   }
   .hero-ctas {
-    left: 18px;
-    right: 18px;
-    bottom: 44px;
-    gap: 10px;
-  }
-  .hero-ctas .btn {
-    padding: 12px 18px;
-    font-size: 12px;
-  }
-  .hero-eyebrow {
-    font-size: 9.5px;
-    letter-spacing: .22em;
-    margin-bottom: 18px;
-  }
-  .hero-scroll { display: none; }
-}
-
-@media (max-width: 420px) {
-  .hero { padding: 0 16px 250px; }
-  .hero.subpage { padding-bottom: 250px; }
-  .hero-sub {
-    bottom: 130px;
-    font-size: 13.5px;
-  }
-  .hero-ctas {
-    bottom: 16px;
+    position: static;
+    left: auto; right: auto; bottom: auto;
+    margin: 4px 0 0;
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    max-width: 320px;
+    gap: 12px;
   }
   .hero-ctas .btn {
     width: 100%;
-    padding: 13px 16px;
     text-align: center;
+    padding: 13px 18px;
+    font-size: 13px;
   }
 }
 
-@media (max-height: 720px) {
+@media (max-width: 420px) {
+  .hero,
+  .hero.subpage {
+    padding: 100px 16px 32px;
+    gap: 18px;
+  }
+  .hero-sub { font-size: 13.5px; }
+}
+
+/* Short / landscape phones: tighten the chrome so eyebrow + title
+   + sub + ctas don't get pushed past the viewport bottom. */
+@media (max-width: 760px) and (max-height: 600px) {
+  .hero,
+  .hero.subpage {
+    min-height: auto;
+    padding-top: 84px;
+    padding-bottom: 28px;
+    gap: 14px;
+  }
+}
+
+/* Short-viewport mode for desktop landscape (wide + short). Mobile
+   portrait/landscape is handled above. */
+@media (min-width: 761px) and (max-height: 720px) {
   h1.display {
     font-size: 68px;
     line-height: 1.02;
   }
-
   .hero,
   .hero.subpage {
     min-height: auto;
@@ -150,7 +205,6 @@
     padding: var(--hero-header-clearance) 48px 72px;
     overflow: visible;
   }
-
   .hero-sub,
   .hero-ctas {
     position: static;
@@ -158,56 +212,14 @@
     right: auto;
     bottom: auto;
   }
-
-  .hero-sub {
-    margin-top: 22px;
-  }
-
-  .hero-ctas {
-    margin-top: 22px;
-  }
-
-  .hero-scroll {
-    display: none;
-  }
+  .hero-sub { margin-top: 22px; }
+  .hero-ctas { margin-top: 22px; }
+  .hero-scroll { display: none; }
 }
 
 @media (min-width: 761px) and (max-height: 520px) {
-  h1.display {
-    font-size: 58px;
-  }
-
-  .hero-eyebrow {
-    margin-bottom: 16px;
-  }
-
-  .hero-sub {
-    margin-top: 18px;
-  }
-
-  .hero-ctas {
-    margin-top: 18px;
-  }
-}
-
-@media (max-width: 760px) and (max-height: 760px) {
-  .hero,
-  .hero.subpage {
-    padding: var(--hero-header-clearance) 18px 56px;
-  }
-
-  .hero-sub {
-    margin-top: 22px;
-  }
-
-  .hero-ctas {
-    margin-top: 22px;
-  }
-}
-
-@media (max-width: 420px) and (max-height: 760px) {
-  .hero,
-  .hero.subpage {
-    padding: var(--hero-header-clearance) 16px 44px;
-  }
+  h1.display { font-size: 58px; }
+  .hero-eyebrow { margin-bottom: 16px; }
+  .hero-sub { margin-top: 18px; }
+  .hero-ctas { margin-top: 18px; }
 }

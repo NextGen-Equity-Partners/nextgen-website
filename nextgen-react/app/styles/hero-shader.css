@@ -1,0 +1,219 @@
+/* Blue background + animated color glows + liquid-metal */
+
+/* Background video — fills the viewport, sits behind everything.
+   Horizontally mirrored so the sun rises from left to right as the
+   user scrolls down (combined with the reverse scroll-scrub).
+   Visible from the moment the element can render anything; we seek
+   to the scroll-mapped target as soon as metadata is in so the
+   correct frame lands on screen ASAP. */
+.hero-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -4;
+  pointer-events: none;
+  user-select: none;
+  transform: scaleX(-1);
+  background: var(--bg-deep);
+}
+
+/* Soft dark tint so foreground white text stays readable across all
+   video frames. */
+.hero-bg-tint {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 18, .30) 0%, rgba(2, 6, 18, .55) 100%);
+}
+
+.hero-bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg-glow .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.hero-bg-glow .glow-1 {
+  width: 560px;
+  height: 560px;
+  top: 8%;
+  left: 6%;
+  background: radial-gradient(circle, rgba(76, 124, 255, .85) 0%, transparent 70%);
+  opacity: .55;
+  animation: glow-drift-1 22s ease-in-out infinite alternate;
+}
+
+.hero-bg-glow .glow-2 {
+  width: 460px;
+  height: 460px;
+  bottom: 12%;
+  right: 14%;
+  background: radial-gradient(circle, rgba(251, 114, 78, .60) 0%, transparent 70%);
+  opacity: .42;
+  animation: glow-drift-2 28s ease-in-out infinite alternate;
+}
+
+.hero-bg-glow .glow-3 {
+  width: 380px;
+  height: 380px;
+  top: 48%;
+  left: 38%;
+  background: radial-gradient(circle, rgba(76, 215, 255, .60) 0%, transparent 70%);
+  opacity: .35;
+  animation: glow-drift-3 32s ease-in-out infinite alternate;
+}
+
+@keyframes glow-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(28vw, 16vh) scale(1.15); }
+}
+@keyframes glow-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-22vw, -14vh) scale(0.9); }
+}
+@keyframes glow-drift-3 {
+  0%   { transform: translate(-10vw, 0) scale(1); }
+  100% { transform: translate(14vw, 10vh) scale(1.2); }
+}
+
+/* WebGL liquid-glass blob — upper-right, screen blend so it lifts
+   the video underneath into a translucent white drop without tinting it. */
+.liquid-metal-stage {
+  position: fixed;
+  top: 0;
+  right: -10vw;
+  width: 70vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  overflow: visible;
+  opacity: .7;
+  mix-blend-mode: screen;
+  filter:
+    brightness(1.05)
+    drop-shadow(0 18px 50px rgba(255, 255, 255, .12))
+    drop-shadow(0 40px 110px rgba(180, 210, 255, .10));
+}
+
+/* Binary rain — full-height, right-aligned with ragged left edge from
+   variable line lengths. Static stream + occasional white blinks for
+   subtle dynamics. Masked on the left so it stays clear of the headline. */
+.hero-network-binary {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 38%, #000 100%);
+}
+
+.hero-network-binary .stream {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.15;
+  letter-spacing: 0.05em;
+  color: rgba(150, 190, 240, 0.07);
+  white-space: pre;
+  text-align: right;
+}
+
+/* "Writers" — short binary sequences being typed in. Each writer reveals
+   its text via a clip-path animation (typewriter feel) with a blinking
+   caret at the right edge, then fades out. Multiple writers staggered
+   across the field create a quiet "code being written" texture. */
+.hero-network-binary .writer {
+  position: absolute;
+  display: inline-flex;
+  align-items: baseline;
+  font-family: 'Fira Code', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: rgba(220, 230, 250, 0.40);
+  text-shadow: 0 0 4px rgba(180, 210, 255, 0.18);
+  opacity: 0;
+  animation-name: writer-cycle;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.hero-network-binary .writer-text {
+  /* Hidden until the caret has typed past it. clip-path slides from
+     fully clipped right (text invisible) toward fully visible. */
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  animation: writer-type 9s infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+
+.hero-network-binary .writer-caret {
+  margin-left: 1px;
+  color: rgba(255, 255, 255, 0.55);
+  animation: writer-caret-blink 0.55s steps(2, end) infinite;
+}
+
+/* Whole-writer fade in/out, scoped to the parent so its own delay
+   propagates. */
+@keyframes writer-cycle {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  82%  { opacity: 1; }
+  92%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Typing reveal: clip-path inset opens from right to left at first,
+   then sits open for the rest of the cycle while the writer fades out. */
+@keyframes writer-type {
+  0%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+  4%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+  60%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0); }
+}
+
+@keyframes writer-caret-blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-network-binary .writer,
+  .hero-network-binary .writer-text,
+  .hero-network-binary .writer-caret { animation: none; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-glow .glow {
+    animation: none;
+  }
+  .liquid-metal-stage { opacity: .6; }
+}
+
+@media (max-width: 760px) {
+  .liquid-metal-stage {
+    right: -20vw;
+    width: 110vw;
+    opacity: .65;
+  }
+}

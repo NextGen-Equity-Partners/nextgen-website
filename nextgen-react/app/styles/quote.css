@@ -69,7 +69,7 @@
 
 /* Strong words inside quotes get a subtle warm accent */
 .quote p strong {
-  color: var(--warm);
+  color: var(--w);
   font-weight: 600;
 }
 

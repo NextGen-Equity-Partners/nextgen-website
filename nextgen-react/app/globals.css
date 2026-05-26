@@ -5,6 +5,7 @@
 
 /* Layout primitives */
 @import "./styles/bg-image.css";
+@import "./styles/hero-shader.css";
 @import "./styles/sections.css";
 
 /* Components */
@@ -21,6 +22,8 @@
 @import "./styles/aaa-diagram.css";
 @import "./styles/contact-form.css";
 @import "./styles/footer.css";
+@import "./styles/scroll-progress.css";
+@import "./styles/side-arrows.css";
 @import "./styles/impressum.css";
 @import "./styles/editorial.css";
 
@@ -29,6 +32,7 @@
 
 /* Effects */
 @import "./styles/reveal.css";
+@import "./styles/scroll-stack.css";
 @import "./styles/animations-lab.css";
 
 /* Deprecated: keep empty compatibility import last while responsive ownership moves into components. */

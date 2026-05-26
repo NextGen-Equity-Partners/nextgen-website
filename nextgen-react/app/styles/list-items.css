@@ -29,9 +29,11 @@
   opacity: 0; transition: opacity .35s var(--ease);
   pointer-events: none; mix-blend-mode: screen;
 }
-.j-item:hover::after { opacity: 1; }
 .j-item > * { position: relative; z-index: 1; transform: translateZ(16px); }
-.j-item:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.24); }
+@media (hover: hover) and (pointer: fine) {
+  .j-item:hover::after { opacity: 1; }
+  .j-item:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.24); }
+}
 .j-item .n {
   font-size: 11px; letter-spacing: .24em; color: rgba(249,247,244,.6);
   font-weight: 500; padding-top: 5px;

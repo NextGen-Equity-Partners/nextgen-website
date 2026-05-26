@@ -1,7 +1,12 @@
+"use client";
+
 import { Hero } from "@/components/ui/hero";
-import { ki as c } from "@/lib/content/ki-wertsteigerung";
+import { ki as content } from "@/lib/content/ki-wertsteigerung";
+import { useLocale } from "@/components/providers/locale-provider";
 
 export default function Page() {
+  const { locale } = useLocale();
+  const c = content[locale];
   return (
     <>
       <Hero variant="subpage" eyebrow={c.hero.eyebrow} title={c.hero.title} sub={c.hero.sub} />
@@ -54,7 +59,7 @@ export default function Page() {
                   ))}
                 </div>
                 <div className="aaa-outcomes">
-                  <div className="aaa-outcomes-label">Ergebnis</div>
+                  <div className="aaa-outcomes-label">{c.diagram.outcomeLabel}</div>
                   <ul>
                     {row.outcomes.map((o) => <li key={o}>{o}</li>)}
                   </ul>

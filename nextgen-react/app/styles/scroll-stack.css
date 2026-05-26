@@ -1,0 +1,166 @@
+/* Each top-level section is its own 100vh "page" for the mandatory
+   scroll-snap. The visible glass box inside is smaller than the frame
+   so the page background (video) shows around its edges. */
+
+body.bg-image section.pane,
+body.bg-image section.story-break,
+body.bg-image section.kontakt-teaser-section,
+body.bg-image section.bare-section,
+body.bg-image section.testimonial-section,
+body.bg-image .mission-section,
+section.pane,
+section.story-break,
+section.kontakt-teaser-section,
+section.bare-section,
+section.testimonial-section,
+.mission-section {
+  min-height: 100vh;
+  display: flex;
+  /* Box anchored to the TOP of the section (just below the nav) so the
+     gap between the menu and the box is identical on every snap stop,
+     regardless of inner box height. */
+  align-items: flex-start;
+  justify-content: center;
+  /* Top padding = nav height (92px) + 16px breathing room. Same on
+     every section so each snap (and every menu-link click) lands the
+     box at the same y-position right under the nav pill. */
+  padding-top: 108px !important;
+  padding-bottom: clamp(48px, 7vh, 96px) !important;
+  /* Box edges flush with the visible nav pill (50px from each viewport
+     edge — 28px nav padding + 22px pill inset). */
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+/* Last snap target leaves room at the bottom of the viewport for the
+   footer (Impressum + Datenschutz) — otherwise mandatory snap pins
+   kontakt-teaser to viewport top and the footer ends up below the fold,
+   permanently invisible. Trim the section by ~60px so the footer fits
+   in the same screen. */
+body.bg-image section.kontakt-teaser-section,
+section.kontakt-teaser-section {
+  min-height: calc(100vh - 60px);
+}
+
+/* Reset pane margin from bg-image.css so 50px section padding fully
+   determines box position. */
+body.bg-image section.pane,
+body.bg-image section.story-break,
+body.bg-image section.kontakt-teaser-section,
+body.bg-image section.bare-section,
+body.bg-image .mission-section {
+  margin: 0 !important;
+}
+
+/* Mission + testimonial + kontakt stay vertically centred — these
+   single-purpose sections read stronger in the middle of the viewport
+   than anchored to the top like the content sections. */
+body.bg-image .mission-section,
+body.bg-image section.testimonial-section,
+body.bg-image section.kontakt-teaser-section,
+.mission-section,
+section.testimonial-section,
+section.kontakt-teaser-section {
+  align-items: center !important;
+  padding-top: clamp(48px, 7vh, 96px) !important;
+}
+
+/* Reset the body.bg-image pane offsets — the snap-frame padding above
+   replaces them now. */
+body.bg-image section.pane {
+  margin: 0 !important;
+}
+
+/* The original pane glass plate filled the entire section — now we move
+   the glass to .pane-inner so the visible box stops short of the
+   section frame and the background can be seen around it. */
+body.bg-image section.pane::before {
+  display: none !important;
+}
+
+section.pane > .pane-inner {
+  position: relative;
+  width: 100%;
+  /* Override sections.css's max-width: 1320px so the box can grow as
+     wide as the section padding allows. */
+  max-width: none !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .06) 0%, transparent 45%),
+    rgba(255, 255, 255, .05);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+          backdrop-filter: blur(18px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 32px;
+  padding: clamp(40px, 5vw, 72px) clamp(36px, 5vw, 72px);
+  box-shadow:
+    0 22px 64px rgba(0, 0, 0, .34),
+    inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+
+/* Bare/story-break/mission sections stay box-free (only edges via
+   section padding above) — no inner glass plate. */
+section.bare-section > .bare-inner,
+section.story-break > .story-break-inner,
+.mission-section > .mission-inner {
+  width: 100%;
+}
+
+/* Section dividers don't earn their own snap stop. */
+.sec-divider {
+  display: none;
+}
+
+
+@media (max-width: 760px) {
+  body.bg-image section.pane,
+  body.bg-image section.story-break,
+  body.bg-image section.kontakt-teaser-section,
+  body.bg-image section.bare-section,
+  body.bg-image section.testimonial-section,
+  body.bg-image .mission-section,
+  section.pane,
+  section.story-break,
+  section.kontakt-teaser-section,
+  section.bare-section,
+  section.testimonial-section,
+  .mission-section {
+    min-height: 100svh;
+    /* Mobile nav is 64px tall — same anchored-top approach. */
+    padding-top: 96px !important;
+    padding-bottom: clamp(40px, 7vh, 72px) !important;
+    /* Mobile pill sits 34px from each edge (12px nav padding + 22px). */
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+  }
+
+  section.pane > .pane-inner {
+    border-radius: 22px;
+    padding: clamp(36px, 9vw, 56px) clamp(22px, 6vw, 32px);
+  }
+}
+
+@media (max-width: 420px) {
+  body.bg-image section.pane,
+  body.bg-image section.story-break,
+  body.bg-image section.kontakt-teaser-section,
+  body.bg-image section.bare-section,
+  body.bg-image section.testimonial-section,
+  body.bg-image .mission-section,
+  section.pane,
+  section.story-break,
+  section.kontakt-teaser-section,
+  section.bare-section,
+  section.testimonial-section,
+  .mission-section {
+    /* On 360–420px viewports, 34px×2 = 68px is too much chrome. Tighten
+       to 18px so the inner box gets ~324px content width on a 360px screen. */
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  section.pane > .pane-inner {
+    border-radius: 18px;
+    padding: 28px 18px;
+  }
+}
+

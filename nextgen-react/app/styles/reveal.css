@@ -4,15 +4,15 @@
    REVEAL ANIMATION
 ============================================================ */
 .rv {
-  opacity: 0; transform: translateY(36px);
-  transition: opacity 1.4s var(--ease-cinema), transform 1.4s var(--ease-cinema);
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .9s var(--ease-cinema), transform .9s var(--ease-cinema);
   transition-delay: 0s;
 }
 .rv.on { opacity: 1; transform: translateY(0); }
-.rv.on.rv-d1 { transition-delay: .14s; }
-.rv.on.rv-d2 { transition-delay: .28s; }
-.rv.on.rv-d3 { transition-delay: .42s; }
-.rv.on.rv-d4 { transition-delay: .56s; }
+.rv.on.rv-d1 { transition-delay: .08s; }
+.rv.on.rv-d2 { transition-delay: .16s; }
+.rv.on.rv-d3 { transition-delay: .24s; }
+.rv.on.rv-d4 { transition-delay: .32s; }
 
 /* ============================================================
    SECTION DIVIDER

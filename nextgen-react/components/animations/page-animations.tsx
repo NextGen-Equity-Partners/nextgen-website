@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "./reduced-motion";
+import { useLocale } from "@/components/providers/locale-provider";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -16,12 +17,25 @@ if (typeof window !== "undefined") {
  *   #30 Section divider draw-in (scaleX 0 → 1 left-to-right on enter viewport)
  *   #29 Accent-number spotlight pulse
  * Skips animations entirely when prefers-reduced-motion is set.
+ *
+ * Re-runs on locale changes too — the DE/EN toggle replaces the
+ * hero-title children, which strips out the .hero-line-inner mask
+ * wrappers added below. Without re-running, any new hero-line span
+ * (e.g. the 4th DE line that doesn't exist in EN) stays at the FOUC-
+ * guard `opacity: 0` and the user sees missing words in the title.
  */
 export function PageAnimations() {
   const pathname = usePathname();
+  const { locale } = useLocale();
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (prefersReducedMotion()) {
+      // Even with reduced motion, override the FOUC-guard opacity:0
+      // on .hero-line so the title is actually visible.
+      document.querySelectorAll<HTMLElement>(".hero .hero-title .hero-line")
+        .forEach((el) => { el.style.opacity = "1"; });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       // ---------- #27 Hero reveal ----------
@@ -32,10 +46,17 @@ export function PageAnimations() {
 
       if (heroLines.length) {
         // Wrap each line in overflow:hidden mask for the slide-up reveal.
-        // display:block preserves the block layout (inline-block would collapse two lines onto one).
+        // Check the actual DOM for an existing wrapper instead of just
+        // the data-masked flag — when locale changes, React strips the
+        // inner span on its reconciliation pass even though the flag is
+        // still set, so we have to look at what's really there.
         heroLines.forEach((line) => {
           const el = line as HTMLElement;
-          if (el.dataset.masked === "1") return;
+          const existingInner = el.querySelector(":scope > .hero-line-inner");
+          if (existingInner) {
+            el.dataset.masked = "1";
+            return;
+          }
           el.dataset.masked = "1";
           el.style.display = "block";
           el.style.overflow = "hidden";
@@ -122,7 +143,7 @@ export function PageAnimations() {
     return () => {
       ctx.revert();
     };
-  }, [pathname]);
+  }, [pathname, locale]);
 
   return null;
 }

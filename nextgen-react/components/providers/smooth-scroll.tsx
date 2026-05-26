@@ -25,8 +25,9 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     <ReactLenis
       root
       options={{
-        duration: 1.1,
+        duration: 0.7,
         smoothWheel: true,
+        wheelMultiplier: 1.4,
       }}
       onScroll={() => ScrollTrigger.update()}
     >

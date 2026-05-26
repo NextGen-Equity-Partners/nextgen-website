@@ -146,6 +146,79 @@
   color: #fff;
 }
 
+/* DE / EN locale toggle — iOS-26 segmented switch. Both labels are
+   always visible; a glass thumb slides between them when the active
+   locale changes. */
+.nav-locale {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+          backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .04),
+    0 4px 14px rgba(0, 0, 0, .18);
+  isolation: isolate;
+}
+.nav-locale button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 38px;
+  background: transparent;
+  border: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+  cursor: pointer;
+  transition: color .25s var(--ease);
+}
+.nav-locale button.is-active { color: #fff; }
+.nav-locale-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 38px;
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .35),
+    0 2px 6px rgba(0, 0, 0, .25);
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+.nav-locale[data-locale="en"] .nav-locale-thumb {
+  transform: translateX(38px);
+}
+
+.nav-locale-mobile {
+  margin-top: 22px;
+  align-self: center;
+  height: 38px;
+  padding: 4px;
+}
+.nav-locale-mobile button { width: 50px; font-size: 11px; }
+.nav-locale-mobile .nav-locale-thumb {
+  top: 4px; left: 4px;
+  width: 50px;
+  height: calc(100% - 8px);
+}
+.nav-locale-mobile[data-locale="en"] .nav-locale-thumb {
+  transform: translateX(50px);
+}
+
 /* Animations-Lab badge in nav */
 .nav-alab {
   display: inline-flex; align-items: center; justify-content: center;
@@ -184,24 +257,30 @@
   background: rgba(5,13,31,.92);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  flex-direction: column; align-items: center; justify-content: center;
-  gap: 14px;
+  /* flex-start (not center) + overflow-y: auto so the menu scrolls
+     internally on short viewports (small phones, landscape mode)
+     instead of links spilling out the bottom of the screen. */
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 18px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   opacity: 0; pointer-events: none;
   transition: opacity .35s ease;
 }
 .nav-mobile.open { opacity: 1; pointer-events: all; }
 .nav-mobile a {
-  font-size: 28px; font-weight: 200;
-  letter-spacing: -.02em; color: var(--w);
-  opacity: .8; padding: 8px 0;
+  font-size: 22px; font-weight: 300;
+  letter-spacing: -.015em; color: var(--w);
+  opacity: .82; padding: 6px 0;
   transition: opacity .2s;
+  white-space: nowrap;
 }
 .nav-mobile a.active { opacity: 1; font-weight: 600; }
 .nav-mobile a.cta {
-  margin-top: 24px;
-  padding: 14px 36px; border-radius: 999px;
+  margin-top: 18px;
+  padding: 13px 32px; border-radius: 999px;
   background: var(--w); color: var(--bg-deep);
-  font-size: 14px; font-weight: 600; letter-spacing: .14em;
+  font-size: 13px; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -222,7 +301,9 @@
   .nav-burger { display: flex; }
   .nav-mobile {
     display: flex;
-    padding: 80px 22px 40px;
+    /* Top padding clears the 80px nav; bottom padding gives breathing
+       room above the iOS home-indicator / browser chrome. */
+    padding: 96px 22px 48px;
   }
 }
 

@@ -1,25 +1,82 @@
 /* contact form · glass panel */
 
+/* Bare wrapper for the kontakt page — replaces the .pane shell so the
+   form floats on the page background without an outer box. */
+.kontakt-section {
+  position: relative;
+  z-index: 1;
+  /* Centred vertically inside the viewport. Padding biased toward the
+     top (heavier than the bottom) so the form sits visually in the
+     lower-middle of the screen, well clear of the nav. Min-height
+     leaves a 60px strip at the bottom of the viewport for the footer
+     (Impressum / Datenschutz) to stay visible — same trick as the
+     home page's last snap target. */
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(180px, 18vh, 260px) 48px clamp(80px, 8vh, 120px);
+}
+.kontakt-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Sidebar without glass shell — only the photo + text on the page bg. */
+.cf-side-bare {
+  background: transparent !important;
+  border: 0 !important;
+  -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+  box-shadow: none !important;
+  padding: 32px 12px !important;
+  transform: none !important;
+}
+.cf-side-bare::before,
+.cf-side-bare::after { content: none !important; }
+
+/* Bottom info blocks without glass shell. */
+.cf-bottom-block-bare {
+  background: transparent !important;
+  border: 0 !important;
+  -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+  box-shadow: none !important;
+  padding: 18px 12px !important;
+}
+
+@media (max-width: 760px) {
+  /* Mobile has no snap, so no need for nav-clearance padding. */
+  .kontakt-section { padding: 24px 18px 96px; }
+}
+
+
 /* ============================================================
    CONTACT FORM · GLASS PANEL
 ============================================================ */
 .cf-wrap {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  /* Photo / greeting on the left (1fr), form on the right (1.7fr). */
+  grid-template-columns: 1fr 1.7fr;
   gap: clamp(28px, 3.5vw, 56px);
   align-items: stretch;
-  margin-top: 64px;
+  margin-top: 0;
 }
 .cf {
   --tx: 0deg; --ty: 0deg; --gx: 50%; --gy: 50%; --lift: 0;
   position: relative;
-  background: rgba(255,255,255,.05);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,.14);
+  /* Transparent glass to match the rest of the site's card style —
+     same recipe as .glass-card. */
+  background: rgba(255, 255, 255, .06);
+  backdrop-filter: blur(18px) saturate(1.35) brightness(1.06);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 24px;
   padding: 44px 48px 48px;
-  box-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.16);
+  box-shadow:
+    0 12px 42px rgba(0, 0, 0, .26),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
   transform: perspective(1000px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
   transform-style: preserve-3d;
   transition: background .35s var(--ease), border-color .35s var(--ease);
@@ -96,6 +153,33 @@
   background: rgba(255,255,255,.12);
 }
 .cf input::placeholder, .cf textarea::placeholder { color: rgba(249,247,244,.55); }
+
+/* Override the chrome / safari autofill blue (or yellow) wash that
+   covers the input as soon as the browser fills or matches the field.
+   The `box-shadow inset` is the only way to recolour the autofill
+   background; the long transition delay keeps that override sticky
+   (otherwise the blue flashes back in for a frame on focus changes). */
+.cf input:-webkit-autofill,
+.cf input:-webkit-autofill:hover,
+.cf input:-webkit-autofill:focus,
+.cf input:-webkit-autofill:active,
+.cf textarea:-webkit-autofill,
+.cf textarea:-webkit-autofill:hover,
+.cf textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--w);
+  -webkit-box-shadow: 0 0 0 100px rgba(255,255,255,.08) inset;
+          box-shadow: 0 0 0 100px rgba(255,255,255,.08) inset;
+  caret-color: var(--w);
+  border-color: rgba(255,255,255,.22);
+  transition: background-color 9999s ease-out 0s;
+}
+/* iOS Safari paints a blue tap highlight on focused inputs / selects;
+   neutralise it so the field stays consistent with the design. */
+.cf input,
+.cf select,
+.cf textarea {
+  -webkit-tap-highlight-color: transparent;
+}
 .cf select {
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(249,247,244,.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -114,8 +198,63 @@
   border: none;
   transition: background .25s, transform .25s var(--ease);
 }
-.cf-submit:hover { background: #fff; transform: translateY(-2px); }
-.cf-submit.sent { background: rgba(249,247,244,.2); color: rgba(249,247,244,.7); cursor: default; transform: none; }
+.cf-submit:hover:not(:disabled) { background: #fff; transform: translateY(-2px); }
+.cf-submit:disabled { cursor: default; }
+.cf-error {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #ffb4a2;
+  opacity: .9;
+}
+
+/* Thank-you panel that replaces the form once a submission lands —
+   same outer glass shell as the form so the page layout doesn't shift,
+   but a centred check mark + headline + body instead of input rows. */
+.cf-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 40px 60px;
+  min-height: 360px;
+  animation: cf-sent-in .7s var(--ease-cinema) both;
+}
+@keyframes cf-sent-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cf-sent-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .28);
+  color: var(--w);
+  margin-bottom: 24px;
+}
+.cf-sent-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  color: var(--w);
+  margin: 0;
+  line-height: 1.2;
+}
+.cf-sent-body {
+  margin-top: 14px;
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--w);
+  opacity: .82;
+  font-weight: 300;
+}
 
 .cf-side .cf-block {
   margin-bottom: 36px;

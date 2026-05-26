@@ -1,0 +1,63 @@
+/* side-arrows · prev / next stepper anchored bottom-left.
+   Mirrors the nav-locale glass pill aesthetic so the two pieces of
+   chrome read as a set. */
+
+.side-arrows {
+  position: fixed;
+  bottom: 26px;
+  left: 28px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 4px;
+  gap: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+          backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .04),
+    0 4px 14px rgba(0, 0, 0, .18);
+  isolation: isolate;
+}
+
+.side-arrows-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, .85);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .25s var(--ease), color .25s var(--ease), opacity .2s;
+}
+.side-arrows-btn:hover {
+  background: rgba(255, 255, 255, .15);
+  color: #fff;
+}
+.side-arrows-btn:disabled {
+  opacity: .32;
+  cursor: not-allowed;
+}
+.side-arrows-btn:disabled:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, .85);
+}
+
+@media (max-width: 760px) {
+  .side-arrows {
+    bottom: 16px;
+    left: 12px;
+    height: 34px;
+    padding: 3px;
+  }
+  .side-arrows-btn {
+    width: 28px;
+    height: 26px;
+  }
+}

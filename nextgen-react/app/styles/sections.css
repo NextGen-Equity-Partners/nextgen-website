@@ -22,6 +22,13 @@
   color: var(--mute); font-weight: 500; margin-bottom: 28px;
 }
 
+h1.display, h2.display, h3.display {
+  /* German compounds (e.g. "Mehrheitsbeteiligungen") otherwise overflow
+     narrow viewports. Browsers respect <html lang="de"> for hyphenation. */
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
 h1.display, h2.display {
   font-family: 'Outfit', sans-serif;
   color: var(--w);
@@ -47,11 +54,11 @@ h3.display {
   line-height: 1.1;
   color: var(--w);
 }
-.bold { font-weight: 800; color: #FB724E; }
+.bold { font-weight: 800; color: var(--w); }
 
 .body-text {
-  font-size: 15px; line-height: 1.85;
-  color: var(--w); opacity: .78; font-weight: 300;
+  font-size: 17px; line-height: 1.8;
+  color: var(--w); opacity: .82; font-weight: 300;
 }
 
 .twocol {
@@ -78,17 +85,31 @@ h3.display {
 @media (max-width: 760px) {
   .pane { padding: clamp(56px, 9vw, 96px) 18px; }
   h1.display {
-    font-size: clamp(34px, 9vw, 52px);
-    line-height: 1.05;
+    font-size: clamp(28px, 7vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -.03em;
   }
   h2.display {
-    font-size: clamp(28px, 7vw, 40px);
-    line-height: 1.08;
+    font-size: clamp(24px, 5.6vw, 34px);
+    line-height: 1.1;
+    letter-spacing: -.025em;
+    /* Let the browser auto-balance 2-line headings ("Motivierte
+       Nachfolgeunternehmer und Operator.", "Wertsteigerung durch
+       KI & Digitalisierung." etc.) instead of dumping every overflow
+       on the last line. Also helps the long DE compound titles avoid
+       a stranded short last line. */
+    text-wrap: balance;
   }
-  h3.display { font-size: clamp(22px, 5.6vw, 30px); }
+  h3.display { font-size: clamp(20px, 4.6vw, 26px); }
+  /* Nachfolge title only — same font-size as the other h2 headings,
+     but slightly tighter letter-spacing so "Motivierte Nachfolgeunter-
+     nehmer" still fits on one line on 375 px+ phones, with text-wrap:
+     balance from h2.display already in place to land the break right
+     before "und Operator." */
+  #nachfolge h2.display { letter-spacing: -.035em; }
   .body-text {
-    font-size: 14.5px;
-    line-height: 1.7;
+    font-size: 14px;
+    line-height: 1.65;
   }
   .twocol {
     grid-template-columns: 1fr !important;
@@ -113,7 +134,8 @@ h3.display {
 
 @media (max-width: 420px) {
   .pane { padding: 40px 16px; }
-  h1.display { font-size: clamp(28px, 9vw, 40px); }
-  h2.display { font-size: clamp(24px, 7vw, 32px); }
-  h3.display { font-size: clamp(20px, 5.6vw, 26px); }
+  h1.display { font-size: clamp(24px, 7vw, 32px); }
+  h2.display { font-size: clamp(21px, 5.8vw, 28px); }
+  h3.display { font-size: clamp(18px, 4.8vw, 23px); }
+  .body-text { font-size: 13.5px; line-height: 1.6; }
 }

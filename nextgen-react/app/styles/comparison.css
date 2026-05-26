@@ -35,11 +35,13 @@
   pointer-events: none;
   mix-blend-mode: screen;
 }
-.cmp-card:hover {
-  background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.24);
+@media (hover: hover) and (pointer: fine) {
+  .cmp-card:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.24);
+  }
+  .cmp-card:hover::after { opacity: 1; }
 }
-.cmp-card:hover::after { opacity: 1; }
 .cmp-card > * { position: relative; z-index: 1; }
 
 /* Big ghost number top-left */
@@ -76,7 +78,7 @@
   font-style: italic;
 }
 .cmp-counter .cmp-vs {
-  color: var(--warm);
+  color: var(--w);
   font-style: normal;
   font-weight: 600;
   letter-spacing: .02em;
