@@ -64,11 +64,42 @@ export const metadata: Metadata = {
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "FinancialService"],
   name: "NextGen Equity Partners",
+  alternateName: "NextGen Equity",
   url: SITE,
   logo: `${SITE}/assets/logo-blue.svg`,
+  image: `${SITE}/assets/og-image-v6.jpg`,
   description: SITE_DESCRIPTION,
+  email: "contact@nextgen-equity.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Leopoldstraße 21",
+    postalCode: "80802",
+    addressLocality: "München",
+    addressCountry: "DE",
+  },
+  areaServed: [
+    { "@type": "Country", name: "Germany" },
+    { "@type": "Country", name: "Austria" },
+    { "@type": "Country", name: "Switzerland" },
+  ],
+  knowsAbout: [
+    "Private Equity",
+    "Wachstumskapital",
+    "Mittelstand",
+    "Unternehmensgruppen",
+    "Digitalisierung",
+    "Künstliche Intelligenz",
+    "ESG",
+    "Buy-and-Build",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: "contact@nextgen-equity.com",
+    availableLanguage: ["de", "en"],
+  },
   sameAs: [] as string[],
 };
 
