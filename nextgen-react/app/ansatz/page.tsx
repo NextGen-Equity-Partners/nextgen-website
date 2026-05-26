@@ -12,7 +12,7 @@ function JList({ items }: { items: ReadonlyArray<{ n: string; title: string; bod
         <div key={it.n} className={`j-item rv rv-d${(i % 3) + 1}`}>
           <div className="n">{it.n}</div>
           <div>
-            <h4>{it.title}</h4>
+            <h3>{it.title}</h3>
             <p>{it.body}</p>
           </div>
         </div>

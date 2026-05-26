@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Ansatz — NextGen Equity Partners",
+export const metadata = pageMetadata({
+  title: "Ansatz",
   description:
     "Unser Ansatz: kennenlernen, gemeinsam aufbauen, Wertschöpfung. So entwickeln wir mittelständische Dienstleister zu Unternehmensgruppen.",
-  alternates: { canonical: "/ansatz" },
-  openGraph: {
-    title: "Ansatz — NextGen Equity Partners",
-    description:
-      "Unser Ansatz: kennenlernen, gemeinsam aufbauen, Wertschöpfung. So entwickeln wir mittelständische Dienstleister zu Unternehmensgruppen.",
-    url: "/ansatz",
-  },
-};
+  path: "/ansatz",
+});
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      {children}
+      <JsonLd data={breadcrumbLd([{ name: "Ansatz", path: "/ansatz" }])} />
+    </>
+  );
 }

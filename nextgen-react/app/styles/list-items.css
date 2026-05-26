@@ -38,7 +38,7 @@
   font-size: 11px; letter-spacing: .24em; color: rgba(249,247,244,.6);
   font-weight: 500; padding-top: 5px;
 }
-.j-item h4 {
+.j-item h3 {
   font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 600;
   color: var(--w); letter-spacing: -.01em;
 }
