@@ -1,54 +1,15 @@
-/* impressum modal */
+/* legal pages · /impressum and /datenschutz */
 
-/* ============================================================
-   IMPRESSUM MODAL
-============================================================ */
-.imp-backdrop {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px;
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s ease;
-}
-.imp-backdrop.open { opacity: 1; pointer-events: all; }
-.imp-panel {
-  background: rgba(255,255,255,.10);
-  backdrop-filter: blur(40px) saturate(1.5) brightness(1.04);
-  -webkit-backdrop-filter: blur(40px) saturate(1.5) brightness(1.04);
-  border: 1px solid rgba(255,255,255,.22);
-  max-width: 720px; width: 100%;
-  max-height: 88vh; overflow-y: auto;
-  border-radius: 22px;
-  padding: 56px 60px 52px;
+.legal-section {
   position: relative;
-  box-shadow:
-    0 32px 80px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.30);
-  transform: translateY(20px);
-  transition: transform .35s var(--ease);
+  z-index: 1;
+  padding: 0 48px 96px;
 }
-.imp-backdrop.open .imp-panel { transform: translateY(0); }
-.imp-close {
-  position: absolute; top: 22px; right: 22px;
-  width: 38px; height: 38px; border-radius: 50%;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(249,247,244,.7); font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s, color .2s;
+.legal-inner {
+  max-width: 720px;
+  margin: 0 auto;
 }
-.imp-close:hover { background: rgba(255,255,255,.14); color: var(--w); }
-.imp-eyebrow {
-  font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
-  color: rgba(249,247,244,.5); margin-bottom: 14px; font-weight: 500;
-}
-.imp-title {
-  font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 700;
-  color: var(--w); letter-spacing: -.03em; margin-bottom: 38px; line-height: 1;
-}
+
 .imp-body section { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.08); }
 .imp-body section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .imp-body h3 {
@@ -60,14 +21,7 @@
 .imp-body a:hover { border-color: var(--w); }
 
 @media (max-width: 760px) {
-  .imp-panel {
-    max-height: 92vh;
-    padding: 36px 22px 32px;
-  }
-  .imp-title {
-    margin-bottom: 28px;
-    font-size: 26px;
-  }
+  .legal-section { padding: 0 18px 64px; }
   .imp-body section {
     margin-bottom: 22px;
     padding-bottom: 22px;
@@ -75,13 +29,5 @@
   .imp-body p {
     font-size: 13.5px;
     line-height: 1.7;
-  }
-}
-
-@media (max-width: 420px) {
-  .imp-panel { padding: 32px 18px 28px; }
-  .imp-title {
-    margin-bottom: 22px;
-    font-size: 22px;
   }
 }

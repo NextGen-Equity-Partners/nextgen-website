@@ -66,7 +66,7 @@ export const tr = {
           Unsere Mission bei NextGen Equity Partners ist die{" "}
           <span className="bold">Entwicklung kleiner und mittlerer Dienstleistungsunternehmen</span>{" "}
           im DACH-Raum zu{" "}
-          <span className="bold">technologisch und marktführenden Unternehmensgruppen</span>. Wir setzen{" "}
+          <span className="bold">technologisch- und marktführenden Unternehmensgruppen</span>. Wir setzen{" "}
           <span className="bold">Wachstumskapital</span> ein, um damit die{" "}
           <span className="bold">Substanz des Mittelstands</span> zu stärken und{" "}
           <span className="bold">KI-befähigte Wissensträger</span> in den Mittelpunkt zu stellen.

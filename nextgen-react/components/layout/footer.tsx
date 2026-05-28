@@ -1,13 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useLocale } from "@/components/providers/locale-provider";
 import { tr } from "@/lib/content/i18n";
-
-function openLegal(kind: "impressum" | "datenschutz") {
-  document.dispatchEvent(
-    new CustomEvent("legal-modal-open", { detail: kind }),
-  );
-}
 
 export function Footer() {
   const { locale } = useLocale();
@@ -23,12 +18,8 @@ export function Footer() {
       </nav>
       <div className="fl">
         <span className="footer-meta">{tr.footer.company[locale]}</span>
-        <button type="button" onClick={() => openLegal("impressum")}>
-          {tr.footer.impressum[locale]}
-        </button>
-        <button type="button" onClick={() => openLegal("datenschutz")}>
-          {tr.footer.datenschutz[locale]}
-        </button>
+        <Link href="/impressum">{tr.footer.impressum[locale]}</Link>
+        <Link href="/datenschutz">{tr.footer.datenschutz[locale]}</Link>
       </div>
     </footer>
   );
