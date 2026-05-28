@@ -11,25 +11,9 @@ footer {
   letter-spacing: .22em;
   text-transform: uppercase;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-/* Primary page navigation — descriptive links to every main page,
-   styled to match the minimal uppercase footer meta. */
-footer .footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-footer .footer-nav a {
-  color: rgba(249, 247, 244, .55);
-  text-decoration: none;
-  transition: color .2s;
-}
-footer .footer-nav a:hover {
-  color: var(--w);
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
 }
 
 footer .fl {
