@@ -1,12 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useLocale } from "@/components/providers/locale-provider";
 import type { Locale } from "@/lib/content/i18n";
 
-type LegalKey = "impressum" | "datenschutz";
+export type LegalKey = "impressum" | "datenschutz";
 
-const CONTENT: Record<Locale, Record<LegalKey, { title: string; html: string }>> = {
+export const LEGAL_CONTENT: Record<Locale, Record<LegalKey, { title: string; html: string }>> = {
   de: {
     impressum: {
       title: "Impressum",
@@ -227,56 +223,7 @@ const CONTENT: Record<Locale, Record<LegalKey, { title: string; html: string }>>
   },
 };
 
-const UI_STRINGS: Record<Locale, { eyebrow: string; close: string; defaultTitle: string }> = {
-  de: { eyebrow: "Rechtliches", close: "Schließen", defaultTitle: "Impressum" },
-  en: { eyebrow: "Legal", close: "Close", defaultTitle: "Imprint" },
+export const LEGAL_UI: Record<Locale, { eyebrow: string }> = {
+  de: { eyebrow: "Rechtliches" },
+  en: { eyebrow: "Legal" },
 };
-
-export function LegalModal() {
-  const { locale } = useLocale();
-  const [active, setActive] = useState<LegalKey | null>(null);
-
-  useEffect(() => {
-    const onOpen = (e: Event) => {
-      const detail = (e as CustomEvent<LegalKey>).detail;
-      if (detail && CONTENT[locale][detail]) setActive(detail);
-    };
-    const onClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest("[data-modal]");
-      if (!target) return;
-      const key = target.getAttribute("data-modal") as LegalKey | null;
-      if (key && CONTENT[locale][key]) {
-        e.preventDefault();
-        setActive(key);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActive(null);
-    };
-    document.addEventListener("legal-modal-open", onOpen);
-    document.addEventListener("click", onClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("legal-modal-open", onOpen);
-      document.removeEventListener("click", onClick);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [locale]);
-
-  const open = active !== null;
-  const data = active ? CONTENT[locale][active] : null;
-  const ui = UI_STRINGS[locale];
-
-  return (
-    <div className={`imp-backdrop${open ? " open" : ""}`} onClick={(e) => {
-      if (e.target === e.currentTarget) setActive(null);
-    }}>
-      <div className="imp-panel" data-lenis-prevent>
-        <button className="imp-close" aria-label={ui.close} onClick={() => setActive(null)}>✕</button>
-        <div className="imp-eyebrow">{ui.eyebrow}</div>
-        <div className="imp-title">{data?.title ?? ui.defaultTitle}</div>
-        <div className="imp-body" dangerouslySetInnerHTML={{ __html: data?.html ?? "" }} />
-      </div>
-    </div>
-  );
-}

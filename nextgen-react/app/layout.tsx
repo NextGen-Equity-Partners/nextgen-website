@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { LegalModal } from "@/components/layout/legal-modal";
 import { Watermark } from "@/components/layout/watermark";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { ScrollProgress } from "@/components/providers/scroll-progress";
@@ -23,9 +22,9 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
-// Home (default) title is kept under ~60 chars and leads with the brand.
+// Home (default) title leads with the brand + positioning.
 // Every sub-page sets its own short title; the template appends the brand.
-const HOME_TITLE = "NextGen Equity Partners – Wachstumskapital im Mittelstand";
+const HOME_TITLE = "NextGen Equity Partners | Private Equity für den deutschen Mittelstand";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -88,8 +87,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ScrollProgress />
             <ScrollCue />
           </SmoothScrollProvider>
-
-          <LegalModal />
         </LocaleProvider>
       </body>
     </html>

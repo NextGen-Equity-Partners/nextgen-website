@@ -39,7 +39,7 @@ footer .fl {
   justify-content: flex-start;
 }
 
-footer button {
+footer .fl a {
   font: inherit;
   font-size: 9.5px;
   letter-spacing: .22em;
@@ -49,9 +49,10 @@ footer button {
   border: none;
   cursor: pointer;
   padding: 0;
+  text-decoration: none;
   transition: color .2s;
 }
-footer button:hover {
+footer .fl a:hover {
   color: var(--w);
 }
 
