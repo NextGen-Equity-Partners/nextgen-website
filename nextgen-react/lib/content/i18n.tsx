@@ -472,17 +472,6 @@ export const tr = {
     company:    { de: "NextGen Equity Partners · München · © 2026", en: "NextGen Equity Partners · Munich · © 2026" },
   } satisfies Record<string, T>,
 
-  // Footer navigation — descriptive links to every main page
-  footerNav: {
-    label:            { de: "Seiten",            en: "Pages" },
-    profil:           { de: "Profil",            en: "Profile" },
-    ansatz:           { de: "Ansatz",            en: "Approach" },
-    kiWertsteigerung: { de: "KI-Wertsteigerung", en: "AI Value Creation" },
-    team:             { de: "Team",              en: "Team" },
-    beteiligungen:    { de: "Beteiligungen",     en: "Investments" },
-    kontakt:          { de: "Kontakt",           en: "Contact" },
-  } satisfies Record<string, T>,
-
   // Home → deep-page contextual links (descriptive anchor text, not "click here")
   sectionLinks: {
     profil:        { de: "Mehr über NextGen →",                 en: "More about NextGen →" },
