@@ -580,6 +580,21 @@ export default function HomePage() {
           <div className="rv rv-d3 kontakt-teaser-cta">
             <a href="/kontakt" className="btn btn-light kontakt-teaser-btn">{t(tr.kontaktTeaser.cta)}</a>
           </div>
+
+          <div className="cf-superreturn rv rv-d3">
+            <div className="cf-superreturn-text">
+              <div className="cf-eyebrow">{t(tr.kontakt.srEyebrow)}</div>
+              <p>{t(tr.kontakt.srBody)}</p>
+            </div>
+            <a
+              className="cf-superreturn-cta"
+              href="https://sr26events.nextgen-equity.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t(tr.kontakt.srCta)}
+            </a>
+          </div>
         </div>
       </section>
     </>
