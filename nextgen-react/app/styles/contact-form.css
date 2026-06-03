@@ -317,6 +317,75 @@
   color: rgba(249,247,244,.5);
 }
 
+/* SuperReturn side-events banner — glass panel at the foot of the homepage */
+.cf-superreturn {
+  width: 100%;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  margin-top: clamp(40px, 5vw, 72px);
+  padding: clamp(28px, 3vw, 40px) clamp(32px, 3.4vw, 48px);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .05);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(24px, 3vw, 48px);
+  flex-wrap: wrap;
+}
+.cf-superreturn-text {
+  flex: 1 1 360px;
+  min-width: 0;
+}
+.cf-superreturn-text .cf-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(249, 247, 244, .55);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.cf-superreturn-text p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--w);
+  opacity: .9;
+  font-weight: 300;
+  margin: 0;
+  max-width: 64ch;
+}
+.cf-superreturn-cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--w);
+  color: var(--bg-deep);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: background .25s, transform .25s var(--ease);
+}
+.cf-superreturn-cta:hover { background: #fff; transform: translateY(-2px); }
+@media (max-width: 760px) {
+  .cf-superreturn {
+    margin-top: 14px;
+    padding: 24px 22px;
+    border-radius: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .cf-superreturn-cta { justify-content: center; }
+}
+
 /* Two bubbles below cf-wrap, mirroring its grid (form / Max greeting) */
 .cf-bottom {
   display: grid;

@@ -452,6 +452,13 @@ export const tr = {
     topicCoinvest:  { de: "Co-Investment",                                en: "Co-investment" },
     topicOther:     { de: "Sonstiges",                                    en: "Other" },
     submitDefault:  { de: "Unverbindliches Gespräch vereinbaren →",     en: "Schedule a conversation →" },
+    // SuperReturn side-events banner (below the contact form)
+    srEyebrow: { de: "SuperReturn 2026", en: "SuperReturn 2026" },
+    srBody: {
+      de: "Wir sind vor Ort auf der SuperReturn. Hier finden Sie unseren Überblick über alle Side-Events rund um die Konferenz – und können direkt ein persönliches Treffen mit uns vereinbaren.",
+      en: "We'll be on the ground at SuperReturn. Here you'll find our schedule of all the side events around the conference — and you can arrange to meet us in person.",
+    },
+    srCta: { de: "Treffen Sie uns auf der SuperReturn →", en: "Meet us at SuperReturn →" },
     submitSending:  { de: "Wird gesendet …",                              en: "Sending …" },
     submitSent:     { de: "Vielen Dank – wir melden uns bald ✓",        en: "Thank you — we'll be in touch soon ✓" },
     sentTitle:      { de: "Vielen Dank für Ihre Nachricht.",              en: "Thank you for your message." },
